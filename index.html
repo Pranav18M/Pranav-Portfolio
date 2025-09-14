@@ -1,184 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pranav's Portfolio</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pranav's Portfolio</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Animated Background -->
-    <div class="background-animation"></div>
+  <!-- Animated Background -->
+  <div class="background-animation"></div>
 
-    <!-- Navbar -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="logo">Pranav's Portfolio</div>
-            <div class="mobile-menu" onclick="toggleMenu()">
-                <div class="hamburger"></div>
-                <div class="hamburger"></div>
-                <div class="hamburger"></div>
-            </div>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#home" class="nav-link active">Home</a></li>
-                <li><a href="#about" class="nav-link">About</a></li>
-                <li><a href="#projects" class="nav-link">Projects</a></li>
-                <li><a href="#certifications" class="nav-link">Certifications</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li> 
-            </ul>
-        </div></nav>
-    </nav>
-
-    <!-- Main Container -->
-    <div class="main-container">
-
-        <!-- Home Section -->
-        <div class="content-section active fade-in" id="home">
-            <div class="home-section">
-                <div class="hero-content">
-                    <h1>Hello, I'm <span class="highlight">Pranav</span></h1>
-                    <p>Aspiring <strong>Frontend developer</strong>| Building fast,scalable,and elegant applications </p>
-                    <a href="#about" class="cta-button nav-link">Discover More</a>
-
-                   <div class="social-links">
-    <!-- LinkedIn -->
-    <a href="https://www.linkedin.com/in/mohana-pranav-1b087b2bb?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="social-box linkedin">
-        <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn">
-    </a>
-
-    <!-- GitHub -->
-    <a href="https://github.com/Pranav18M" target="_blank" class="social-box github">
-        <img src="https://cdn-icons-png.flaticon.com/512/733/733609.png" alt="GitHub">
-    </a>
-
-    <!-- Email -->
-    <a href="mailto:mohnapranav@gmail.com" class="social-box email">
-        <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="Email">
-    </a>
-</div>
-</div>
-
-<div class="profile-section">
-  <div class="profile-img">
-    <img src="pranav.jpg" alt="Pranav">
-  </div>
-</div>
-</div>
-        </div>
-<!-- About Section --> 
- <div class="content-section" id="about"> 
-  <div class="content-box fade-in"> 
-  <button class="back-btn" onclick="goBack()">⬅ Back</button>
-  <h2>About Me</h2>
-   <p>I am a passionate developer with experience in HTML, CSS, JavaScript, and DevOps tools. I love creating clean and modern web designs with unique effects and smooth user experiences.</p>
-   <p>My journey in technology combines creativity with technical expertise, focusing on building scalable web applications and efficient deployment pipelines. I believe in continuous learning and staying updated with the latest technology trends.</p>
-   <p>When I'm not coding, you'll find me exploring new frameworks, contributing to open-source projects, or planning my next big idea that could change the world!</p> 
-</div>
- </div>
-  
-<!-- Projects Section -->
-<div class="content-section" id="projects">
-  <div class="content-box fade-in">
-    <button class="back-btn" onclick="goBack()">⬅ Back</button>
-    <h2>My Projects</h2>
-    
-    <div class="projects-grid">
-    
-        <!-- Project 1 -->
-      <a href="https://smart-ats-resume-scanner.vercel.app/" target="_blank" class="project-card">
-        <h3>📄 ATS-Resume_scanner</h3>
-        <p> “Recruiter’s Assistant – Simplifies resume shortlisting with ATS-based scanning.”</p>
-      </a>
-        
-         <!-- Project 2 -->
-      <a href="https://shopease-pranav.vercel.app/" target="_blank" class="project-card">
-        <h3>🛍️ ShopEase</h3>
-        <p> Morden e-commerce platform build for seamless shopping,featuring scalable architecture,secure payments,smooth user experience.</p>
-      </a>
-
-         <!-- Project 3 -->
-      <a href="https://fit-nest-018.vercel.app/" target="_blank" class="project-card">
-        <h3>💪 FitNest</h3>
-        <p> Fit-Nest App – A fitness tracking application designed to help users stay consistent with their workouts and health goals.</p>
-      </a>
-
-      <!-- Project 4 -->
-      <a href="https://pranav-to-do-list.vercel.app/" target="_blank" class="project-card">
-        <h3>🎯 To-Do-List</h3>
-        <p>To-Do List App – A task management tool built to help users organize their daily activities efficiently, Designed to improve productivity and time management.</p>
-      </a>
-
-        <!-- Project 5 -->
-      <a href="https://pranavperfumy.vercel.app/" target="_blank" class="project-card">
-        <h3>⚱💨 Perfumy</h3>
-        <p>Simple perfume ordering platform where user can browse and place orders online. Once order is placed,sent directly to my number for quick proccesing.</p>
-      </a>
-
-      <!-- Project 6 -->
-      <a href="https://booksky-018.vercel.app/" target="_blank" class="project-card">
-        <h3>📖 BookSky</h3>
-        <p>BookSky App – A simple book management tool that allows users to save book titles along with personal notes or content about each book.</p>
-      </a>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container">
+      <div class="logo">Pranav's Portfolio</div>
+      <div class="mobile-menu" onclick="toggleMenu()">
+        <div class="hamburger"></div>
+        <div class="hamburger"></div>
+        <div class="hamburger"></div>
+      </div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home" class="nav-link active">Home</a></li>
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li><a href="#certifications" class="nav-link">Certifications</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li> 
+      </ul>
     </div>
+  </nav>
+
+  <!-- Main Container -->
+  <div class="main-container">
+
+    <!-- Home Section -->
+    <div class="content-section active fade-in" id="home">
+      <div class="home-section">
+        <div class="hero-content">
+          <h1>Hello, I'm <span class="highlight">Pranav</span></h1>
+          <p>Aspiring <strong>Frontend developer</strong> | Building fast, scalable, and elegant applications </p>
+          <a href="#about" class="cta-button nav-link">Discover More</a>
+
+          <div class="social-links">
+            <!-- LinkedIn -->
+            <a href="https://www.linkedin.com/in/mohana-pranav-1b087b2bb?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="social-box linkedin">
+              <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn">
+            </a>
+
+            <!-- GitHub -->
+            <a href="https://github.com/Pranav18M" target="_blank" class="social-box github">
+              <img src="https://cdn-icons-png.flaticon.com/512/733/733609.png" alt="GitHub">
+            </a>
+
+            <!-- Email -->
+            <a href="mailto:mohnapranav@gmail.com" class="social-box email">
+              <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="Email">
+            </a>
+          </div>
+        </div>
+
+        <div class="profile-section">
+          <div class="profile-img">
+            <img src="pranav.jpg" alt="Pranav">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- About Section -->
+    <div class="content-section" id="about"> 
+      <div class="content-box fade-in"> 
+        <div class="nav-buttons">
+          <button class="back-btn" onclick="goBack()">⬅ Back</button>
+          <button class="next-btn" onclick="goNext('projects')">Next ➡</button>
+        </div>
+        <h2>About Me</h2>
+        <p>I am a passionate developer with experience in HTML, CSS, JavaScript, and DevOps tools. I love creating clean and modern web designs with unique effects and smooth user experiences.</p>
+        <p>My journey in technology combines creativity with technical expertise, focusing on building scalable web applications and efficient deployment pipelines. I believe in continuous learning and staying updated with the latest technology trends.</p>
+        <p>When I'm not coding, you'll find me exploring new frameworks, contributing to open-source projects, or planning my next big idea that could change the world!</p> 
+      </div>
+    </div>
+
+    <!-- Projects Section -->
+    <div class="content-section" id="projects">
+      <div class="content-box fade-in">
+        <div class="nav-buttons">
+          <button class="back-btn" onclick="goBack()">⬅ Back</button>
+          <button class="next-btn" onclick="goNext('certifications')">Next ➡</button>
+        </div>
+        <h2>My Projects</h2>
+
+        <div class="projects-grid">
+          <!-- Project 1 -->
+          <a href="https://smart-ats-resume-scanner.vercel.app/" target="_blank" class="project-card">
+            <h3>📄 ATS-Resume_scanner</h3>
+            <p>Recruiter’s Assistant – Simplifies resume shortlisting with ATS-based scanning.</p>
+          </a>
+
+          <!-- Project 2 -->
+          <a href="https://shopease-pranav.vercel.app/" target="_blank" class="project-card">
+            <h3>🛍️ ShopEase</h3>
+            <p>Modern e-commerce platform built for seamless shopping, featuring scalable architecture, secure payments, and smooth UX.</p>
+          </a>
+
+          <!-- Project 3 -->
+          <a href="https://fit-nest-018.vercel.app/" target="_blank" class="project-card">
+            <h3>💪 FitNest</h3>
+            <p>A fitness tracking application designed to help users stay consistent with their workouts and health goals.</p>
+          </a>
+
+          <!-- Project 4 -->
+          <a href="https://pranav-to-do-list.vercel.app/" target="_blank" class="project-card">
+            <h3>🎯 To-Do-List</h3>
+            <p>Task management tool to help users organize daily activities efficiently.</p>
+          </a>
+
+          <!-- Project 5 -->
+          <a href="https://pranavperfumy.vercel.app/" target="_blank" class="project-card">
+            <h3>⚱💨 Perfumy</h3>
+            <p>Perfume ordering platform where users can browse and place orders online.</p>
+          </a>
+
+          <!-- Project 6 -->
+          <a href="https://booksky-018.vercel.app/" target="_blank" class="project-card">
+            <h3>📖 BookSky</h3>
+            <p>Book management tool allowing users to save book titles and personal notes.</p>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Certifications Section -->
+    <div class="content-section" id="certifications">
+      <div class="content-box fade-in">
+        <div class="nav-buttons">
+          <button class="back-btn" onclick="goBack()">⬅ Back</button>
+          <button class="next-btn" onclick="goNext('contact')">Next ➡</button>
+        </div>
+        <h2>Certifications & Skills</h2>
+        <ul>
+          <li onclick="openCert('image1.jpg')">☁️ <strong style="cursor:pointer; color:#667eea;">EPOCH 2K25</strong><br>Secured 1st prize in Paper presentation</li>
+          <li onclick="openCert('image2.jpg')">🐧 <strong style="cursor:pointer; color:#667eea;">CYBERL@NE'25</strong><br>Participation in a Cybersecurity Workshop</li>
+          <li onclick="openCert('image3.jpg')">🐍 <strong style="cursor:pointer; color:#667eea;">Python FreeCodeCamp</strong><br>Python programming and data structures certification</li>
+          <li onclick="openCert('image4.jpg')">🌐 <strong style="cursor:pointer; color:#667eea;">Web Development Fundamentals</strong><br>Full-stack web development with modern frameworks</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Certification Popup -->
+    <div id="certPopup" class="cert-popup">
+      <div class="cert-popup-content">
+        <button class="back-btn" onclick="closeCert()">⬅ Back</button>
+        <img id="certImage" src="" alt="Certification" class="cert-full">
+      </div>
+    </div>
+
+    <!-- Contact Section -->
+    <div class="content-section" id="contact">
+      <div class="content-box fade-in">
+        <div class="nav-buttons">
+          <button class="back-btn" onclick="goBack()">⬅ Back</button>
+          <button class="next-btn" onclick="goNext('home')">Next ➡</button>
+        </div>
+        <h2>Contact Me</h2>
+        <form class="contact-form" onsubmit="handleSubmit(event)">
+          <input type="text" name="name" placeholder="Your Name" required>
+          <input type="email" name="email" placeholder="Your Email" required>
+          <textarea name="message" placeholder="Your Message" required></textarea>
+          <button type="submit">Send Message</button>
+        </form>
+      </div>
+    </div>
+
   </div>
-</div>
 
-
-<!-- Certifications Section -->
-<div class="content-section" id="certifications">
-  <div class="content-box fade-in">
-    <button class="back-btn" onclick="goBack()">⬅ Back</button>
-
-    <h2>Certifications & Skills</h2>
-    <ul>
-      <ul>
-  <li onclick="openCert('image1.jpg')">
-    ☁️ <strong style="cursor:pointer; color:#667eea;">EPOCH 2K25(National level symposium)</strong><br>
-    secured 1st price in Paper presentation
-  </li>
-
-  <li onclick="openCert('image2.jpg')">
-    🐧 <strong style="cursor:pointer; color:#667eea;">CYBERL@NE'25(National Level Symposium)</strong><br>
-   Participation in a Cybersecurity Workshop
-  </li>
-
-  <li onclick="openCert('image3.jpg')">
-    🐍 <strong style="cursor:pointer; color:#667eea;">Python FreeCodeCamp</strong><br>
-    Python programming and data structures certification
-  </li>
-
-  <li onclick="openCert('image4.jpg')">
-    🌐 <strong style="cursor:pointer; color:#667eea;">Web Development Fundamentals</strong><br>
-    Full-stack web development with modern frameworks
-  </li>
-</ul>
-
-    </ul>
-  </div>
-</div>
-
-<!-- Certification Popup -->
-<div id="certPopup" class="cert-popup">
-  <div class="cert-popup-content">
-    <button class="back-btn" onclick="goBack()">⬅ Back</button>
-    <img id="certImage" src="" alt="Certification" class="cert-full">
-  </div>
-</div>
-
-<!-- Contact Section -->
-<div class="content-section" id="contact">
-  <div class="content-box fade-in">
-    <button class="back-btn" onclick="goBack()">⬅ Back</button>
-    <h2>Contact Me</h2>
-    <form class="contact-form" onsubmit="handleSubmit(event)">
-      <input type="text" name="name" placeholder="Your Name" required>
-      <input type="email" name="email" placeholder="Your Email" required>
-      <textarea name="message" placeholder="Your Message" required></textarea>
-      <button type="submit">Send Message</button>
-    </form>
-  </div>
-</div>
-
-     <script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
