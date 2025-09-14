@@ -1,172 +1,252 @@
 // Create animated background
 function createBackground() {
-    const background = document.querySelector('.background-animation');
+  const background = document.querySelector('.background-animation');
+  if (!background) return;
 
-    // Create bubbles
-    for (let i = 0; i < 15; i++) {
-        const bubble = document.createElement('div');
-        bubble.classList.add('bubble');
-        bubble.style.width = Math.random() * 60 + 20 + 'px';
-        bubble.style.height = bubble.style.width;
-        bubble.style.left = Math.random() * 100 + '%';
-        bubble.style.top = Math.random() * 100 + '%';
-        bubble.style.animationDelay = Math.random() * 8 + 's';
-        bubble.style.animationDuration = (Math.random() * 3 + 5) + 's';
-        background.appendChild(bubble);
-    }
+  // Clear previous elements (prevents duplicates if function re-runs)
+  background.innerHTML = '';
 
-    // Create lines
-    for (let i = 0; i < 10; i++) {
-        const line = document.createElement('div');
-        line.classList.add('line');
-        line.style.height = Math.random() * 100 + 50 + 'px';
-        line.style.top = Math.random() * 100 + '%';
-        line.style.animationDelay = Math.random() * 10 + 's';
-        line.style.animationDuration = (Math.random() * 5 + 8) + 's';
-        background.appendChild(line);
-    }
+  // Create bubbles
+  for (let i = 0; i < 15; i++) {
+    const bubble = document.createElement('div');
+    bubble.classList.add('bubble');
+    bubble.style.width = Math.random() * 60 + 20 + 'px';
+    bubble.style.height = bubble.style.width;
+    bubble.style.left = Math.random() * 100 + '%';
+    bubble.style.top = Math.random() * 100 + '%';
+    bubble.style.animationDelay = Math.random() * 8 + 's';
+    bubble.style.animationDuration = (Math.random() * 3 + 5) + 's';
+    background.appendChild(bubble);
+  }
+
+  // Create lines
+  for (let i = 0; i < 10; i++) {
+    const line = document.createElement('div');
+    line.classList.add('line');
+    line.style.height = Math.random() * 100 + 50 + 'px';
+    line.style.top = Math.random() * 100 + '%';
+    line.style.animationDelay = Math.random() * 10 + 's';
+    line.style.animationDuration = (Math.random() * 5 + 8) + 's';
+    background.appendChild(line);
+  }
 }
 
-// Navigation functionality
-function showSection(targetId) {
-    const sections = document.querySelectorAll('.content-section');
-    const navLinks = document.querySelectorAll('.nav-link');
+// -----------------------------
+// Navigation history handling
+// -----------------------------
+let historyStack = [];
 
-    sections.forEach(section => {
-        section.classList.remove('active');
-    });
+/**
+ * Show a section by id.
+ * @param {string} targetId - id of section to show
+ * @param {boolean} pushHistory - whether to push this navigation into history (default true)
+ */
+function showSection(targetId, pushHistory = true) {
+  if (!targetId) return;
+  const targetEl = document.getElementById(targetId);
+  if (!targetEl) return;
 
-    navLinks.forEach(link => {
-        link.classList.remove('active');
-    });
+  const sections = document.querySelectorAll('.content-section');
+  const navLinks = document.querySelectorAll('.nav-link');
 
-    document.getElementById(targetId).classList.add('active');
-    document.querySelector(`[href="#${targetId}"]`).classList.add('active');
+  sections.forEach(section => section.classList.remove('active'));
+  navLinks.forEach(link => link.classList.remove('active'));
 
-    // Blur effect toggle
-    if (targetId !== "home") {
-        document.body.classList.add("blur-active");
-    } else {
-        document.body.classList.remove("blur-active");
+  targetEl.classList.add('active');
+  const activeLink = document.querySelector(`[href="#${targetId}"]`);
+  if (activeLink) activeLink.classList.add('active');
+
+  // Blur effect toggle
+  if (targetId !== "home") {
+    document.body.classList.add("blur-active");
+  } else {
+    document.body.classList.remove("blur-active");
+  }
+
+  // Push into history only if allowed and not a duplicate
+  if (pushHistory) {
+    const last = historyStack[historyStack.length - 1];
+    if (last !== targetId) {
+      historyStack.push(targetId);
     }
+  }
 }
 
-// Back button functionality
+/**
+ * Go to previous view:
+ * 1) if cert popup open -> close it
+ * 2) else if history has previous -> go to it
+ * 3) else fallback to home
+ */
 function goBack() {
-    showSection("home");
+  const popup = document.getElementById("certPopup");
+
+  // If popup is open, close it first (don't change section history)
+  if (popup && window.getComputedStyle(popup).display !== "none") {
+    closeCert();
+    return;
+  }
+
+  // If there is a previous entry in history, go back
+  if (historyStack.length > 1) {
+    // remove current
+    historyStack.pop();
+    // peek previous
+    const prev = historyStack[historyStack.length - 1] || "home";
+    // show previous WITHOUT pushing it again into history
+    showSection(prev, false);
+  } else {
+    // fallback to home (reset history to only home)
+    historyStack = ["home"];
+    showSection("home", false);
+  }
 }
 
-// Handle navigation clicks
+/**
+ * Next button navigation (also pushes into history)
+ * @param {string} targetId
+ */
+function goNext(targetId) {
+  if (!targetId) return;
+  showSection(targetId, true);
+}
+
+// -----------------------------
+// Nav link handlers & mobile menu
+// -----------------------------
 document.querySelectorAll('.nav-link').forEach(link => {
-    link.addEventListener('click', function(e) {
-        e.preventDefault();
-        const targetId = this.getAttribute('href').substring(1);
-        showSection(targetId);
+  link.addEventListener('click', function (e) {
+    e.preventDefault();
+    const targetId = this.getAttribute('href').substring(1);
+    showSection(targetId, true);
 
-        // Close mobile menu if open
-        const navLinks = document.getElementById('navLinks');
-        navLinks.classList.remove('active');
-    });
+    // Close mobile menu if open
+    const navLinks = document.getElementById('navLinks');
+    if (navLinks) navLinks.classList.remove('active');
+  });
 });
 
-// Mobile menu toggle
 function toggleMenu() {
-    const navLinks = document.getElementById('navLinks');
-    navLinks.classList.toggle('active');
+  const navLinks = document.getElementById('navLinks');
+  if (navLinks) navLinks.classList.toggle('active');
 }
 
-// Handle form submission with Formspree (no redirect)
+// -----------------------------
+// Contact form (Formspree)
+// -----------------------------
 function handleSubmit(event) {
-    event.preventDefault();
-    const form = event.target;
-    const button = form.querySelector('button');
-    const originalText = button.textContent;
+  event.preventDefault();
+  const form = event.target;
+  const button = form.querySelector('button');
+  if (!button) return;
+  const originalText = button.textContent;
 
-    button.textContent = 'Sending...';
-    button.disabled = true;
+  button.textContent = 'Sending...';
+  button.disabled = true;
 
-    fetch("https://formspree.io/f/xwpqjlvp", {
-        method: "POST",
-        body: new FormData(form),
-        headers: { "Accept": "application/json" }
-    }).then(response => {
-        if (response.ok) {
-            button.textContent = "Message Sent!";
-            button.style.background = "linear-gradient(135deg, #4CAF50, #45a049)";
-            form.reset();
-        } else {
-            button.textContent = "Error! Try Again";
-            button.style.background = "linear-gradient(135deg, #e63946, #d62828)";
-        }
-
-        // Reset button after 3 seconds
-        setTimeout(() => {
-            button.textContent = originalText;
-            button.style.background = "linear-gradient(135deg, #667eea, #764ba2)";
-            button.disabled = false;
-        }, 3000);
-    }).catch(() => {
-        button.textContent = "Error! Try Again";
-        button.style.background = "linear-gradient(135deg, #e63946, #d62828)";
-        setTimeout(() => {
-            button.textContent = originalText;
-            button.style.background = "linear-gradient(135deg, #667eea, #764ba2)";
-            button.disabled = false;
-        }, 3000);
-    });
-}
-
-
-
-// Initialize background animation when page loads
-document.addEventListener('DOMContentLoaded', function() {
-    createBackground();
-
-    // Add entrance animation to active section
+  fetch("https://formspree.io/f/xwpqjlvp", {
+    method: "POST",
+    body: new FormData(form),
+    headers: { "Accept": "application/json" }
+  }).then(response => {
+    if (response.ok) {
+      button.textContent = "Message Sent!";
+      button.style.background = "linear-gradient(135deg, #4CAF50, #45a049)";
+      form.reset();
+    } else {
+      button.textContent = "Error! Try Again";
+      button.style.background = "linear-gradient(135deg, #e63946, #d62828)";
+    }
     setTimeout(() => {
-        const activeSection = document.querySelector('.content-section.active');
-        if (activeSection) {
-            activeSection.style.opacity = '1';
-            activeSection.style.transform = 'translateX(0)';
-        }
-    }, 100);
-});
+      button.textContent = originalText;
+      button.style.background = "linear-gradient(135deg, #667eea, #764ba2)";
+      button.disabled = false;
+    }, 3000);
+  }).catch(() => {
+    button.textContent = "Error! Try Again";
+    button.style.background = "linear-gradient(135deg, #e63946, #d62828)";
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.style.background = "linear-gradient(135deg, #667eea, #764ba2)";
+      button.disabled = false;
+    }, 3000);
+  });
+}
 
-// Keyboard navigation
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-        const navLinks = document.getElementById('navLinks');
-        navLinks.classList.remove('active');
-    }
-});
-
-// Close mobile menu when clicking outside
-document.addEventListener('click', function(e) {
-    const navbar = document.querySelector('.navbar');
-    const navLinks = document.getElementById('navLinks');
-
-    if (!navbar.contains(e.target)) {
-        navLinks.classList.remove('active');
-    }
-});
-
-// Open Certification Popup
+// -----------------------------
+// Certification popup
+// -----------------------------
 function openCert(imgSrc) {
-    const popup = document.getElementById("certPopup");
-    const certImage = document.getElementById("certImage");
-    certImage.src = imgSrc;
-    popup.style.display = "flex";
+  const popup = document.getElementById("certPopup");
+  const certImage = document.getElementById("certImage");
+  if (!popup || !certImage) return;
+  certImage.src = imgSrc;
+  popup.style.display = "flex";
 }
 
-// Close Certification Popup
 function closeCert() {
-    document.getElementById("certPopup").style.display = "none";
+  const popup = document.getElementById("certPopup");
+  if (!popup) return;
+  popup.style.display = "none";
 }
 
-// Close popup when clicking outside image
-document.getElementById("certPopup").addEventListener("click", function(e) {
-    if (e.target === this) {
-        closeCert();
-    }
+// close popup when clicking outside image area
+document.getElementById("certPopup")?.addEventListener("click", function (e) {
+  if (e.target === this) {
+    closeCert();
+  }
 });
 
+// -----------------------------
+// Misc: init, keyboard, outside click
+// -----------------------------
+document.addEventListener('DOMContentLoaded', function () {
+  createBackground();
+
+  // Initialize history with the currently active section (if any)
+  const activeSection = document.querySelector('.content-section.active') || document.getElementById('home');
+  const startId = activeSection?.id || 'home';
+  historyStack = [startId];
+
+  // Ensure entrance animation is applied
+  setTimeout(() => {
+    const activeSectionEl = document.querySelector('.content-section.active');
+    if (activeSectionEl) {
+      activeSectionEl.style.opacity = '1';
+      activeSectionEl.style.transform = 'translateX(0)';
+    }
+  }, 100);
+});
+
+// Keyboard shortcuts (Escape closes mobile/certs; Left = back, Right = next)
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'Escape') {
+    // close mobile menu and cert popup (if open)
+    document.getElementById('navLinks')?.classList.remove('active');
+    const popup = document.getElementById("certPopup");
+    if (popup && window.getComputedStyle(popup).display !== "none") {
+      closeCert();
+    }
+  } else if (e.key === 'ArrowLeft') {
+    goBack();
+  } else if (e.key === 'ArrowRight') {
+    // attempt to move to next based on known order
+    const order = ['home', 'about', 'projects', 'certifications', 'contact'];
+    const current = historyStack[historyStack.length - 1] || 'home';
+    const idx = order.indexOf(current);
+    if (idx >= 0 && idx < order.length - 1) {
+      goNext(order[idx + 1]);
+    } else if (idx === order.length - 1) {
+      goNext('home');
+    }
+  }
+});
+
+// close mobile menu when clicking outside
+document.addEventListener('click', function (e) {
+  const navbar = document.querySelector('.navbar');
+  const navLinks = document.getElementById('navLinks');
+  if (!navbar?.contains(e.target)) {
+    navLinks?.classList.remove('active');
+  }
+});
