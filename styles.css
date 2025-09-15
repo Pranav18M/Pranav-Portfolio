@@ -673,3 +673,56 @@ body.blur-active #home {
   }
 }
 
+
+/* Mobile Layout Adjustments for Profile-first view */
+@media (max-width: 768px) {
+    .home-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1.5rem;
+    }
+
+    .profile-section {
+        order: -1; /* Move profile image to top */
+    }
+
+    .hero-content {
+        text-align: center;
+        order: 1;
+    }
+
+    .social-links {
+        order: 2;
+        justify-content: center;
+        margin-top: 1rem;
+    }
+
+    .cta-button {
+        order: 3;
+        margin-top: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile-section {
+        order: -1;
+    }
+
+    .hero-content {
+        order: 1;
+        padding: 1rem;
+    }
+
+    .social-links {
+        order: 2;
+        gap: 12px;
+    }
+
+    .cta-button {
+        order: 3;
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+    }
+}
