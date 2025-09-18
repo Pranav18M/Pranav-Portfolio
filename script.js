@@ -250,3 +250,39 @@ document.addEventListener('click', function (e) {
     navLinks?.classList.remove('active');
   }
 });
+
+const textArray = ["Frontend Developer", "Problem Solver", "UI/UX Enthusiast"];
+let i = 0, j = 0, currentText = "", isDeleting = false;
+
+function typeEffect() {
+  currentText = textArray[i];
+  document.getElementById("typing-text").textContent = 
+    currentText.substring(0, j);
+
+  if (!isDeleting && j++ === currentText.length) { 
+    // finished typing → pause before deleting
+    isDeleting = true; 
+    setTimeout(typeEffect, 1200);  
+    return;
+  } else if (isDeleting && j-- === 0) {
+    // finished deleting → move to next word
+    isDeleting = false; 
+    i = (i + 1) % textArray.length;
+  }
+
+  // adjust typing speed (slower = higher number)
+  const speed = isDeleting ? 150 : 180;  
+  setTimeout(typeEffect, speed);
+}
+
+document.addEventListener("DOMContentLoaded", typeEffect);
+
+document.querySelector(".profile-img").addEventListener("mousemove", e => {
+  const { offsetX, offsetY, target } = e;
+  const x = (offsetX / target.offsetWidth) - 0.9;
+  const y = (offsetY / target.offsetHeight) - 0.9;
+  target.style.transform = `rotateX(${y*10}deg) rotateY(${x*10}deg) scale(1.05)`;
+});
+document.querySelector(".profile-img").addEventListener("mouseleave", e => {
+  e.target.style.transform = "rotateX(0) rotateY(0) scale(1)";
+});
