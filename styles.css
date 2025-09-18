@@ -13,6 +13,7 @@ body {
     overflow-x: hidden;
 }
 
+ 
 /* Animated Background */
 .background-animation {
     position: fixed;
@@ -62,7 +63,7 @@ body {
         transform: translateX(calc(100vw + 100px)) translateY(-100px);
         opacity: 0;
     }
-}
+} 
 
 /* Navbar */
 .navbar {
@@ -264,10 +265,9 @@ body {
   box-shadow: 0 0 15px rgba(217, 48, 37, 0.8);
 }
 
-
-
-/* Content Boxes */
+/* Content Boxes with Smooth Continuous Border Animation */ 
 .content-box {
+    position: relative;
     background: rgba(15, 15, 15, 0.8);
     border-radius: 20px;
     padding: 3rem;
@@ -276,8 +276,10 @@ body {
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     max-width: 800px;
     margin: 0 auto;
+    overflow: hidden;   /* ensures border animation stays inside */
 }
 
+/* Title inside box */
 .content-box h2 {
     color: #667eea;
     margin-bottom: 2rem;
@@ -291,6 +293,37 @@ body {
     color: #ccc;
     margin-bottom: 1rem;
 }
+
+/* 🔥 Smooth continuous border animation */
+.content-box::before {
+    content: "";
+    position: absolute;
+    top: -2px; left: -2px; right: -2px; bottom: -2px;
+    border-radius: 20px;
+    background: linear-gradient(
+      120deg,
+      transparent,
+      rgba(102,126,234,0.5),
+      transparent
+    );
+    background-size: 200% 200%;
+    z-index: 0;
+    animation: borderShine 4s linear infinite;
+}
+
+/* Keep content above the animated border */
+.content-box * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Keyframes for smooth diagonal shimmer */
+@keyframes borderShine {
+    0% { background-position: 0% 0%; }
+    50% { background-position: 100% 100%; }
+    100% { background-position: 0% 0%; }
+}
+
 
 /* Lists */
 .content-box ul {
