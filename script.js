@@ -286,3 +286,20 @@ document.querySelector(".profile-img").addEventListener("mousemove", e => {
 document.querySelector(".profile-img").addEventListener("mouseleave", e => {
   e.target.style.transform = "rotateX(0) rotateY(0) scale(1)";
 });
+// Lazy Loading + Staggered Animations
+document.addEventListener("DOMContentLoaded", () => {
+  const lazyElements = document.querySelectorAll(".lazy-load");
+
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add("show");
+        }, index * 150); // staggered delay
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+
+  lazyElements.forEach(el => observer.observe(el));
+});
