@@ -1,3 +1,4 @@
+
 * {
     margin: 0;
     padding: 0;
@@ -704,6 +705,20 @@ body.blur-active #home {
         transform: translateY(0);
     }
 }
+
+/* Lazy Load Animations */
+.lazy-load {
+  opacity: 0;
+  transform: translateY(80px) scale(0.95); /* start lower & smaller */
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.lazy-load.show {
+  opacity: 1;
+  transform: translateY(0) scale(1); /* smooth pop-in */
+}
+
+
 
 /* Social Icons & Back Button Responsive */
 @media (max-width: 1024px) {
