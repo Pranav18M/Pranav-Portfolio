@@ -3,10 +3,9 @@ function createBackground() {
   const background = document.querySelector('.background-animation');
   if (!background) return;
 
-  // Clear previous elements (prevents duplicates if function re-runs)
-  background.innerHTML = '';
+  background.innerHTML = ''; // clear previous
 
-  // Create bubbles
+  // Bubbles
   for (let i = 0; i < 15; i++) {
     const bubble = document.createElement('div');
     bubble.classList.add('bubble');
@@ -19,7 +18,7 @@ function createBackground() {
     background.appendChild(bubble);
   }
 
-  // Create lines
+  // Lines
   for (let i = 0; i < 10; i++) {
     const line = document.createElement('div');
     line.classList.add('line');
@@ -32,15 +31,11 @@ function createBackground() {
 }
 
 // -----------------------------
-// Navigation history handling
+// Navigation
 // -----------------------------
 let historyStack = [];
 
-/**
- * Show a section by id.
- * @param {string} targetId - id of section to show
- * @param {boolean} pushHistory - whether to push this navigation into history (default true)
- */
+// Show a section
 function showSection(targetId, pushHistory = true) {
   if (!targetId) return;
   const targetEl = document.getElementById(targetId);
@@ -63,7 +58,7 @@ function showSection(targetId, pushHistory = true) {
     document.body.classList.remove("blur-active");
   }
 
-  // Push into history only if allowed and not a duplicate
+  // Push into history
   if (pushHistory) {
     const last = historyStack[historyStack.length - 1];
     if (last !== targetId) {
@@ -72,73 +67,52 @@ function showSection(targetId, pushHistory = true) {
   }
 }
 
-/**
- * Go to previous view:
- * 1) if cert popup open -> close it
- * 2) else if history has previous -> go to it
- * 3) else fallback to home
- */
+// Go back
 function goBack() {
   const popup = document.getElementById("certPopup");
-
-  // If popup is open, close it first (don't change section history)
   if (popup && window.getComputedStyle(popup).display !== "none") {
     closeCert();
     return;
   }
 
-  // If there is a previous entry in history, go back
   if (historyStack.length > 1) {
-    // remove current
     historyStack.pop();
-    // peek previous
     const prev = historyStack[historyStack.length - 1] || "home";
-    // show previous WITHOUT pushing it again into history
     showSection(prev, false);
   } else {
-    // fallback to home (reset history to only home)
     historyStack = ["home"];
     showSection("home", false);
   }
 }
 
-/**
- * Next button navigation (also pushes into history)
- * @param {string} targetId
- */
+// Go next
 function goNext(targetId) {
   if (!targetId) return;
   showSection(targetId, true);
 }
 
-// -----------------------------
-// Nav link handlers & mobile menu
-// -----------------------------
+// Nav links click
 document.querySelectorAll('.nav-link').forEach(link => {
   link.addEventListener('click', function (e) {
     e.preventDefault();
     const targetId = this.getAttribute('href').substring(1);
     showSection(targetId, true);
 
-    // Close mobile menu if open
-    const navLinks = document.getElementById('navLinks');
-    if (navLinks) navLinks.classList.remove('active');
+    document.getElementById('navLinks')?.classList.remove('active');
   });
 });
 
 function toggleMenu() {
-  const navLinks = document.getElementById('navLinks');
-  if (navLinks) navLinks.classList.toggle('active');
+  document.getElementById('navLinks')?.classList.toggle('active');
 }
 
 // -----------------------------
-// Contact form (Formspree)
+// Contact Form (Formspree)
 // -----------------------------
 function handleSubmit(event) {
   event.preventDefault();
   const form = event.target;
   const button = form.querySelector('button');
-  if (!button) return;
   const originalText = button.textContent;
 
   button.textContent = 'Sending...';
@@ -174,7 +148,7 @@ function handleSubmit(event) {
 }
 
 // -----------------------------
-// Certification popup
+// Certifications popup
 // -----------------------------
 function openCert(imgSrc) {
   const popup = document.getElementById("certPopup");
@@ -190,7 +164,6 @@ function closeCert() {
   popup.style.display = "none";
 }
 
-// close popup when clicking outside image area
 document.getElementById("certPopup")?.addEventListener("click", function (e) {
   if (e.target === this) {
     closeCert();
@@ -198,17 +171,15 @@ document.getElementById("certPopup")?.addEventListener("click", function (e) {
 });
 
 // -----------------------------
-// Misc: init, keyboard, outside click
+// Init
 // -----------------------------
 document.addEventListener('DOMContentLoaded', function () {
   createBackground();
 
-  // Initialize history with the currently active section (if any)
   const activeSection = document.querySelector('.content-section.active') || document.getElementById('home');
   const startId = activeSection?.id || 'home';
   historyStack = [startId];
 
-  // Ensure entrance animation is applied
   setTimeout(() => {
     const activeSectionEl = document.querySelector('.content-section.active');
     if (activeSectionEl) {
@@ -218,10 +189,11 @@ document.addEventListener('DOMContentLoaded', function () {
   }, 100);
 });
 
-// Keyboard shortcuts (Escape closes mobile/certs; Left = back, Right = next)
+// -----------------------------
+// Keyboard shortcuts
+// -----------------------------
 document.addEventListener('keydown', function (e) {
   if (e.key === 'Escape') {
-    // close mobile menu and cert popup (if open)
     document.getElementById('navLinks')?.classList.remove('active');
     const popup = document.getElementById("certPopup");
     if (popup && window.getComputedStyle(popup).display !== "none") {
@@ -230,8 +202,7 @@ document.addEventListener('keydown', function (e) {
   } else if (e.key === 'ArrowLeft') {
     goBack();
   } else if (e.key === 'ArrowRight') {
-    // attempt to move to next based on known order
-    const order = ['home', 'about', 'projects', 'certifications', 'contact'];
+    const order = ['home', 'about', 'skills', 'projects', 'certifications', 'contact'];
     const current = historyStack[historyStack.length - 1] || 'home';
     const idx = order.indexOf(current);
     if (idx >= 0 && idx < order.length - 1) {
@@ -242,51 +213,22 @@ document.addEventListener('keydown', function (e) {
   }
 });
 
-// close mobile menu when clicking outside
-document.addEventListener('click', function (e) {
-  const navbar = document.querySelector('.navbar');
-  const navLinks = document.getElementById('navLinks');
-  if (!navbar?.contains(e.target)) {
-    navLinks?.classList.remove('active');
-  }
-});
-
-const textArray = ["Frontend Developer", "Problem Solver", "UI/UX Enthusiast"];
-let i = 0, j = 0, currentText = "", isDeleting = false;
-
-function typeEffect() {
-  currentText = textArray[i];
-  document.getElementById("typing-text").textContent = 
-    currentText.substring(0, j);
-
-  if (!isDeleting && j++ === currentText.length) { 
-    // finished typing → pause before deleting
-    isDeleting = true; 
-    setTimeout(typeEffect, 1200);  
-    return;
-  } else if (isDeleting && j-- === 0) {
-    // finished deleting → move to next word
-    isDeleting = false; 
-    i = (i + 1) % textArray.length;
-  }
-
-  // adjust typing speed (slower = higher number)
-  const speed = isDeleting ? 150 : 180;  
-  setTimeout(typeEffect, speed);
-}
-
-document.addEventListener("DOMContentLoaded", typeEffect);
-
-document.querySelector(".profile-img").addEventListener("mousemove", e => {
+// -----------------------------
+// Profile image tilt
+// -----------------------------
+document.querySelector(".profile-img")?.addEventListener("mousemove", e => {
   const { offsetX, offsetY, target } = e;
   const x = (offsetX / target.offsetWidth) - 0.9;
   const y = (offsetY / target.offsetHeight) - 0.9;
   target.style.transform = `rotateX(${y*10}deg) rotateY(${x*10}deg) scale(1.05)`;
 });
-document.querySelector(".profile-img").addEventListener("mouseleave", e => {
+document.querySelector(".profile-img")?.addEventListener("mouseleave", e => {
   e.target.style.transform = "rotateX(0) rotateY(0) scale(1)";
 });
-// Lazy Loading + Staggered Animations
+
+// -----------------------------
+// Lazy load animations
+// -----------------------------
 document.addEventListener("DOMContentLoaded", () => {
   const lazyElements = document.querySelectorAll(".lazy-load");
 
@@ -295,7 +237,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (entry.isIntersecting) {
         setTimeout(() => {
           entry.target.classList.add("show");
-        }, index * 150); // staggered delay
+        }, index * 150);
         obs.unobserve(entry.target);
       }
     });
@@ -303,3 +245,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
   lazyElements.forEach(el => observer.observe(el));
 });
+
+// -----------------------------
+// Typing effect
+// -----------------------------
+const textArray = ["Frontend Developer", "Problem Solver", "UI/UX Enthusiast"];
+let i = 0, j = 0, currentText = "", isDeleting = false;
+
+function typeEffect() {
+  currentText = textArray[i];
+  document.getElementById("typing-text").textContent = currentText.substring(0, j);
+
+  if (!isDeleting && j++ === currentText.length) {
+    isDeleting = true; 
+    setTimeout(typeEffect, 1200);  
+    return;
+  } else if (isDeleting && j-- === 0) {
+    isDeleting = false; 
+    i = (i + 1) % textArray.length;
+  }
+
+  const speed = isDeleting ? 150 : 180;  
+  setTimeout(typeEffect, speed);
+}
+document.addEventListener("DOMContentLoaded", typeEffect);
