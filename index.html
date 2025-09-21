@@ -22,7 +22,8 @@
       <ul class="nav-links" id="navLinks">
         <li><a href="#home" class="nav-link active">Home</a></li>
         <li><a href="#about" class="nav-link">About</a></li>
-        <li><a href="#projects" class="nav-link">Projects</a></li>
+         <li><a href="#skills" class="nav-link">Skills</a></li>
+          <li><a href="#projects" class="nav-link">Projects</a></li>
         <li><a href="#certifications" class="nav-link">Certifications</a></li>
         <li><a href="#contact" class="nav-link">Contact</a></li> 
       </ul>
@@ -72,13 +73,59 @@
   <div class="content-box fade-in lazy-load"> 
         <div class="nav-buttons">
           <button class="back-btn" onclick="goBack()">⬅ Back</button>
-          <button class="next-btn" onclick="goNext('projects')">Next ➡</button>
+          <button class="next-btn" onclick="goNext('skills')">Next ➡</button>
         </div>
         <h2>About Me</h2>
         <p>Passionate Full Stack Developer with a strong foundation in front-end and back-end technologies. I enjoy building scalable, user-friendly, and responsive web applications that bridge design with functionality..</p>
         <p>On the front-end, I focus on creating clean, interactive, and accessible interfaces using HTML, CSS, JavaScript, and React.
 ⚙️ On the back-end, I work with Node.js, Express, and databases (SQL/NoSQL) to design robust APIs and handle server-side logic.</p>
         <p>I love solving problems, writing clean code, and continuously learning modern tools and frameworks to deliver impactful digital solutions. Currently, I am sharpening my skills through projects that combine UI/UX design with efficient back-end architectures.</p> 
+      </div>
+    </div>
+
+     <!-- Skills Section -->
+    <div class="content-section" id="skills">
+      <div class="content-box fade-in lazy-load">
+        <div class="nav-buttons">
+           <button class="back-btn" onclick="goBack()">⬅ Back</button>
+          <button class="next-btn" onclick="goNext('projects')">Next ➡</button>
+        </div>
+        <h2>My Skills</h2>
+        <div class="skills-grid">
+          <!-- Frontend -->
+          <div class="skill-box">
+            <h3>Frontend</h3>
+            <div class="skill-icons">
+              <img src="https://cdn-icons-png.flaticon.com/512/732/732212.png" alt="HTML" title="HTML">
+              <img src="https://cdn-icons-png.flaticon.com/512/732/732190.png" alt="CSS" title="CSS">
+              <img src="https://cdn-icons-png.flaticon.com/512/5968/5968292.png" alt="JavaScript" title="JavaScript">
+              <img src="https://cdn-icons-png.flaticon.com/512/1126/1126012.png" alt="React" title="React">
+            </div>
+          </div>
+          <!-- Backend -->
+          <div class="skill-box">
+            <h3>Backend</h3>
+            <div class="skill-icons">
+              <img src="https://cdn-icons-png.flaticon.com/512/919/919825.png" alt="Node.js" title="Node.js">
+            </div>
+          </div>
+          <!-- Database -->
+          <div class="skill-box">
+            <h3>Database</h3>
+            <div class="skill-icons">
+              <img src="https://cdn-icons-png.flaticon.com/512/919/919836.png" alt="MongoDB" title="MongoDB">
+            </div>
+          </div>
+          <!-- Tools -->
+          <div class="skill-box">
+            <h3>Tools</h3>
+            <div class="skill-icons">
+              <img src="https://cdn-icons-png.flaticon.com/512/2111/2111288.png" alt="Git" title="Git">
+              <img src="https://cdn-icons-png.flaticon.com/512/733/733609.png" alt="GitHub" title="GitHub">
+              <img src="https://cdn-icons-png.flaticon.com/512/906/906324.png" alt="VS Code" title="VS Code">
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -138,7 +185,7 @@
           <button class="back-btn" onclick="goBack()">⬅ Back</button>
           <button class="next-btn" onclick="goNext('contact')">Next ➡</button>
         </div>
-        <h2>Certifications & Skills</h2>
+        <h2>Certifications</h2>
         <ul>
           <li class="lazy-load" onclick="openCert('image1.jpg')">☁️ <strong style="cursor:pointer; color:#667eea;">EPOCH 2K25</strong><br>Secured 1st prize in Paper presentation</li>
           <li class="lazy-load" onclick="openCert('image2.jpg')">🐧 <strong style="cursor:pointer; color:#667eea;">CYBERL@NE'25</strong><br>Participation in a Cybersecurity Workshop</li>
