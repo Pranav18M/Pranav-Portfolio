@@ -467,42 +467,75 @@ body {
     transform: translateY(-3px);
     box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
 }
-
-/* Back and Next Buttons */
+/* Transparent Neon Glow & Pulse Buttons */
 .back-btn,
 .next-btn {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(102, 126, 234, 0.05); /* transparent background */
     color: #fff;
-    padding: 10px 20px;
-    min-width: 120px;
+    padding: 8px 16px; /* smaller width */
+    min-width: 90px;   /* control button width */
+    border: 2px solid rgba(102, 126, 234, 0.5); /* subtle neon border */
     border-radius: 12px;
-    cursor: pointer;
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 500;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(6px);
+    cursor: pointer;
     text-align: center;
+    transition: all 0.3s ease, box-shadow 0.6s ease;
+    box-shadow: 
+        0 0 5px rgba(102, 126, 234, 0.5),
+        0 0 10px rgba(118, 75, 162, 0.3),
+        0 0 15px rgba(102, 126, 234, 0.2);
+    animation: pulse-neon 2.5s infinite alternate;
 }
 
+/* Hover Effect */
 .back-btn:hover,
 .next-btn:hover {
-  background: rgba(102, 126, 234, 0.2);
-  border-color: #667eea;
-  box-shadow: 0 0 15px rgba(102, 126, 234, 0.5);
+    transform: translateY(-3px);
+    box-shadow: 
+        0 0 10px #667eea,
+        0 0 20px #764ba2,
+        0 0 35px rgba(102, 126, 234, 0.8);
+    border-color: #667eea;
 }
 
+/* Arrow icons */
+.back-btn::before {
+    content: "←";
+    margin-right: 6px;
+}
+.next-btn::after {
+    content: "→";
+    margin-left: 6px;
+}
+
+/* Neon pulse animation */
+@keyframes pulse-neon {
+    0% {
+        box-shadow: 0 0 5px #667eea, 0 0 10px #764ba2, 0 0 15px rgba(102, 126, 234, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 10px #667eea, 0 0 20px #764ba2, 0 0 25px rgba(118, 75, 162, 0.5);
+    }
+    100% {
+        box-shadow: 0 0 5px #667eea, 0 0 10px #764ba2, 0 0 15px rgba(102, 126, 234, 0.3);
+    }
+}
+
+/* Nav container (optional) */
 .nav-buttons {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    max-width: 800px;
+    max-width: 600px;
     margin: 0 auto 20px auto;
 }
+
+
 
 /* Certification Images */
 .cert-img {
@@ -662,6 +695,7 @@ body.blur-active #home {
 }
 
 @media (max-width: 480px) {
+    /* Hero Section */
     .hero-content h1 {
         font-size: 2rem;
     }
@@ -671,24 +705,37 @@ body.blur-active #home {
         height: 150px;
     }
 
+    /* Content box padding */
     .content-box {
         padding: 1.5rem;
     }
 
-    /* Keep buttons side by side on small screens */
+    /* Navigation buttons container */
     .nav-buttons {
-        flex-direction: row;
-        gap: 10px;
-        justify-content: space-between;
+        flex-direction: row;      /* keep side by side */
+        gap: 8px;                 /* smaller gap */
+        justify-content: center;  /* center buttons */
+        margin: 10px auto 15px auto;
     }
 
+    /* Back/Next Buttons */
     .back-btn,
     .next-btn {
-        flex: 1;
-        min-width: 120px;
-        max-width: none;
+        flex: none;               /* don’t stretch */
+        width:50px;              /* smaller fixed width */
+        padding: 6px 10px;        /* smaller padding */
+        font-size: 0.8rem;        /* smaller text */
+        border-radius: 8px;       /* slightly smaller rounding */
+    }
+
+    /* Arrow spacing */
+    .back-btn::before,
+    .next-btn::after {
+        margin: 2px 4px;
     }
 }
+
+
 
 /* Loading Animation */
 .fade-in {
