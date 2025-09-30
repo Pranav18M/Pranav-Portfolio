@@ -693,9 +693,7 @@ body.blur-active #home {
         max-width: 140px;
         text-align: center;
     }
-}
-
-@media (max-width: 480px) {
+}@media (max-width: 480px) {
     /* Hero Section */
     .hero-content h1 {
         font-size: 2rem;
@@ -713,20 +711,22 @@ body.blur-active #home {
 
     /* Navigation buttons container */
     .nav-buttons {
-        flex-direction: row;      /* keep side by side */
-        gap: 8px;                 /* smaller gap */
-        justify-content: center;  /* center buttons */
+        flex-direction: row;             /* side by side */
+        justify-content: space-between;  /* push to corners */
+        width: 100%;                     /* full width */
         margin: 10px auto 15px auto;
+        padding: 0 15px;                 /* little edge spacing */
     }
 
     /* Back/Next Buttons */
     .back-btn,
     .next-btn {
-        flex: none;               /* don’t stretch */
-        width:100px;              /* smaller fixed width */
-        padding: 6px 6px;        /* smaller padding */
-        font-size: 0.8rem;        /* smaller text */
-        border-radius: 8px;       /* slightly smaller rounding */
+        flex: none;               
+        width: 100px;                   
+        padding: 6px 6px;        
+        font-size: 0.8rem;        
+        border-radius: 8px;       
+        text-align: center;
     }
 
     /* Arrow spacing */
@@ -735,6 +735,7 @@ body.blur-active #home {
         margin: 2px 4px;
     }
 }
+
 
 
 
