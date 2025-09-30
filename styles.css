@@ -441,7 +441,7 @@ body {
   }
 }
 
-/* Mobile adjustments (480px) - show 2 cards */
+/* Mobile adjustments (480px) - show 1 card */
 @media (max-width: 480px) {
   .projects-grid {
     gap: 0.8rem;
@@ -449,12 +449,10 @@ body {
   }
 
   .project-card {
-    /* 2 cards visible with gap */
-    width: calc((100% - 0.8rem) / 2); 
+    width: 100%;       /* Full width of screen minus gap */
     padding: 0.8rem;
   }
 }
-
 
 /* Form Styling */
 .contact-form {
