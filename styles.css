@@ -125,11 +125,10 @@ body {
     display: none;
     font-size: 28px;
     background: none;
-    padding:45px
     border: none;
     cursor: pointer;
     color: #fff;
-    margin-left: auto; /* pushes it fully to the right */
+    margin-left: 70px; 
     z-index: 1100;
 }
 
