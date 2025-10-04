@@ -8,11 +8,12 @@ function createBackground() {
   background.innerHTML = '';
 
   // Bubbles
-  for (let i = 0; i < 15; i++) {
+  for (let i = 0; i < 12; i++) { // reduced number for mobile performance
     const bubble = document.createElement('div');
     bubble.classList.add('bubble');
-    bubble.style.width = Math.random() * 60 + 20 + 'px';
-    bubble.style.height = bubble.style.width;
+    const size = Math.random() * 40 + 20;
+    bubble.style.width = size + 'px';
+    bubble.style.height = size + 'px';
     bubble.style.left = Math.random() * 100 + '%';
     bubble.style.top = Math.random() * 100 + '%';
     bubble.style.animationDelay = Math.random() * 8 + 's';
@@ -21,7 +22,7 @@ function createBackground() {
   }
 
   // Lines
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 8; i++) {
     const line = document.createElement('div');
     line.classList.add('line');
     line.style.height = Math.random() * 100 + 50 + 'px';
@@ -63,6 +64,12 @@ function showSection(targetId, pushHistory = true) {
     const last = historyStack[historyStack.length - 1];
     if (last !== targetId) historyStack.push(targetId);
   }
+
+  // Close mobile menu after selection
+  const navLinksContainer = document.getElementById('navLinks');
+  if (navLinksContainer && navLinksContainer.classList.contains('active')) {
+    navLinksContainer.classList.remove('active');
+  }
 }
 
 function goBack() {
@@ -93,13 +100,18 @@ document.querySelectorAll('.nav-link').forEach(link => {
     e.preventDefault();
     const targetId = this.getAttribute('href').substring(1);
     showSection(targetId, true);
-    document.getElementById('navLinks')?.classList.remove('active');
   });
 });
 
+// Toggle mobile menu
 function toggleMenu() {
-  document.getElementById('navLinks')?.classList.toggle('active');
+  const navLinksContainer = document.getElementById('navLinks');
+  if (!navLinksContainer) return;
+  navLinksContainer.classList.toggle('active');
 }
+
+// Add event listener for mobile menu button
+document.getElementById('menuBtn')?.addEventListener('click', toggleMenu);
 
 // -----------------------------
 // Contact Form (Formspree)
