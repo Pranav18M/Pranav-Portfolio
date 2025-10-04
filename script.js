@@ -1,9 +1,11 @@
-// Create animated background
+// -----------------------------
+// Animated Background
+// -----------------------------
 function createBackground() {
   const background = document.querySelector('.background-animation');
   if (!background) return;
 
-  background.innerHTML = ''; // clear previous
+  background.innerHTML = '';
 
   // Bubbles
   for (let i = 0; i < 15; i++) {
@@ -31,11 +33,10 @@ function createBackground() {
 }
 
 // -----------------------------
-// Navigation
+// Navigation & History with Smooth Transitions
 // -----------------------------
 let historyStack = [];
 
-// Show a section
 function showSection(targetId, pushHistory = true) {
   if (!targetId) return;
   const targetEl = document.getElementById(targetId);
@@ -47,27 +48,23 @@ function showSection(targetId, pushHistory = true) {
   sections.forEach(section => section.classList.remove('active'));
   navLinks.forEach(link => link.classList.remove('active'));
 
-  targetEl.classList.add('active');
-  const activeLink = document.querySelector(`[href="#${targetId}"]`);
-  if (activeLink) activeLink.classList.add('active');
+  // Smooth transition
+  setTimeout(() => {
+    targetEl.classList.add('active');
+    const activeLink = document.querySelector(`[href="#${targetId}"]`);
+    if (activeLink) activeLink.classList.add('active');
+  }, 50);
 
-  // Blur effect toggle
-  if (targetId !== "home") {
-    document.body.classList.add("blur-active");
-  } else {
-    document.body.classList.remove("blur-active");
-  }
+  // Blur toggle
+  document.body.classList.toggle("blur-active", targetId !== "home");
 
-  // Push into history
+  // Push to history
   if (pushHistory) {
     const last = historyStack[historyStack.length - 1];
-    if (last !== targetId) {
-      historyStack.push(targetId);
-    }
+    if (last !== targetId) historyStack.push(targetId);
   }
 }
 
-// Go back
 function goBack() {
   const popup = document.getElementById("certPopup");
   if (popup && window.getComputedStyle(popup).display !== "none") {
@@ -85,19 +82,17 @@ function goBack() {
   }
 }
 
-// Go next
 function goNext(targetId) {
   if (!targetId) return;
   showSection(targetId, true);
 }
 
-// Nav links click
+// Nav link click with smooth transition
 document.querySelectorAll('.nav-link').forEach(link => {
   link.addEventListener('click', function (e) {
     e.preventDefault();
     const targetId = this.getAttribute('href').substring(1);
     showSection(targetId, true);
-
     document.getElementById('navLinks')?.classList.remove('active');
   });
 });
@@ -133,7 +128,7 @@ function handleSubmit(event) {
     }
     setTimeout(() => {
       button.textContent = originalText;
-      button.style.background = "linear-gradient(135deg, #667eea, #764ba2)";
+      button.style.background = "linear-gradient(135deg, #3b82f6, #2563eb)";
       button.disabled = false;
     }, 3000);
   }).catch(() => {
@@ -141,7 +136,7 @@ function handleSubmit(event) {
     button.style.background = "linear-gradient(135deg, #e63946, #d62828)";
     setTimeout(() => {
       button.textContent = originalText;
-      button.style.background = "linear-gradient(135deg, #667eea, #764ba2)";
+      button.style.background = "linear-gradient(135deg, #3b82f6, #2563eb)";
       button.disabled = false;
     }, 3000);
   });
@@ -165,29 +160,46 @@ function closeCert() {
 }
 
 document.getElementById("certPopup")?.addEventListener("click", function (e) {
-  if (e.target === this) {
-    closeCert();
-  }
+  if (e.target === this) closeCert();
 });
 
 // -----------------------------
-// Init
+// Projects horizontal scroll (drag & swipe)
 // -----------------------------
-document.addEventListener('DOMContentLoaded', function () {
-  createBackground();
+const slider = document.querySelector('.projects-grid');
+if (slider) {
+  let isDown = false, startX, scrollLeft;
 
-  const activeSection = document.querySelector('.content-section.active') || document.getElementById('home');
-  const startId = activeSection?.id || 'home';
-  historyStack = [startId];
+  slider.addEventListener('mousedown', e => {
+    isDown = true;
+    slider.classList.add('active');
+    startX = e.pageX - slider.offsetLeft;
+    scrollLeft = slider.scrollLeft;
+  });
 
-  setTimeout(() => {
-    const activeSectionEl = document.querySelector('.content-section.active');
-    if (activeSectionEl) {
-      activeSectionEl.style.opacity = '1';
-      activeSectionEl.style.transform = 'translateX(0)';
-    }
-  }, 100);
-});
+  slider.addEventListener('mouseleave', () => { isDown = false; slider.classList.remove('active'); });
+  slider.addEventListener('mouseup', () => { isDown = false; slider.classList.remove('active'); });
+
+  slider.addEventListener('mousemove', e => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - slider.offsetLeft;
+    const walk = (x - startX) * 2;
+    slider.scrollLeft = scrollLeft - walk;
+  });
+
+  slider.addEventListener('touchstart', e => {
+    startX = e.touches[0].pageX - slider.offsetLeft;
+    scrollLeft = slider.scrollLeft;
+  });
+
+  slider.addEventListener('touchmove', e => {
+    e.preventDefault();
+    const x = e.touches[0].pageX - slider.offsetLeft;
+    const walk = (x - startX) * 2;
+    slider.scrollLeft = scrollLeft - walk;
+  });
+}
 
 // -----------------------------
 // Keyboard shortcuts
@@ -196,20 +208,15 @@ document.addEventListener('keydown', function (e) {
   if (e.key === 'Escape') {
     document.getElementById('navLinks')?.classList.remove('active');
     const popup = document.getElementById("certPopup");
-    if (popup && window.getComputedStyle(popup).display !== "none") {
-      closeCert();
-    }
+    if (popup && window.getComputedStyle(popup).display !== "none") closeCert();
   } else if (e.key === 'ArrowLeft') {
     goBack();
   } else if (e.key === 'ArrowRight') {
     const order = ['home', 'about', 'skills', 'projects', 'certifications', 'contact'];
     const current = historyStack[historyStack.length - 1] || 'home';
     const idx = order.indexOf(current);
-    if (idx >= 0 && idx < order.length - 1) {
-      goNext(order[idx + 1]);
-    } else if (idx === order.length - 1) {
-      goNext('home');
-    }
+    if (idx >= 0 && idx < order.length - 1) goNext(order[idx + 1]);
+    else if (idx === order.length - 1) goNext('home');
   }
 });
 
@@ -227,22 +234,18 @@ document.querySelector(".profile-img")?.addEventListener("mouseleave", e => {
 });
 
 // -----------------------------
-// Lazy load animations
+// Lazy load animations with smoother transitions
 // -----------------------------
 document.addEventListener("DOMContentLoaded", () => {
   const lazyElements = document.querySelectorAll(".lazy-load");
-
   const observer = new IntersectionObserver((entries, obs) => {
     entries.forEach((entry, index) => {
       if (entry.isIntersecting) {
-        setTimeout(() => {
-          entry.target.classList.add("show");
-        }, index * 150);
+        setTimeout(() => entry.target.classList.add("show"), index * 120);
         obs.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.2 });
-
+  }, { threshold: 0.15 });
   lazyElements.forEach(el => observer.observe(el));
 });
 
@@ -258,14 +261,33 @@ function typeEffect() {
 
   if (!isDeleting && j++ === currentText.length) {
     isDeleting = true; 
-    setTimeout(typeEffect, 1200);  
+    setTimeout(typeEffect, 1200);
     return;
   } else if (isDeleting && j-- === 0) {
     isDeleting = false; 
     i = (i + 1) % textArray.length;
   }
 
-  const speed = isDeleting ? 150 : 180;  
+  const speed = isDeleting ? 150 : 180;
   setTimeout(typeEffect, speed);
 }
-document.addEventListener("DOMContentLoaded", typeEffect);
+
+// -----------------------------
+// Init with smooth entrance
+// -----------------------------
+document.addEventListener('DOMContentLoaded', function () {
+  createBackground();
+  typeEffect();
+
+  const activeSection = document.querySelector('.content-section.active') || document.getElementById('home');
+  historyStack = [activeSection?.id || 'home'];
+
+  // Smooth entrance for home section
+  setTimeout(() => {
+    const activeSectionEl = document.querySelector('.content-section.active');
+    if (activeSectionEl) {
+      activeSectionEl.style.opacity = '1';
+      activeSectionEl.style.transform = 'translateX(0) scale(1)';
+    }
+  }, 100);
+});
