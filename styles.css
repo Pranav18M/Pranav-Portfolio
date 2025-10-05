@@ -894,16 +894,17 @@ body.blur-active #home {
     height: auto;
     width: 85%;
     max-width: 400px;
-    max-height: 80vh;
+    max-height: 70vh;
     overflow-y: auto;
     flex-direction: column;
     background: rgba(10, 14, 39, 0.98);
-    padding: 30px 20px;
+    padding: 40px 20px 30px 20px;
     gap: 15px;
     border-radius: 20px;
     box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     border: 1px solid rgba(59, 130, 246, 0.3);
+    margin-top: 20px;
   }
 
   .nav-links.active {
@@ -922,42 +923,67 @@ body.blur-active #home {
     width: 100%;
   }
 
-  /* Mobile Home Section - Image Left, Text Right */
+  /* Mobile Home Section - Image Left, Text Right (Side by Side) */
   .home-section {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
     padding: 1.5rem 1rem;
     text-align: left;
+    align-items: center;
   }
 
   .profile-section {
-    order: 1;
+    flex: 0 0 auto;
     display: flex;
     justify-content: flex-start;
+    align-items: center;
   }
 
   .profile-section img {
-    width: 180px;
-    height: 180px;
+    width: 140px;
+    height: 140px;
   }
 
   .hero-content {
-    order: 2;
+    flex: 1;
     padding: 0.5rem;
     text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   .hero-content h1 {
-    font-size: 2.2rem;
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
   }
 
   .hero-content p {
-    font-size: 1.1rem;
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+  }
+
+  .cta-button {
+    padding: 0.7rem 1.3rem;
+    font-size: 0.9rem;
+    margin-bottom: 0.8rem;
   }
 
   .social-links {
     justify-content: flex-start;
-    order: 3;
+    margin-top: 0.5rem;
+    gap: 12px;
+  }
+
+  .social-box {
+    width: 42px;
+    height: 42px;
+  }
+
+  .social-box img {
+    width: 22px;
+    height: 22px;
   }
 
   .content-box {
@@ -999,9 +1025,10 @@ body.blur-active #home {
   }
 
   .nav-links {
-    width: 90%;
-    padding: 25px 15px;
+    width: 88%;
+    padding: 35px 18px 25px 18px;
     gap: 12px;
+    max-height: 65vh;
   }
 
   .nav-links a {
@@ -1009,41 +1036,57 @@ body.blur-active #home {
     padding: 0.7rem 1rem;
   }
 
+  /* Mobile Side-by-Side Layout */
   .home-section {
+    display: flex;
+    flex-direction: row;
+    gap: 0.8rem;
     padding: 1.2rem 0.8rem;
-    gap: 1.2rem;
+  }
+
+  .profile-section {
+    flex: 0 0 auto;
   }
 
   .profile-section img {
-    width: 150px;
-    height: 150px;
+    width: 120px;
+    height: 120px;
+  }
+
+  .hero-content {
+    flex: 1;
+    padding: 0.3rem;
   }
 
   .hero-content h1 {
-    font-size: 1.9rem;
+    font-size: 1.5rem;
+    margin-bottom: 0.4rem;
   }
 
   .hero-content p {
-    font-size: 1rem;
+    font-size: 0.85rem;
+    margin-bottom: 0.8rem;
   }
 
   .social-links {
-    gap: 15px;
+    gap: 10px;
+    margin-top: 0.5rem;
   }
 
   .social-box {
-    width: 48px;
-    height: 48px;
+    width: 38px;
+    height: 38px;
   }
 
   .social-box img {
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
   }
 
   .cta-button {
-    padding: 0.8rem 1.5rem;
-    font-size: 1rem;
+    padding: 0.6rem 1.2rem;
+    font-size: 0.85rem;
+    margin-bottom: 0.6rem;
   }
 
   .content-box {
@@ -1092,9 +1135,10 @@ body.blur-active #home {
   }
 
   .nav-links {
-    width: 92%;
-    padding: 20px 12px;
+    width: 90%;
+    padding: 35px 15px 25px 15px;
     gap: 10px;
+    max-height: 60vh;
   }
 
   .nav-links a {
@@ -1102,45 +1146,57 @@ body.blur-active #home {
     padding: 0.6rem 0.8rem;
   }
 
+  /* Mobile Side-by-Side Layout - Extra Small */
   .home-section {
+    display: flex;
+    flex-direction: row;
+    gap: 0.6rem;
     padding: 1rem 0.6rem;
-    gap: 1rem;
+  }
+
+  .profile-section {
+    flex: 0 0 auto;
   }
 
   .profile-section img {
-    width: 130px;
-    height: 130px;
+    width: 100px;
+    height: 100px;
   }
 
   .hero-content {
-    padding: 0.3rem;
+    flex: 1;
+    padding: 0.2rem;
   }
 
   .hero-content h1 {
-    font-size: 1.6rem;
+    font-size: 1.3rem;
+    margin-bottom: 0.3rem;
   }
 
   .hero-content p {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
+    margin-bottom: 0.6rem;
   }
 
   .social-links {
-    gap: 12px;
+    gap: 8px;
+    margin-top: 0.4rem;
   }
 
   .social-box {
-    width: 42px;
-    height: 42px;
+    width: 36px;
+    height: 36px;
   }
 
   .social-box img {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
   }
 
   .cta-button {
-    padding: 0.7rem 1.2rem;
-    font-size: 0.9rem;
+    padding: 0.55rem 1rem;
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
   }
 
   .content-box {
