@@ -897,6 +897,7 @@ body.blur-active #home {
     max-width: 400px;
     max-height: 70vh;
     margin-top: 40%;
+    margin-right: 38%;
     overflow-y: auto;
     flex-direction: column;
     background: rgba(10, 14, 39, 0.98);
