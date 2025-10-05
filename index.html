@@ -1,205 +1,366 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pranav's Portfolio</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <!-- Animated Background -->
-  <div class="background-animation"></div>
+// -----------------------------
+// Animated Background
+// -----------------------------
+function createBackground() {
+  const background = document.querySelector('.background-animation');
+  if (!background) return;
 
-  <!-- Navbar -->
-  <nav class="navbar">
-    <div class="container">
-      <div class="logo">Pranav's Portfolio</div>
-      <div class="mobile-menu" onclick="toggleMenu()">
-        <div class="hamburger"></div>
-        <div class="hamburger"></div>
-        <div class="hamburger"></div>
-      </div>
-<ul class="nav-links" id="navLinks">
-  <li><a href="#home" class="nav-link active">Home</a></li>
-  <li><a href="#about" class="nav-link">About</a></li>
-  <li><a href="#skills" class="nav-link">Skills</a></li>
-  <li><a href="#projects" class="nav-link">Projects</a></li>
-  <li><a href="#certifications" class="nav-link">Certifications</a></li>
-  <li><a href="#contact" class="nav-link">Contact</a></li> 
-</ul>
+  background.innerHTML = '';
 
-    </div>
-  </nav>
+  // Bubbles
+  for (let i = 0; i < 12; i++) {
+    const bubble = document.createElement('div');
+    bubble.classList.add('bubble');
+    const size = Math.random() * 40 + 20;
+    bubble.style.width = size + 'px';
+    bubble.style.height = size + 'px';
+    bubble.style.left = Math.random() * 100 + '%';
+    bubble.style.top = Math.random() * 100 + '%';
+    bubble.style.animationDelay = Math.random() * 8 + 's';
+    bubble.style.animationDuration = (Math.random() * 3 + 5) + 's';
+    background.appendChild(bubble);
+  }
 
-  <!-- Main Container -->
-  <div class="main-container">
+  // Lines
+  for (let i = 0; i < 8; i++) {
+    const line = document.createElement('div');
+    line.classList.add('line');
+    line.style.height = Math.random() * 100 + 50 + 'px';
+    line.style.top = Math.random() * 100 + '%';
+    line.style.animationDelay = Math.random() * 10 + 's';
+    line.style.animationDuration = (Math.random() * 5 + 8) + 's';
+    background.appendChild(line);
+  }
+}
 
-    <!-- Home Section -->
-    <div class="content-section active fade-in" id="home">
-      <div class="home-section">
-        <div class="hero-content">
-          <h1>Hello, I'm <span class="highlight">Pranav</span></h1>
-          <p>Aspiring <span id="typing-text"></span></p>
-          <a href="#about" class="cta-button nav-link">Discover More</a>
+// -----------------------------
+// Navigation & History with Smooth Transitions
+// -----------------------------
+let historyStack = [];
 
-          <div class="social-links">
-            <a href="https://www.linkedin.com/in/mohana-pranav-1b087b2bb?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="social-box linkedin">
-              <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn">
-            </a>
-            <a href="https://github.com/Pranav18M" target="_blank" class="social-box github">
-              <img src="https://cdn-icons-png.flaticon.com/512/733/733609.png" alt="GitHub">
-            </a>
-            <a href="mailto:mohnapranav@gmail.com" class="social-box email">
-              <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="Email">
-            </a>
-          </div>
-        </div>
+function showSection(targetId, pushHistory = true) {
+  if (!targetId) return;
+  const targetEl = document.getElementById(targetId);
+  if (!targetEl) return;
 
-        <div class="profile-section">
-          <div class="profile-img">
-            <img src="pranav.jpg" alt="Pranav">
-          </div>
-        </div>
-      </div>
-    </div>
+  const sections = document.querySelectorAll('.content-section');
+  const navLinks = document.querySelectorAll('.nav-link');
 
-    <!-- About Section -->
-    <div class="content-section" id="about"> 
-      <div class="content-box fade-in lazy-load"> 
-        <div class="nav-buttons">
-          <button class="back-btn" onclick="goBack()"></button>
-          <button class="next-btn" onclick="goNext('skills')"></button>
-        </div>
-        <h2>About Me</h2>
-        <p>Hi, I'm Mohana Pranav M, a passionate learner and aspiring Full-Stack Developer.</p>
-        <p>I enjoy building projects that combine creativity and problem-solving, from designing user-friendly interfaces to implementing scalable backend systems.</p>
-        <p>My focus is on continuous learning — currently exploring React and JavaScript — and applying them through real-world projects. I believe in writing clean, efficient code and building solutions that make an impact.</p>
-      </div> 
-    </div>
+  sections.forEach(section => section.classList.remove('active'));
+  navLinks.forEach(link => link.classList.remove('active'));
 
-    <!-- Skills Section -->
-    <div class="content-section" id="skills">
-      <div class="content-box fade-in lazy-load">
-        <div class="nav-buttons">
-          <button class="back-btn" onclick="goBack()"></button>
-          <button class="next-btn" onclick="goNext('projects')"></button>
-        </div>
-        <h2>My Skills</h2>
-        <div class="skills-grid">
-          <div class="skill-box">
-            <h3>Frontend</h3>
-            <div class="skill-icons">
-              <img src="https://cdn-icons-png.flaticon.com/512/732/732212.png" alt="HTML" title="HTML">
-              <img src="https://cdn-icons-png.flaticon.com/512/732/732190.png" alt="CSS" title="CSS">
-              <img src="https://cdn-icons-png.flaticon.com/512/5968/5968292.png" alt="JavaScript" title="JavaScript">
-              <img src="https://cdn-icons-png.flaticon.com/512/1126/1126012.png" alt="React" title="React">
-            </div>
-          </div>
-          <div class="skill-box">
-            <h3>Backend</h3>
-            <div class="skill-icons">
-              <img src="https://cdn-icons-png.flaticon.com/512/919/919825.png" alt="Node.js" title="Node.js">
-            </div>
-          </div>
-          <div class="skill-box">
-            <h3>Database</h3>
-            <div class="skill-icons">
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" alt="MongoDB" title="MongoDB">
-            </div>
-          </div>
-          <div class="skill-box">
-            <h3>Tools</h3>
-            <div class="skill-icons">
-              <img src="https://cdn-icons-png.flaticon.com/512/2111/2111288.png" alt="Git" title="Git">
-              <img src="https://cdn-icons-png.flaticon.com/512/733/733609.png" alt="GitHub" title="GitHub">
-              <img src="https://cdn-icons-png.flaticon.com/512/906/906324.png" alt="VS Code" title="VS Code">
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+  // Smooth transition
+  setTimeout(() => {
+    targetEl.classList.add('active');
+    const activeLink = document.querySelector(`[href="#${targetId}"]`);
+    if (activeLink) activeLink.classList.add('active');
+  }, 50);
 
-    <!-- Projects Section -->
-    <div class="content-section" id="projects">
-      <div class="content-box fade-in lazy-load">
-        <div class="nav-buttons">
-          <button class="back-btn" onclick="goBack()"></button>
-          <button class="next-btn" onclick="goNext('certifications')"></button>
-        </div>
-        <h2>My Projects</h2>
-        <div class="projects-grid">
-          <a href="https://ats-resumescanner-018.vercel.app/" target="_blank" class="project-card lazy-load">
-            <h3>ATS-Resume_scanner</h3>
-            <p>Recruiter's Assistant — Simplifies resume shortlisting with ATS-based scanning.</p>
-          </a>
-          <a href="https://shopease-pranav.vercel.app/" target="_blank" class="project-card lazy-load">
-            <h3>ShopEase</h3>
-            <p>Modern e-commerce platform built for seamless shopping, featuring scalable architecture, secure payments, and smooth UX.</p>
-          </a>
-          <a href="https://fit-nest-018.vercel.app/" target="_blank" class="project-card lazy-load">
-            <h3>FitNest</h3>
-            <p>A fitness tracking application designed to help users stay consistent with their workouts and health goals.</p>
-          </a>
-          <a href="https://pranav-to-do-list.vercel.app/" target="_blank" class="project-card lazy-load">
-            <h3>To-Do-List</h3>
-            <p>Task management tool to help users organize daily activities efficiently.</p>
-          </a>
-          <a href="https://pranavperfumy.vercel.app/" target="_blank" class="project-card lazy-load">
-            <h3>Perfumy</h3>
-            <p>Perfume ordering platform where users can browse and place orders online.</p>
-          </a>
-          <a href="https://booksky-018.vercel.app/" target="_blank" class="project-card lazy-load">
-            <h3>BookSky</h3>
-            <p>Book management tool allowing users to save book titles and personal notes.</p>
-          </a>
-        </div>
-      </div>
-    </div>
+  // Blur toggle
+  document.body.classList.toggle("blur-active", targetId !== "home");
 
-    <!-- Certifications Section -->
-    <div class="content-section" id="certifications">
-      <div class="content-box fade-in lazy-load">
-        <div class="nav-buttons">
-          <button class="back-btn" onclick="goBack()"></button>
-          <button class="next-btn" onclick="goNext('contact')"></button>
-        </div>
-        <h2>Certifications</h2>
-        <ul>
-          <li class="lazy-load" onclick="openCert('image1.jpg')"><strong style="cursor:pointer; color:#3b82f6;">EPOCH 2K25</strong><br>Secured 1st prize in Paper presentation</li>
-          <li class="lazy-load" onclick="openCert('image2.jpg')"><strong style="cursor:pointer; color:#3b82f6;">CYBERL@NE'25</strong><br>Participation in a Cybersecurity Workshop</li>
-          <li class="lazy-load" onclick="openCert('image3.jpg')"><strong style="cursor:pointer; color:#3b82f6;">Python FreeCodeCamp</strong><br>Python programming and data structures certification</li>
-          <li class="lazy-load" onclick="openCert('image4.jpg')"><strong style="cursor:pointer; color:#3b82f6;">Web Development Fundamentals</strong><br>Full-stack web development with modern frameworks</li>
-        </ul>
-      </div>
-    </div>
+  // Push to history
+  if (pushHistory) {
+    const last = historyStack[historyStack.length - 1];
+    if (last !== targetId) historyStack.push(targetId);
+  }
 
-    <!-- Certification Popup -->
-    <div id="certPopup" class="cert-popup">
-      <div class="cert-popup-content">
-        <button class="back-btn" onclick="closeCert()"></button>
-        <img id="certImage" src="" alt="Certification" class="cert-full">
-      </div>
-    </div>
+  // Close mobile menu after selection
+  const navLinksContainer = document.getElementById('navLinks');
+  const menuBtn = document.getElementById('menuBtn');
+  if (navLinksContainer && navLinksContainer.classList.contains('active')) {
+    navLinksContainer.classList.remove('active');
+    if (menuBtn) menuBtn.classList.remove('active');
+  }
+}
 
-    <!-- Contact Section -->
-    <div class="content-section" id="contact">
-      <div class="content-box fade-in">
-        <div class="nav-buttons">
-          <button class="back-btn" onclick="goBack()"></button>
-          <button class="next-btn" onclick="goNext('home')"></button>
-        </div>
-        <h2>Contact Me</h2>
-        <form class="contact-form" onsubmit="handleSubmit(event)">
-          <input type="text" name="name" placeholder="Your Name" required>
-          <input type="email" name="email" placeholder="Your Email" required>
-          <textarea name="message" placeholder="Your Message" required></textarea>
-          <button type="submit">Send Message</button>
-        </form>
-      </div>
-    </div>
+function goBack() {
+  const popup = document.getElementById("certPopup");
+  if (popup && window.getComputedStyle(popup).display !== "none") {
+    closeCert();
+    return;
+  }
 
-  </div>
+  if (historyStack.length > 1) {
+    historyStack.pop();
+    const prev = historyStack[historyStack.length - 1] || "home";
+    showSection(prev, false);
+  } else {
+    historyStack = ["home"];
+    showSection("home", false);
+  }
+}
 
-  <script src="script.js"></script>
-</body>
-</html>
+function goNext(targetId) {
+  if (!targetId) return;
+  showSection(targetId, true);
+}
+
+// Nav link click with smooth transition
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      const targetId = this.getAttribute('href').substring(1);
+      showSection(targetId, true);
+    });
+  });
+});
+
+// Toggle mobile menu
+function toggleMenu() {
+  const navLinksContainer = document.getElementById('navLinks');
+  const menuBtn = document.getElementById('menuBtn');
+  if (!navLinksContainer) return;
+  
+  navLinksContainer.classList.toggle('active');
+  if (menuBtn) menuBtn.classList.toggle('active');
+}
+
+// Add event listener for mobile menu button
+document.addEventListener('DOMContentLoaded', function() {
+  const menuBtn = document.getElementById('menuBtn');
+  if (menuBtn) {
+    menuBtn.addEventListener('click', toggleMenu);
+  }
+});
+
+// Close menu when clicking outside
+document.addEventListener('click', function(e) {
+  const navLinks = document.getElementById('navLinks');
+  const menuBtn = document.getElementById('menuBtn');
+  const navbar = document.querySelector('.navbar');
+  
+  if (navLinks && navLinks.classList.contains('active')) {
+    if (!navbar.contains(e.target)) {
+      navLinks.classList.remove('active');
+      if (menuBtn) menuBtn.classList.remove('active');
+    }
+  }
+});
+
+// -----------------------------
+// Contact Form (Formspree)
+// -----------------------------
+function handleSubmit(event) {
+  event.preventDefault();
+  const form = event.target;
+  const button = form.querySelector('button');
+  const originalText = button.textContent;
+
+  button.textContent = 'Sending...';
+  button.disabled = true;
+
+  fetch("https://formspree.io/f/xwpqjlvp", {
+    method: "POST",
+    body: new FormData(form),
+    headers: { "Accept": "application/json" }
+  }).then(response => {
+    if (response.ok) {
+      button.textContent = "Message Sent!";
+      button.style.background = "linear-gradient(135deg, #4CAF50, #45a049)";
+      form.reset();
+    } else {
+      button.textContent = "Error! Try Again";
+      button.style.background = "linear-gradient(135deg, #e63946, #d62828)";
+    }
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.style.background = "linear-gradient(135deg, #3b82f6, #2563eb)";
+      button.disabled = false;
+    }, 3000);
+  }).catch(() => {
+    button.textContent = "Error! Try Again";
+    button.style.background = "linear-gradient(135deg, #e63946, #d62828)";
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.style.background = "linear-gradient(135deg, #3b82f6, #2563eb)";
+      button.disabled = false;
+    }, 3000);
+  });
+}
+
+// -----------------------------
+// Certifications popup
+// -----------------------------
+function openCert(imgSrc) {
+  const popup = document.getElementById("certPopup");
+  const certImage = document.getElementById("certImage");
+  if (!popup || !certImage) return;
+  certImage.src = imgSrc;
+  popup.style.display = "flex";
+}
+
+function closeCert() {
+  const popup = document.getElementById("certPopup");
+  if (!popup) return;
+  popup.style.display = "none";
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  const certPopup = document.getElementById("certPopup");
+  if (certPopup) {
+    certPopup.addEventListener("click", function (e) {
+      if (e.target === this) closeCert();
+    });
+  }
+});
+
+// -----------------------------
+// Projects horizontal scroll (drag & swipe)
+// -----------------------------
+document.addEventListener('DOMContentLoaded', function() {
+  const slider = document.querySelector('.projects-grid');
+  if (slider) {
+    let isDown = false, startX, scrollLeft;
+
+    slider.addEventListener('mousedown', e => {
+      isDown = true;
+      slider.classList.add('active');
+      startX = e.pageX - slider.offsetLeft;
+      scrollLeft = slider.scrollLeft;
+    });
+
+    slider.addEventListener('mouseleave', () => { 
+      isDown = false; 
+      slider.classList.remove('active'); 
+    });
+    
+    slider.addEventListener('mouseup', () => { 
+      isDown = false; 
+      slider.classList.remove('active'); 
+    });
+
+    slider.addEventListener('mousemove', e => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - slider.offsetLeft;
+      const walk = (x - startX) * 2;
+      slider.scrollLeft = scrollLeft - walk;
+    });
+
+    slider.addEventListener('touchstart', e => {
+      startX = e.touches[0].pageX - slider.offsetLeft;
+      scrollLeft = slider.scrollLeft;
+    });
+
+    slider.addEventListener('touchmove', e => {
+      if (e.touches.length === 0) return;
+      const x = e.touches[0].pageX - slider.offsetLeft;
+      const walk = (x - startX) * 2;
+      slider.scrollLeft = scrollLeft - walk;
+    });
+  }
+});
+
+// -----------------------------
+// Keyboard shortcuts
+// -----------------------------
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'Escape') {
+    const navLinks = document.getElementById('navLinks');
+    const menuBtn = document.getElementById('menuBtn');
+    if (navLinks) navLinks.classList.remove('active');
+    if (menuBtn) menuBtn.classList.remove('active');
+    
+    const popup = document.getElementById("certPopup");
+    if (popup && window.getComputedStyle(popup).display !== "none") closeCert();
+  } else if (e.key === 'ArrowLeft') {
+    goBack();
+  } else if (e.key === 'ArrowRight') {
+    const order = ['home', 'about', 'skills', 'projects', 'certifications', 'contact'];
+    const current = historyStack[historyStack.length - 1] || 'home';
+    const idx = order.indexOf(current);
+    if (idx >= 0 && idx < order.length - 1) goNext(order[idx + 1]);
+    else if (idx === order.length - 1) goNext('home');
+  }
+});
+
+// -----------------------------
+// Profile image tilt
+// -----------------------------
+document.addEventListener('DOMContentLoaded', function() {
+  const profileImg = document.querySelector(".profile-img");
+  if (profileImg) {
+    profileImg.addEventListener("mousemove", e => {
+      const { offsetX, offsetY, target } = e;
+      const x = (offsetX / target.offsetWidth) - 0.5;
+      const y = (offsetY / target.offsetHeight) - 0.5;
+      target.style.transform = `rotateX(${y*10}deg) rotateY(${x*10}deg) scale(1.05)`;
+    });
+    
+    profileImg.addEventListener("mouseleave", e => {
+      e.target.style.transform = "rotateX(0) rotateY(0) scale(1)";
+    });
+  }
+});
+
+// -----------------------------
+// Lazy load animations with smoother transitions
+// -----------------------------
+document.addEventListener("DOMContentLoaded", () => {
+  const lazyElements = document.querySelectorAll(".lazy-load");
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add("show"), index * 120);
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  lazyElements.forEach(el => observer.observe(el));
+});
+
+// -----------------------------
+// Typing effect
+// -----------------------------
+const textArray = ["Frontend Developer", "Problem Solver", "UI/UX Enthusiast"];
+let i = 0, j = 0, currentText = "", isDeleting = false;
+
+function typeEffect() {
+  const typingElement = document.getElementById("typing-text");
+  if (!typingElement) return;
+  
+  currentText = textArray[i];
+  typingElement.textContent = currentText.substring(0, j);
+
+  if (!isDeleting && j++ === currentText.length) {
+    isDeleting = true; 
+    setTimeout(typeEffect, 1200);
+    return;
+  } else if (isDeleting && j-- === 0) {
+    isDeleting = false; 
+    i = (i + 1) % textArray.length;
+  }
+
+  const speed = isDeleting ? 150 : 180;
+  setTimeout(typeEffect, speed);
+}
+
+// -----------------------------
+// Init with smooth entrance
+// -----------------------------
+document.addEventListener('DOMContentLoaded', function () {
+  // Remove loading screen after animation
+  setTimeout(() => {
+    const loadingScreen = document.querySelector('.loading-screen');
+    if (loadingScreen) {
+      loadingScreen.style.display = 'none';
+    }
+  }, 2500);
+
+  createBackground();
+  typeEffect();
+
+  const activeSection = document.querySelector('.content-section.active') || document.getElementById('home');
+  historyStack = [activeSection?.id || 'home'];
+
+  // Smooth entrance for home section
+  setTimeout(() => {
+    const activeSectionEl = document.querySelector('.content-section.active');
+    if (activeSectionEl) {
+      activeSectionEl.style.opacity = '1';
+      activeSectionEl.style.transform = 'translateX(0) scale(1)';
+    }
+  }, 100);
+});
