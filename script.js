@@ -8,7 +8,7 @@ function createBackground() {
   background.innerHTML = '';
 
   // Bubbles
-  for (let i = 0; i < 12; i++) { // reduced number for mobile performance
+  for (let i = 0; i < 12; i++) {
     const bubble = document.createElement('div');
     bubble.classList.add('bubble');
     const size = Math.random() * 40 + 20;
@@ -67,8 +67,10 @@ function showSection(targetId, pushHistory = true) {
 
   // Close mobile menu after selection
   const navLinksContainer = document.getElementById('navLinks');
+  const menuBtn = document.getElementById('menuBtn');
   if (navLinksContainer && navLinksContainer.classList.contains('active')) {
     navLinksContainer.classList.remove('active');
+    if (menuBtn) menuBtn.classList.remove('active');
   }
 }
 
@@ -95,23 +97,47 @@ function goNext(targetId) {
 }
 
 // Nav link click with smooth transition
-document.querySelectorAll('.nav-link').forEach(link => {
-  link.addEventListener('click', function (e) {
-    e.preventDefault();
-    const targetId = this.getAttribute('href').substring(1);
-    showSection(targetId, true);
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      const targetId = this.getAttribute('href').substring(1);
+      showSection(targetId, true);
+    });
   });
 });
 
 // Toggle mobile menu
 function toggleMenu() {
   const navLinksContainer = document.getElementById('navLinks');
+  const menuBtn = document.getElementById('menuBtn');
   if (!navLinksContainer) return;
+  
   navLinksContainer.classList.toggle('active');
+  if (menuBtn) menuBtn.classList.toggle('active');
 }
 
 // Add event listener for mobile menu button
-document.getElementById('menuBtn')?.addEventListener('click', toggleMenu);
+document.addEventListener('DOMContentLoaded', function() {
+  const menuBtn = document.getElementById('menuBtn');
+  if (menuBtn) {
+    menuBtn.addEventListener('click', toggleMenu);
+  }
+});
+
+// Close menu when clicking outside
+document.addEventListener('click', function(e) {
+  const navLinks = document.getElementById('navLinks');
+  const menuBtn = document.getElementById('menuBtn');
+  const navbar = document.querySelector('.navbar');
+  
+  if (navLinks && navLinks.classList.contains('active')) {
+    if (!navbar.contains(e.target)) {
+      navLinks.classList.remove('active');
+      if (menuBtn) menuBtn.classList.remove('active');
+    }
+  }
+});
 
 // -----------------------------
 // Contact Form (Formspree)
@@ -171,54 +197,72 @@ function closeCert() {
   popup.style.display = "none";
 }
 
-document.getElementById("certPopup")?.addEventListener("click", function (e) {
-  if (e.target === this) closeCert();
+document.addEventListener('DOMContentLoaded', function() {
+  const certPopup = document.getElementById("certPopup");
+  if (certPopup) {
+    certPopup.addEventListener("click", function (e) {
+      if (e.target === this) closeCert();
+    });
+  }
 });
 
 // -----------------------------
 // Projects horizontal scroll (drag & swipe)
 // -----------------------------
-const slider = document.querySelector('.projects-grid');
-if (slider) {
-  let isDown = false, startX, scrollLeft;
+document.addEventListener('DOMContentLoaded', function() {
+  const slider = document.querySelector('.projects-grid');
+  if (slider) {
+    let isDown = false, startX, scrollLeft;
 
-  slider.addEventListener('mousedown', e => {
-    isDown = true;
-    slider.classList.add('active');
-    startX = e.pageX - slider.offsetLeft;
-    scrollLeft = slider.scrollLeft;
-  });
+    slider.addEventListener('mousedown', e => {
+      isDown = true;
+      slider.classList.add('active');
+      startX = e.pageX - slider.offsetLeft;
+      scrollLeft = slider.scrollLeft;
+    });
 
-  slider.addEventListener('mouseleave', () => { isDown = false; slider.classList.remove('active'); });
-  slider.addEventListener('mouseup', () => { isDown = false; slider.classList.remove('active'); });
+    slider.addEventListener('mouseleave', () => { 
+      isDown = false; 
+      slider.classList.remove('active'); 
+    });
+    
+    slider.addEventListener('mouseup', () => { 
+      isDown = false; 
+      slider.classList.remove('active'); 
+    });
 
-  slider.addEventListener('mousemove', e => {
-    if (!isDown) return;
-    e.preventDefault();
-    const x = e.pageX - slider.offsetLeft;
-    const walk = (x - startX) * 2;
-    slider.scrollLeft = scrollLeft - walk;
-  });
+    slider.addEventListener('mousemove', e => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - slider.offsetLeft;
+      const walk = (x - startX) * 2;
+      slider.scrollLeft = scrollLeft - walk;
+    });
 
-  slider.addEventListener('touchstart', e => {
-    startX = e.touches[0].pageX - slider.offsetLeft;
-    scrollLeft = slider.scrollLeft;
-  });
+    slider.addEventListener('touchstart', e => {
+      startX = e.touches[0].pageX - slider.offsetLeft;
+      scrollLeft = slider.scrollLeft;
+    });
 
-  slider.addEventListener('touchmove', e => {
-    e.preventDefault();
-    const x = e.touches[0].pageX - slider.offsetLeft;
-    const walk = (x - startX) * 2;
-    slider.scrollLeft = scrollLeft - walk;
-  });
-}
+    slider.addEventListener('touchmove', e => {
+      if (e.touches.length === 0) return;
+      const x = e.touches[0].pageX - slider.offsetLeft;
+      const walk = (x - startX) * 2;
+      slider.scrollLeft = scrollLeft - walk;
+    });
+  }
+});
 
 // -----------------------------
 // Keyboard shortcuts
 // -----------------------------
 document.addEventListener('keydown', function (e) {
   if (e.key === 'Escape') {
-    document.getElementById('navLinks')?.classList.remove('active');
+    const navLinks = document.getElementById('navLinks');
+    const menuBtn = document.getElementById('menuBtn');
+    if (navLinks) navLinks.classList.remove('active');
+    if (menuBtn) menuBtn.classList.remove('active');
+    
     const popup = document.getElementById("certPopup");
     if (popup && window.getComputedStyle(popup).display !== "none") closeCert();
   } else if (e.key === 'ArrowLeft') {
@@ -235,14 +279,20 @@ document.addEventListener('keydown', function (e) {
 // -----------------------------
 // Profile image tilt
 // -----------------------------
-document.querySelector(".profile-img")?.addEventListener("mousemove", e => {
-  const { offsetX, offsetY, target } = e;
-  const x = (offsetX / target.offsetWidth) - 0.9;
-  const y = (offsetY / target.offsetHeight) - 0.9;
-  target.style.transform = `rotateX(${y*10}deg) rotateY(${x*10}deg) scale(1.05)`;
-});
-document.querySelector(".profile-img")?.addEventListener("mouseleave", e => {
-  e.target.style.transform = "rotateX(0) rotateY(0) scale(1)";
+document.addEventListener('DOMContentLoaded', function() {
+  const profileImg = document.querySelector(".profile-img");
+  if (profileImg) {
+    profileImg.addEventListener("mousemove", e => {
+      const { offsetX, offsetY, target } = e;
+      const x = (offsetX / target.offsetWidth) - 0.5;
+      const y = (offsetY / target.offsetHeight) - 0.5;
+      target.style.transform = `rotateX(${y*10}deg) rotateY(${x*10}deg) scale(1.05)`;
+    });
+    
+    profileImg.addEventListener("mouseleave", e => {
+      e.target.style.transform = "rotateX(0) rotateY(0) scale(1)";
+    });
+  }
 });
 
 // -----------------------------
@@ -268,8 +318,11 @@ const textArray = ["Frontend Developer", "Problem Solver", "UI/UX Enthusiast"];
 let i = 0, j = 0, currentText = "", isDeleting = false;
 
 function typeEffect() {
+  const typingElement = document.getElementById("typing-text");
+  if (!typingElement) return;
+  
   currentText = textArray[i];
-  document.getElementById("typing-text").textContent = currentText.substring(0, j);
+  typingElement.textContent = currentText.substring(0, j);
 
   if (!isDeleting && j++ === currentText.length) {
     isDeleting = true; 
@@ -288,6 +341,14 @@ function typeEffect() {
 // Init with smooth entrance
 // -----------------------------
 document.addEventListener('DOMContentLoaded', function () {
+  // Remove loading screen after animation
+  setTimeout(() => {
+    const loadingScreen = document.querySelector('.loading-screen');
+    if (loadingScreen) {
+      loadingScreen.style.display = 'none';
+    }
+  }, 2500);
+
   createBackground();
   typeEffect();
 
