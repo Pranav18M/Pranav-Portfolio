@@ -392,6 +392,7 @@ body {
 /* Profile Image Styling */
 .profile-section {
     animation: fadeInUp 1s ease-out 2.8s both;
+    position: relative;
 }
 
 .profile-section img {
@@ -895,7 +896,6 @@ body.blur-active #home {
     width: 85%;
     max-width: 400px;
     max-height: 70vh;
-    margin-top: 40%;
     overflow-y: auto;
     flex-direction: column;
     background: rgba(10, 14, 39, 0.98);
@@ -927,12 +927,13 @@ body.blur-active #home {
   .home-section {
     display: flex;
     flex-direction: column;
-    gap: 0;
-    padding: 1.5rem;
+    gap: 2rem;
+    padding: 2.5rem 2rem;
     text-align: center;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
     min-height: calc(100vh - 100px);
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(10, 14, 39, 0.8) 100%);
   }
 
   /* Top Section - Image and Hello I'm Pranav Side by Side */
@@ -941,9 +942,33 @@ body.blur-active #home {
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    gap: 1.5rem;
+    gap: 2rem;
     width: 100%;
-    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: rgba(59, 130, 246, 0.08);
+    border-radius: 20px;
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    box-shadow: 0 10px 40px rgba(59, 130, 246, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Animated Background for Image Container */
+  .home-section-top::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+    animation: rotateGradient 8s linear infinite;
+    z-index: 0;
+  }
+
+  @keyframes rotateGradient {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
   }
 
   .profile-section {
@@ -951,26 +976,61 @@ body.blur-active #home {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Professional Animated Background Behind Image */
+  .profile-section::before {
+    content: "";
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    background: linear-gradient(45deg, 
+      rgba(59, 130, 246, 0.3) 0%, 
+      rgba(147, 51, 234, 0.3) 50%, 
+      rgba(59, 130, 246, 0.3) 100%);
+    border-radius: 50%;
+    z-index: -1;
+    animation: pulseBackground 3s ease-in-out infinite;
+    filter: blur(20px);
+  }
+
+  @keyframes pulseBackground {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 0.5;
+    }
+    50% {
+      transform: scale(1.2);
+      opacity: 0.8;
+    }
   }
 
   .profile-section img {
-    width: 180px;
-    height: 180px;
+    width: 200px;
+    height: 200px;
+    border: 3px solid rgba(59, 130, 246, 0.5);
+    position: relative;
+    z-index: 2;
   }
 
   .hero-content {
     flex: 1;
-    padding: 15px;
+    padding: 0;
     text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    position: relative;
+    z-index: 1;
   }
 
   .hero-content h1 {
-    font-size: 2.2rem;
+    font-size: 2.5rem;
     margin-bottom: 0;
     line-height: 1.3;
+    text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
   }
 
   .hero-content > p {
@@ -982,39 +1042,39 @@ body.blur-active #home {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.5rem;
+    gap: 1.8rem;
     width: 100%;
-    padding-top: 1rem;
+    padding: 1.5rem;
   }
 
   .hero-content .hero-description {
-    font-size: 1.05rem;
-    margin-bottom: 1.2rem;
-    line-height: 1.5;
+    font-size: 1.15rem;
+    margin-bottom: 0;
+    line-height: 1.6;
     color: #cbd5e1;
     text-align: center;
   }
 
   .cta-button {
-    padding: 0.9rem 1.8rem;
-    font-size: 1rem;
-    margin-bottom: 1rem;
+    padding: 1rem 2rem;
+    font-size: 1.05rem;
+    margin-bottom: 0;
   }
 
   .social-links {
     justify-content: center;
     margin-top: 0;
-    gap: 18px;
+    gap: 20px;
   }
 
   .social-box {
-    width: 50px;
-    height: 50px;
+    width: 55px;
+    height: 55px;
   }
 
   .social-box img {
-    width: 26px;
-    height: 26px;
+    width: 28px;
+    height: 28px;
   }
 
   .content-box {
@@ -1069,46 +1129,51 @@ body.blur-active #home {
 
   /* Mobile Full Screen Layout */
   .home-section {
-    padding: 1.5rem 1rem;
+    padding: 2rem 1.2rem;
+    gap: 1.8rem;
     min-height: calc(100vh - 100px);
   }
 
   .home-section-top {
-    gap: 1.2rem;
-    margin-bottom: 1.8rem;
+    gap: 1.5rem;
+    padding: 1.2rem;
+  }
+
+  .profile-section::before {
+    width: 190px;
+    height: 190px;
   }
 
   .profile-section img {
-    width: 150px;
-    height: 150px;
+    width: 170px;
+    height: 170px;
   }
 
   .hero-content h1 {
-    font-size: 1.8rem;
+    font-size: 2.1rem;
   }
 
   .hero-content .hero-description {
-    font-size: 0.95rem;
-    margin-bottom: 1rem;
+    font-size: 1.05rem;
   }
 
   .social-links {
-    gap: 15px;
+    gap: 18px;
   }
 
   .social-box {
-    width: 45px;
-    height: 45px;
+    width: 50px;
+    height: 50px;
   }
 
   .social-box img {
-    width: 24px;
-    height: 24px;
+    width: 26px;
+    height: 26px;
   }
 
   .cta-button {
-    padding: 0.8rem 1.5rem;
-    font-size: 0.95rem;
+    padding: 0.9rem 1.8rem;
+    font-size: 1rem;
   }
 
   .content-box {
@@ -1170,48 +1235,58 @@ body.blur-active #home {
 
   /* Mobile Full Screen Layout - Extra Small */
   .home-section {
-    padding: 1.2rem 0.8rem;
+    padding: 1.8rem 1rem;
+    gap: 1.5rem;
     min-height: calc(100vh - 100px);
   }
 
   .home-section-top {
-    gap: 1rem;
-    margin-bottom: 1.5rem;
+    gap: 1.2rem;
+    padding: 1rem;
+  }
+
+  .profile-section::before {
+    width: 170px;
+    height: 170px;
   }
 
   .profile-section img {
-    width: 130px;
-    height: 130px;
+    width: 150px;
+    height: 150px;
   }
 
   .hero-content h1 {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     line-height: 1.2;
   }
 
   .hero-content .hero-description {
-    font-size: 0.88rem;
-    margin-bottom: 1rem;
-    line-height: 1.4;
+    font-size: 0.95rem;
+    line-height: 1.5;
   }
 
   .social-links {
-    gap: 12px;
+    gap: 15px;
   }
 
   .social-box {
-    width: 42px;
-    height: 42px;
+    width: 46px;
+    height: 46px;
   }
 
   .social-box img {
-    width: 22px;
-    height: 22px;
+    width: 24px;
+    height: 24px;
   }
 
   .cta-button {
-    padding: 0.7rem 1.3rem;
-    font-size: 0.88rem;
+    padding: 0.8rem 1.6rem;
+    font-size: 0.95rem;
+  }
+
+  .home-section-bottom {
+    gap: 1.5rem;
+    padding: 1rem;
   }
 
   .content-box {
@@ -1298,6 +1373,11 @@ body.blur-active #home {
   .profile-section img {
     width: 120px;
     height: 120px;
+  }
+
+  .profile-section::before {
+    width: 140px;
+    height: 140px;
   }
 
   .hero-content h1 {
