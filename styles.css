@@ -141,6 +141,7 @@ body {
     background: rgba(10, 14, 39, 0.95);
     backdrop-filter: blur(20px);
     padding: 1rem 2rem;
+    margin-right:25px;
     top: 0;
     left: 0;
     right: 0;
