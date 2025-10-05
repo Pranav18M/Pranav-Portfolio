@@ -904,6 +904,9 @@ body.blur-active #home {
     box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
     border: 1px solid rgba(59, 130, 246, 0.3);
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-top:45%;
+    margin-right:100%;
+    margin-left:0%;
    
   }
 
@@ -921,6 +924,7 @@ body.blur-active #home {
     padding: 0.8rem 1.5rem;
     display: block;
     width: 100%;
+    margin:0%;
   }
 
   /* Mobile Home Section - Image Left, Text Right (Side by Side) */
