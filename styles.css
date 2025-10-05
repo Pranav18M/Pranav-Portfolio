@@ -902,9 +902,10 @@ body.blur-active #home {
     gap: 15px;
     border-radius: 20px;
     box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     border: 1px solid rgba(59, 130, 246, 0.3);
-    margin-top: 20px;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-top: 45%;
+    margin-right: 100%;
   }
 
   .nav-links.active {
@@ -1128,6 +1129,10 @@ body.blur-active #home {
 @media (max-width: 479px) {
   .navbar {
     padding: 0.8rem 1rem;
+    margin-right: 25%;
+    margin-left: 75%;
+    padding-right: 25%;
+    
   }
 
   .logo {
@@ -1136,14 +1141,16 @@ body.blur-active #home {
 
   .nav-links {
     width: 90%;
-    padding: 35px 15px 25px 15px;
+    padding: 35px 15px 25px 15px; 
     gap: 10px;
     max-height: 60vh;
+
   }
 
   .nav-links a {
     font-size: 0.95rem;
     padding: 0.6rem 0.8rem;
+
   }
 
   /* Mobile Side-by-Side Layout - Extra Small */
