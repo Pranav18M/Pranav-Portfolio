@@ -13,7 +13,7 @@ body {
     overflow-x: hidden;
 }
 
-/* Door Loading Animation */
+/* Door Loading Animation - Diagonal Lines from corners to center */
 .door-loading {
     position: fixed;
     top: 0;
@@ -22,111 +22,81 @@ body {
     height: 100%;
     z-index: 10000;
     pointer-events: none;
+    background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0a0e27 100%);
 }
 
 .door {
     position: absolute;
-    background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0a0e27 100%);
-    border: 3px solid #3b82f6;
+    height: 4px;
+    background: linear-gradient(90deg, 
+        #3b82f6 0%,
+        #60a5fa 50%,
+        #3b82f6 100%
+    );
     box-shadow: 
-        0 0 30px rgba(59, 130, 246, 0.6),
-        inset 0 0 30px rgba(59, 130, 246, 0.3);
+        0 0 20px rgba(59, 130, 246, 0.8),
+        0 0 40px rgba(59, 130, 246, 0.6),
+        0 0 60px rgba(59, 130, 246, 0.4);
 }
 
 .door-left {
     top: 0;
     left: 0;
     width: 0;
-    height: 0;
-    border-right: 3px solid #3b82f6;
-    border-bottom: 3px solid #3b82f6;
-    animation: doorLeftClose 1s ease-out forwards,
-               doorLeftOpen 0.8s ease-in 1.2s forwards;
+    transform-origin: left top;
+    transform: rotate(45deg);
+    animation: doorLeftClose 1s cubic-bezier(0.65, 0, 0.35, 1) forwards,
+               doorLeftOpen 0.8s cubic-bezier(0.65, 0, 0.35, 1) 1.2s forwards;
 }
 
 .door-right {
     bottom: 0;
     right: 0;
     width: 0;
-    height: 0;
-    border-left: 3px solid #3b82f6;
-    border-top: 3px solid #3b82f6;
-    animation: doorRightClose 1s ease-out forwards,
-               doorRightOpen 0.8s ease-in 1.2s forwards;
+    transform-origin: right bottom;
+    transform: rotate(45deg);
+    animation: doorRightClose 1s cubic-bezier(0.65, 0, 0.35, 1) forwards,
+               doorRightOpen 0.8s cubic-bezier(0.65, 0, 0.35, 1) 1.2s forwards;
 }
 
+/* Left door: diagonal line from top-left to center */
 @keyframes doorLeftClose {
     0% {
         width: 0;
-        height: 0;
-        top: 0;
-        left: 0;
-    }
-    50% {
-        width: 50%;
-        height: 0;
-        top: 0;
-        left: 0;
     }
     100% {
-        width: 50%;
-        height: 50%;
-        top: 0;
-        left: 0;
-    }
-}
-
-@keyframes doorRightClose {
-    0% {
-        width: 0;
-        height: 0;
-        bottom: 0;
-        right: 0;
-    }
-    50% {
-        width: 50%;
-        height: 0;
-        bottom: 0;
-        right: 0;
-    }
-    100% {
-        width: 50%;
-        height: 50%;
-        bottom: 0;
-        right: 0;
+        width: 70.7%;
     }
 }
 
 @keyframes doorLeftOpen {
     0% {
-        width: 50%;
-        height: 50%;
-        top: 0;
-        left: 0;
+        width: 70.7%;
         opacity: 1;
     }
     100% {
         width: 0;
-        height: 0;
-        top: 0;
-        left: 0;
         opacity: 0;
+    }
+}
+
+/* Right door: diagonal line from bottom-right to center */
+@keyframes doorRightClose {
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 70.7%;
     }
 }
 
 @keyframes doorRightOpen {
     0% {
-        width: 50%;
-        height: 50%;
-        bottom: 0;
-        right: 0;
+        width: 70.7%;
         opacity: 1;
     }
     100% {
         width: 0;
-        height: 0;
-        bottom: 0;
-        right: 0;
         opacity: 0;
     }
 }
@@ -273,7 +243,7 @@ body {
     transform: rotate(45deg) translate(-5px, -6px);
 }
 
-/* Main Container */
+/* Main Container - Initially Hidden */
 .main-container {
     position: relative;
     padding-top: 100px;
@@ -282,6 +252,14 @@ body {
     margin: 0 auto;
     padding-left: 2rem;
     padding-right: 2rem;
+    opacity: 0;
+    animation: showContent 0.1s ease-out 2.1s forwards;
+}
+
+@keyframes showContent {
+    to {
+        opacity: 1;
+    }
 }
 
 /* Content Sections with Smooth Transitions */
