@@ -891,6 +891,7 @@ body.blur-active #home {
   .nav-links {
     position: fixed;
     top: 50%;
+    left:40%;  
     transform: translate(-50%, -50%) scale(0);
     height: auto;
     width: 85%;
