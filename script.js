@@ -338,19 +338,23 @@ function typeEffect() {
 }
 
 // -----------------------------
-// Init with smooth entrance
+// Door Animation and Init
 // -----------------------------
 document.addEventListener('DOMContentLoaded', function () {
-  // Remove loading screen after animation
+  // Remove door animation after completion
   setTimeout(() => {
-    const loadingScreen = document.querySelector('.loading-screen');
-    if (loadingScreen) {
-      loadingScreen.style.display = 'none';
+    const doorLoading = document.querySelector('.door-loading');
+    if (doorLoading) {
+      doorLoading.style.display = 'none';
     }
   }, 2500);
 
   createBackground();
-  typeEffect();
+  
+  // Start typing effect after door animation
+  setTimeout(() => {
+    typeEffect();
+  }, 2500);
 
   const activeSection = document.querySelector('.content-section.active') || document.getElementById('home');
   historyStack = [activeSection?.id || 'home'];
