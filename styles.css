@@ -249,7 +249,7 @@ body {
     cursor: pointer;
     padding: 0.5rem;
     z-index: 1100;
-    margin-right: 20%;
+    margin-right: 19%;
 }
 
 .hamburger {
@@ -891,15 +891,14 @@ body.blur-active #home {
   .nav-links {
     position: fixed;
     top: 50%;
-    left: 50%;
     transform: translate(-50%, -50%) scale(0);
     height: auto;
     width: 85%;
     max-width: 400px;
     max-height: 70vh;
     margin-top: 40%;
-    margin-right: 48%;
-    margin-left: 0%;
+    margin-right: 50%;
+    margin-left: 0;
     overflow-y: auto;
     flex-direction: column;
     background: rgba(10, 14, 39, 0.98);
