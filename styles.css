@@ -13,7 +13,7 @@ body {
     overflow-x: hidden;
 }
 
-/* Door Loading Animation - Diagonal Lines from corners to center */
+/* Door Loading Animation - Two diagonal lines meeting at center */
 .door-loading {
     position: fixed;
     top: 0;
@@ -23,15 +23,19 @@ body {
     z-index: 10000;
     pointer-events: none;
     background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0a0e27 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .door {
     position: absolute;
-    height: 4px;
     background: linear-gradient(90deg, 
-        #3b82f6 0%,
+        transparent 0%,
+        #3b82f6 20%,
         #60a5fa 50%,
-        #3b82f6 100%
+        #3b82f6 80%,
+        transparent 100%
     );
     box-shadow: 
         0 0 20px rgba(59, 130, 246, 0.8),
@@ -39,39 +43,53 @@ body {
         0 0 60px rgba(59, 130, 246, 0.4);
 }
 
+/* Line from top-left to bottom-right (diagonal \) */
 .door-left {
-    top: 0;
-    left: 0;
+    top: 50%;
+    left: 50%;
     width: 0;
-    transform-origin: left top;
-    transform: rotate(45deg);
+    height: 6px;
+    transform-origin: center;
+    transform: translate(-50%, -50%) rotate(-45deg);
     animation: doorLeftClose 1s cubic-bezier(0.65, 0, 0.35, 1) forwards,
                doorLeftOpen 0.8s cubic-bezier(0.65, 0, 0.35, 1) 1.2s forwards;
 }
 
+/* Line from top-right to bottom-left (diagonal /) */
 .door-right {
-    bottom: 0;
-    right: 0;
+    top: 50%;
+    left: 50%;
     width: 0;
-    transform-origin: right bottom;
-    transform: rotate(45deg);
+    height: 6px;
+    transform-origin: center;
+    transform: translate(-50%, -50%) rotate(45deg);
     animation: doorRightClose 1s cubic-bezier(0.65, 0, 0.35, 1) forwards,
                doorRightOpen 0.8s cubic-bezier(0.65, 0, 0.35, 1) 1.2s forwards;
 }
 
-/* Left door: diagonal line from top-left to center */
+/* Closing animation - lines grow from center to corners */
 @keyframes doorLeftClose {
     0% {
         width: 0;
     }
     100% {
-        width: 70.7%;
+        width: 141.42%;
     }
 }
 
+@keyframes doorRightClose {
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 141.42%;
+    }
+}
+
+/* Opening animation - lines shrink back to center */
 @keyframes doorLeftOpen {
     0% {
-        width: 70.7%;
+        width: 141.42%;
         opacity: 1;
     }
     100% {
@@ -80,19 +98,9 @@ body {
     }
 }
 
-/* Right door: diagonal line from bottom-right to center */
-@keyframes doorRightClose {
-    0% {
-        width: 0;
-    }
-    100% {
-        width: 70.7%;
-    }
-}
-
 @keyframes doorRightOpen {
     0% {
-        width: 70.7%;
+        width: 141.42%;
         opacity: 1;
     }
     100% {
