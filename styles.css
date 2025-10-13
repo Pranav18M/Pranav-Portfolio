@@ -128,13 +128,6 @@ body {
     animation: float 8s infinite ease-in-out;
 }
 
-.line {
-    position: absolute;
-    background: linear-gradient(45deg, transparent, rgba(59, 130, 246, 0.4), transparent);
-    width: 2px;
-    animation: moveLine 10s infinite linear;
-}
-
 @keyframes float {
     0%, 100% {
         transform: translateY(0px) rotate(0deg);
