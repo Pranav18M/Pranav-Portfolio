@@ -1306,7 +1306,7 @@ body.blur-active #home {
 #certifications li {
     background: rgba(59, 130, 246, 0.15);
     padding: 1.5rem 2rem;
-    padding-left: 2.5rem;   /* 👈 extra left space for text */
+    padding-left: 25px;   
     border-radius: 16px;
     font-size: 1.05rem;
     cursor: pointer;
