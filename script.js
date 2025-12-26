@@ -326,14 +326,14 @@ function typeEffect() {
 
   if (!isDeleting && j++ === currentText.length) {
     isDeleting = true; 
-    setTimeout(typeEffect, 1200);
+    setTimeout(typeEffect, 1350);
     return;
   } else if (isDeleting && j-- === 0) {
     isDeleting = false; 
     i = (i + 1) % textArray.length;
   }
 
-  const speed = isDeleting ? 170 : 190;
+  const speed = isDeleting ? 185 : 205;
   setTimeout(typeEffect, speed);
 }
 
