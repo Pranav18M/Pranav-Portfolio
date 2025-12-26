@@ -1310,6 +1310,7 @@ body.blur-active #home {
     font-size: 1.05rem;
     cursor: pointer;
     transition: all 0.35s ease;
+    marginleft:4rem;
 }
 
 /* Hover */
