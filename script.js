@@ -314,7 +314,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // -----------------------------
 // Typing effect
 // -----------------------------
-const textArray = ["Frontend Developer", "Problem Solver", "UI/UX Enthusiast"];
+const textArray = ["Full Stack Developer (MERN)", "Problem Solver", "Web Development","AI-assisted coding"];
 let i = 0, j = 0, currentText = "", isDeleting = false;
 
 function typeEffect() {
@@ -333,7 +333,7 @@ function typeEffect() {
     i = (i + 1) % textArray.length;
   }
 
-  const speed = isDeleting ? 150 : 180;
+  const speed = isDeleting ? 170 : 190;
   setTimeout(typeEffect, speed);
 }
 
