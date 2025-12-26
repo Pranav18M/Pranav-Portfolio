@@ -1280,3 +1280,48 @@ body.blur-active #home {
     padding: 20px 15px;
   }
 }
+
+/* ===== FORCE REMOVE ALL DOTS / TIMELINE MARKERS ===== */
+#certifications ul,
+#certifications li {
+    list-style: none !important;
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+}
+
+/* Remove pseudo-element dots */
+#certifications li::before,
+#certifications li::after {
+    content: none !important;
+    display: none !important;
+}
+
+/* Final layout */
+#certifications ul {
+    display: grid;
+    gap: 2rem;
+}
+
+/* Card style */
+#certifications li {
+    background: rgba(59, 130, 246, 0.15);
+    padding: 1.5rem 2rem;
+    border-radius: 16px;
+    font-size: 1.05rem;
+    cursor: pointer;
+    transition: all 0.35s ease;
+}
+
+/* Hover */
+#certifications li:hover {
+    transform: translateY(-5px);
+    background: rgba(59, 130, 246, 0.25);
+    box-shadow: 0 10px 30px rgba(59, 130, 246, 0.35);
+}
+
+/* Title */
+#certifications li strong {
+    color: #3b82f6;
+    font-size: 1.1rem;
+}
+
