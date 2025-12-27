@@ -1285,7 +1285,7 @@ body.blur-active #home {
 #certifications ul,
 #certifications li {
     list-style: none !important;
-    padding-left: 10px !important;
+    padding-left: 0 !important;
     margin-left: 0 !important;
 }
 
@@ -1327,6 +1327,6 @@ body.blur-active #home {
     font-size: 1.1rem;
     text-align:center;
     text-position:center;
-    padding-left:2%
+    padding-left:5%
 }
 
