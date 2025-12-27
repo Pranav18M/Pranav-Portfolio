@@ -1325,5 +1325,6 @@ body.blur-active #home {
 #certifications li strong {
     color: #3b82f6;
     font-size: 1.1rem;
+    padding:25px;
 }
 
