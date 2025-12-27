@@ -1306,7 +1306,7 @@ body.blur-active #home {
 #certifications li {
     background: rgba(59, 130, 246, 0.15);
     padding: 1.5rem 2rem;
-    padding-left: 25px;   
+    padding-left: 34%;   
     border-radius: 16px;
     font-size: 1.05rem;
     cursor: pointer;
@@ -1325,6 +1325,6 @@ body.blur-active #home {
 #certifications li strong {
     color: #3b82f6;
     font-size: 1.1rem;
-    padding-left:45%;
+    padding-left:15%;
 }
 
