@@ -92,7 +92,7 @@ body {
   cursor: pointer;
   padding: 0.5rem;
   z-index: 1100;
-  margin-top:25%;
+  
 }
 
 .hamburger {
@@ -101,6 +101,7 @@ body {
   background: #3b82f6;
   margin: 3px 0;
   transition: 0.3s;
+  margin-top:25%;
 }
 
 .mobile-menu.active .hamburger:nth-child(1) {
