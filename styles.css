@@ -139,28 +139,28 @@ body {
   transform: translateX(0);
 }
 
-/* Home Section - FIXED GAPS */
+/* Home Section - RESTORED ORIGINAL SIDE BY SIDE LAYOUT */
 .home-section {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
   align-items: center;
-  text-align: center;
-  gap: 1.5rem;
   min-height: calc(100vh - 120px);
   padding: 2rem;
   border-radius: 25px;
   border: 2px solid #3b82f6;
   box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
-  justify-content: center;
 }
 
 .profile-section {
-  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .profile-section img {
-  width: 250px;
-  height: 250px;
+  width: 280px;
+  height: 280px;
   border-radius: 50%;
   object-fit: cover;
   box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
@@ -174,12 +174,12 @@ body {
 .hero-content {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 1.2rem;
+  gap: 1.5rem;
+  padding: 2rem;
 }
 
 .hero-content h1 {
-  font-size: 3rem;
+  font-size: 4rem;
   margin: 0;
   color: #fff;
   line-height: 1.2;
@@ -190,7 +190,7 @@ body {
 }
 
 .hero-description {
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   color: #cbd5e1;
   margin: 0;
 }
@@ -206,7 +206,7 @@ body {
   transition: transform 0.3s;
   text-decoration: none;
   display: inline-block;
-  margin: 0.5rem 0;
+  width: fit-content;
 }
 
 .cta-button:hover {
@@ -216,7 +216,6 @@ body {
 .social-links {
   display: flex;
   gap: 20px;
-  margin-top: 0.5rem;
 }
 
 .social-box {
@@ -528,7 +527,7 @@ body {
     display: flex;
   }
 
-  /* FIXED MOBILE MENU - CENTERED & STYLED */
+  /* FIXED MOBILE MENU - PERFECTLY CENTERED */
   .nav-links {
     position: fixed;
     top: 50%;
@@ -536,8 +535,8 @@ body {
     transform: translate(-50%, -50%) scale(0);
     flex-direction: column;
     background: rgba(10, 14, 39, 0.98);
-    padding: 2rem 1.5rem;
-    gap: 0.8rem;
+    padding: 2.5rem 2rem;
+    gap: 1rem;
     border-radius: 20px;
     box-shadow: 0 0 40px rgba(59, 130, 246, 0.6);
     border: 2px solid rgba(59, 130, 246, 0.4);
@@ -569,14 +568,22 @@ body {
     padding-right: 1rem;
   }
 
+  /* Mobile Home Section - Stack Layout */
   .home-section {
+    grid-template-columns: 1fr;
     padding: 2rem 1.5rem;
-    gap: 1.2rem;
+    text-align: center;
+    gap: 2rem;
   }
 
   .profile-section img {
     width: 200px;
     height: 200px;
+  }
+
+  .hero-content {
+    padding: 0;
+    align-items: center;
   }
 
   .hero-content h1 {
@@ -587,18 +594,8 @@ body {
     font-size: 1.15rem;
   }
 
-  .cta-button {
-    padding: 0.9rem 2rem;
-    font-size: 1rem;
-  }
-
   .social-links {
-    gap: 18px;
-  }
-
-  .social-box {
-    width: 50px;
-    height: 50px;
+    justify-content: center;
   }
 
   .content-box {
@@ -630,7 +627,7 @@ body {
   .nav-links {
     width: 90%;
     max-width: 320px;
-    padding: 1.8rem 1.2rem;
+    padding: 2rem 1.5rem;
   }
 
   .nav-links a {
@@ -640,7 +637,6 @@ body {
 
   .home-section {
     padding: 2rem 1rem;
-    gap: 1rem;
   }
 
   .profile-section img {
@@ -703,18 +699,17 @@ body {
   .nav-links {
     width: 92%;
     max-width: 300px;
-    padding: 1.5rem 1rem;
-    gap: 0.6rem;
+    padding: 1.8rem 1.2rem;
+    gap: 0.8rem;
   }
 
   .nav-links a {
     font-size: 1rem;
-    padding: 0.7rem 1rem;
+    padding: 0.75rem 1rem;
   }
 
   .home-section {
     padding: 1.5rem 0.8rem;
-    gap: 0.8rem;
   }
 
   .profile-section img {
