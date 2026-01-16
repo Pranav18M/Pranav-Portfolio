@@ -1,5 +1,9 @@
+// ============================================
+// OPTIMIZED JAVASCRIPT - REDUCED LAG
+// ============================================
+
 // -----------------------------
-// Animated Background
+// Simplified Background (ONLY 4 bubbles!)
 // -----------------------------
 function createBackground() {
   const background = document.querySelector('.background-animation');
@@ -7,34 +11,25 @@ function createBackground() {
 
   background.innerHTML = '';
 
-  // Bubbles
-  for (let i = 0; i < 12; i++) {
+  // REDUCED from 12 to 4 bubbles - MAJOR performance boost
+  for (let i = 0; i < 4; i++) {
     const bubble = document.createElement('div');
     bubble.classList.add('bubble');
-    const size = Math.random() * 40 + 20;
+    const size = Math.random() * 40 + 30;
     bubble.style.width = size + 'px';
     bubble.style.height = size + 'px';
     bubble.style.left = Math.random() * 100 + '%';
     bubble.style.top = Math.random() * 100 + '%';
-    bubble.style.animationDelay = Math.random() * 8 + 's';
-    bubble.style.animationDuration = (Math.random() * 3 + 5) + 's';
+    bubble.style.animationDelay = i * 2 + 's';
+    bubble.style.animation = 'simpleFloat 6s infinite ease-in-out';
     background.appendChild(bubble);
   }
 
-  // Lines
-  for (let i = 0; i < 8; i++) {
-    const line = document.createElement('div');
-    line.classList.add('line');
-    line.style.height = Math.random() * 100 + 50 + 'px';
-    line.style.top = Math.random() * 100 + '%';
-    line.style.animationDelay = Math.random() * 10 + 's';
-    line.style.animationDuration = (Math.random() * 5 + 8) + 's';
-    background.appendChild(line);
-  }
+  // REMOVED all lines - they cause lag on mobile
 }
 
 // -----------------------------
-// Navigation & History with Smooth Transitions
+// Navigation with optimized transitions
 // -----------------------------
 let historyStack = [];
 
@@ -49,23 +44,17 @@ function showSection(targetId, pushHistory = true) {
   sections.forEach(section => section.classList.remove('active'));
   navLinks.forEach(link => link.classList.remove('active'));
 
-  // Smooth transition
-  setTimeout(() => {
-    targetEl.classList.add('active');
-    const activeLink = document.querySelector(`[href="#${targetId}"]`);
-    if (activeLink) activeLink.classList.add('active');
-  }, 50);
+  // Immediate transition - no setTimeout delays
+  targetEl.classList.add('active');
+  const activeLink = document.querySelector(`[href="#${targetId}"]`);
+  if (activeLink) activeLink.classList.add('active');
 
-  // Blur toggle
-  document.body.classList.toggle("blur-active", targetId !== "home");
-
-  // Push to history
   if (pushHistory) {
     const last = historyStack[historyStack.length - 1];
     if (last !== targetId) historyStack.push(targetId);
   }
 
-  // Close mobile menu after selection
+  // Close mobile menu
   const navLinksContainer = document.getElementById('navLinks');
   const menuBtn = document.getElementById('menuBtn');
   if (navLinksContainer && navLinksContainer.classList.contains('active')) {
@@ -76,7 +65,7 @@ function showSection(targetId, pushHistory = true) {
 
 function goBack() {
   const popup = document.getElementById("certPopup");
-  if (popup && window.getComputedStyle(popup).display !== "none") {
+  if (popup && popup.style.display === "flex") {
     closeCert();
     return;
   }
@@ -96,17 +85,6 @@ function goNext(targetId) {
   showSection(targetId, true);
 }
 
-// Nav link click with smooth transition
-document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('.nav-link').forEach(link => {
-    link.addEventListener('click', function (e) {
-      e.preventDefault();
-      const targetId = this.getAttribute('href').substring(1);
-      showSection(targetId, true);
-    });
-  });
-});
-
 // Toggle mobile menu
 function toggleMenu() {
   const navLinksContainer = document.getElementById('navLinks');
@@ -117,30 +95,8 @@ function toggleMenu() {
   if (menuBtn) menuBtn.classList.toggle('active');
 }
 
-// Add event listener for mobile menu button
-document.addEventListener('DOMContentLoaded', function() {
-  const menuBtn = document.getElementById('menuBtn');
-  if (menuBtn) {
-    menuBtn.addEventListener('click', toggleMenu);
-  }
-});
-
-// Close menu when clicking outside
-document.addEventListener('click', function(e) {
-  const navLinks = document.getElementById('navLinks');
-  const menuBtn = document.getElementById('menuBtn');
-  const navbar = document.querySelector('.navbar');
-  
-  if (navLinks && navLinks.classList.contains('active')) {
-    if (!navbar.contains(e.target)) {
-      navLinks.classList.remove('active');
-      if (menuBtn) menuBtn.classList.remove('active');
-    }
-  }
-});
-
 // -----------------------------
-// Contact Form (Formspree)
+// Contact Form
 // -----------------------------
 function handleSubmit(event) {
   event.preventDefault();
@@ -158,23 +114,18 @@ function handleSubmit(event) {
   }).then(response => {
     if (response.ok) {
       button.textContent = "Message Sent!";
-      button.style.background = "linear-gradient(135deg, #4CAF50, #45a049)";
       form.reset();
     } else {
       button.textContent = "Error! Try Again";
-      button.style.background = "linear-gradient(135deg, #e63946, #d62828)";
     }
     setTimeout(() => {
       button.textContent = originalText;
-      button.style.background = "linear-gradient(135deg, #3b82f6, #2563eb)";
       button.disabled = false;
     }, 3000);
   }).catch(() => {
     button.textContent = "Error! Try Again";
-    button.style.background = "linear-gradient(135deg, #e63946, #d62828)";
     setTimeout(() => {
       button.textContent = originalText;
-      button.style.background = "linear-gradient(135deg, #3b82f6, #2563eb)";
       button.disabled = false;
     }, 3000);
   });
@@ -197,61 +148,50 @@ function closeCert() {
   popup.style.display = "none";
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-  const certPopup = document.getElementById("certPopup");
-  if (certPopup) {
-    certPopup.addEventListener("click", function (e) {
-      if (e.target === this) closeCert();
+// -----------------------------
+// OPTIMIZED Lazy load - REMOVED delays!
+// -----------------------------
+function initLazyLoad() {
+  const lazyElements = document.querySelectorAll(".lazy-load");
+  
+  // REMOVED setTimeout delays - instant load for better performance
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("show");
+        observer.unobserve(entry.target);
+      }
     });
-  }
-});
+  }, { threshold: 0.1 }); // Reduced threshold for faster trigger
+  
+  lazyElements.forEach(el => observer.observe(el));
+}
 
 // -----------------------------
-// Projects horizontal scroll (drag & swipe)
+// OPTIMIZED Typing effect
 // -----------------------------
-document.addEventListener('DOMContentLoaded', function() {
-  const slider = document.querySelector('.projects-grid');
-  if (slider) {
-    let isDown = false, startX, scrollLeft;
+const textArray = ["Full Stack Developer (MERN)", "Problem Solver", "Web Developer", "AI-assisted coding"];
+let i = 0, j = 0, currentText = "", isDeleting = false;
 
-    slider.addEventListener('mousedown', e => {
-      isDown = true;
-      slider.classList.add('active');
-      startX = e.pageX - slider.offsetLeft;
-      scrollLeft = slider.scrollLeft;
-    });
+function typeEffect() {
+  const typingElement = document.getElementById("typing-text");
+  if (!typingElement) return;
+  
+  currentText = textArray[i];
+  typingElement.textContent = currentText.substring(0, j);
 
-    slider.addEventListener('mouseleave', () => { 
-      isDown = false; 
-      slider.classList.remove('active'); 
-    });
-    
-    slider.addEventListener('mouseup', () => { 
-      isDown = false; 
-      slider.classList.remove('active'); 
-    });
-
-    slider.addEventListener('mousemove', e => {
-      if (!isDown) return;
-      e.preventDefault();
-      const x = e.pageX - slider.offsetLeft;
-      const walk = (x - startX) * 2;
-      slider.scrollLeft = scrollLeft - walk;
-    });
-
-    slider.addEventListener('touchstart', e => {
-      startX = e.touches[0].pageX - slider.offsetLeft;
-      scrollLeft = slider.scrollLeft;
-    });
-
-    slider.addEventListener('touchmove', e => {
-      if (e.touches.length === 0) return;
-      const x = e.touches[0].pageX - slider.offsetLeft;
-      const walk = (x - startX) * 2;
-      slider.scrollLeft = scrollLeft - walk;
-    });
+  if (!isDeleting && j++ === currentText.length) {
+    isDeleting = true; 
+    setTimeout(typeEffect, 1500);
+    return;
+  } else if (isDeleting && j-- === 0) {
+    isDeleting = false; 
+    i = (i + 1) % textArray.length;
   }
-});
+
+  const speed = isDeleting ? 50 : 100; // Faster typing
+  setTimeout(typeEffect, speed);
+}
 
 // -----------------------------
 // Keyboard shortcuts
@@ -264,7 +204,7 @@ document.addEventListener('keydown', function (e) {
     if (menuBtn) menuBtn.classList.remove('active');
     
     const popup = document.getElementById("certPopup");
-    if (popup && window.getComputedStyle(popup).display !== "none") closeCert();
+    if (popup && popup.style.display === "flex") closeCert();
   } else if (e.key === 'ArrowLeft') {
     goBack();
   } else if (e.key === 'ArrowRight') {
@@ -277,94 +217,54 @@ document.addEventListener('keydown', function (e) {
 });
 
 // -----------------------------
-// Profile image tilt
-// -----------------------------
-document.addEventListener('DOMContentLoaded', function() {
-  const profileImg = document.querySelector(".profile-img");
-  if (profileImg) {
-    profileImg.addEventListener("mousemove", e => {
-      const { offsetX, offsetY, target } = e;
-      const x = (offsetX / target.offsetWidth) - 0.5;
-      const y = (offsetY / target.offsetHeight) - 0.5;
-      target.style.transform = `rotateX(${y*10}deg) rotateY(${x*10}deg) scale(1.05)`;
-    });
-    
-    profileImg.addEventListener("mouseleave", e => {
-      e.target.style.transform = "rotateX(0) rotateY(0) scale(1)";
-    });
-  }
-});
-
-// -----------------------------
-// Lazy load animations with smoother transitions
-// -----------------------------
-document.addEventListener("DOMContentLoaded", () => {
-  const lazyElements = document.querySelectorAll(".lazy-load");
-  const observer = new IntersectionObserver((entries, obs) => {
-    entries.forEach((entry, index) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add("show"), index * 120);
-        obs.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.15 });
-  lazyElements.forEach(el => observer.observe(el));
-});
-
-// -----------------------------
-// Typing effect
-// -----------------------------
-const textArray = ["Full Stack Developer (MERN)", "Problem Solver", "Web Development","AI-assisted coding"];
-let i = 0, j = 0, currentText = "", isDeleting = false;
-
-function typeEffect() {
-  const typingElement = document.getElementById("typing-text");
-  if (!typingElement) return;
-  
-  currentText = textArray[i];
-  typingElement.textContent = currentText.substring(0, j);
-
-  if (!isDeleting && j++ === currentText.length) {
-    isDeleting = true; 
-    setTimeout(typeEffect, 1350);
-    return;
-  } else if (isDeleting && j-- === 0) {
-    isDeleting = false; 
-    i = (i + 1) % textArray.length;
-  }
-
-  const speed = isDeleting ? 185 : 205;
-  setTimeout(typeEffect, speed);
-}
-
-// -----------------------------
-// Door Animation and Init
+// DOM READY - All Event Listeners
 // -----------------------------
 document.addEventListener('DOMContentLoaded', function () {
-  // Remove door animation after completion
-  setTimeout(() => {
-    const doorLoading = document.querySelector('.door-loading');
-    if (doorLoading) {
-      doorLoading.style.display = 'none';
-    }
-  }, 2500);
-
-  createBackground();
   
-  // Start typing effect after door animation
-  setTimeout(() => {
-    typeEffect();
-  }, 2500);
+  // Nav links
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      const targetId = this.getAttribute('href').substring(1);
+      showSection(targetId, true);
+    });
+  });
+
+  // Mobile menu
+  const menuBtn = document.getElementById('menuBtn');
+  if (menuBtn) {
+    menuBtn.addEventListener('click', toggleMenu);
+  }
+
+  // Close menu on outside click
+  document.addEventListener('click', function(e) {
+    const navLinks = document.getElementById('navLinks');
+    const menuBtn = document.getElementById('menuBtn');
+    const navbar = document.querySelector('.navbar');
+    
+    if (navLinks && navLinks.classList.contains('active')) {
+      if (!navbar.contains(e.target)) {
+        navLinks.classList.remove('active');
+        if (menuBtn) menuBtn.classList.remove('active');
+      }
+    }
+  });
+
+  // Cert popup close on background click
+  const certPopup = document.getElementById("certPopup");
+  if (certPopup) {
+    certPopup.addEventListener("click", function (e) {
+      if (e.target === this) closeCert();
+    });
+  }
+
+  // REMOVED drag/swipe on projects - causes lag on mobile
+  
+  // Initialize
+  createBackground();
+  typeEffect();
+  initLazyLoad();
 
   const activeSection = document.querySelector('.content-section.active') || document.getElementById('home');
   historyStack = [activeSection?.id || 'home'];
-
-  // Smooth entrance for home section
-  setTimeout(() => {
-    const activeSectionEl = document.querySelector('.content-section.active');
-    if (activeSectionEl) {
-      activeSectionEl.style.opacity = '1';
-      activeSectionEl.style.transform = 'translateX(0) scale(1)';
-    }
-  }, 100);
 });
