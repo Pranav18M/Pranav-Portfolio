@@ -87,11 +87,12 @@ body {
 }
 
 .mobile-menu {
-  display: none;
+  display: flex;
   flex-direction: column;
   cursor: pointer;
   padding: 0.5rem;
   z-index: 1100;
+  margin-top:25%;
 }
 
 .hamburger {
