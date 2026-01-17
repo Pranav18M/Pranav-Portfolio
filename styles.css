@@ -672,59 +672,52 @@ body {
   }
 
   .main-container {
-    padding-left: 0;
-    padding-right: 0;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
     padding-top: 70px;
   }
 
-  /* MOBILE HOME - FULL SCREEN EDGE TO EDGE */
+  /* MOBILE HOME - FULL SCREEN COVERAGE */
   .home-section {
     grid-template-columns: 1fr;
-    padding: 2rem 0.8rem;
+    padding: 2rem 0.5rem;
     text-align: center;
     gap: 0;
-    min-height: calc(100vh - 70px);
+    min-height: calc(100vh - 90px);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border-radius: 0;
+    border-radius: 15px;
     margin: 0;
-    width: 100vw;
-    margin-left: calc(-1 * (100vw - 100%) / 2);
-    position: relative;
+    width: 100%;
   }
 
-  /* Corner decorations - positioned at screen edges */
+  /* Full width decorative corners for mobile */
   .home-section::before {
     content: "";
     position: absolute;
-    top: 10px;
-    left: 10px;
-    width: 70px;
-    height: 70px;
-    border-top: 4px solid rgba(59, 130, 246, 0.5);
-    border-left: 4px solid rgba(59, 130, 246, 0.5);
-    border-radius: 15px 0 0 0;
+    top: 20px;
+    left: 20px;
+    width: 60px;
+    height: 60px;
+    border-top: 3px solid rgba(59, 130, 246, 0.4);
+    border-left: 3px solid rgba(59, 130, 246, 0.4);
+    border-radius: 10px 0 0 0;
     display: block;
   }
 
   .home-section::after {
     content: "";
     position: absolute;
-    bottom: 10px;
-    right: 10px;
-    width: 70px;
-    height: 70px;
-    border-bottom: 4px solid rgba(59, 130, 246, 0.5);
-    border-right: 4px solid rgba(59, 130, 246, 0.5);
-    border-radius: 0 0 15px 0;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border-bottom: 3px solid rgba(59, 130, 246, 0.4);
+    border-right: 3px solid rgba(59, 130, 246, 0.4);
+    border-radius: 0 0 10px 0;
     display: block;
-  }
-
-  /* Additional corner decorations */
-  .profile-section {
-    position: relative;
   }
 
   /* Compact Profile Section */
@@ -824,30 +817,29 @@ body {
 
   .main-container {
     padding-top: 65px;
-    padding-left: 0;
-    padding-right: 0;
+    padding-left: 0.3rem;
+    padding-right: 0.3rem;
   }
 
-  /* FULL WIDTH MOBILE HOME */
+  /* FULL SCREEN MOBILE HOME */
   .home-section {
-    padding: 2rem 0.5rem;
-    min-height: calc(100vh - 65px);
-    border-radius: 0;
-    width: 100vw;
+    padding: 2rem 0.3rem;
+    min-height: calc(100vh - 80px);
+    border-radius: 12px;
   }
 
   .home-section::before {
-    top: 8px;
-    left: 8px;
-    width: 60px;
-    height: 60px;
+    top: 15px;
+    left: 15px;
+    width: 50px;
+    height: 50px;
   }
 
   .home-section::after {
-    bottom: 8px;
-    right: 8px;
-    width: 60px;
-    height: 60px;
+    bottom: 15px;
+    right: 15px;
+    width: 50px;
+    height: 50px;
   }
 
   .profile-section {
