@@ -30,11 +30,19 @@ body {
   background: rgba(59, 130, 246, 0.08);
   border: 1px solid rgba(59, 130, 246, 0.2);
   border-radius: 50%;
+  z-index: -1;
 }
 
 @keyframes simpleFloat {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-15px); }
+}
+
+/* Hide bubbles on mobile to prevent visual issues */
+@media (max-width: 991px) {
+  .background-animation {
+    display: none;
+  }
 }
 
 /* Navbar */
@@ -92,7 +100,6 @@ body {
   cursor: pointer;
   padding: 0.5rem;
   z-index: 1100;
-  
 }
 
 .hamburger {
@@ -101,7 +108,6 @@ body {
   background: #3b82f6;
   margin: 3px 0;
   transition: 0.3s;
-
 }
 
 .mobile-menu.active .hamburger:nth-child(1) {
@@ -532,9 +538,9 @@ body {
   /* FIXED MOBILE MENU - PERFECTLY CENTERED */
   .nav-links {
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0);
+    top: 50vh !important;
+    left: 50vw !important;
+    transform: translate(-50%, -50%) scale(0) !important;
     flex-direction: column;
     background: rgba(10, 14, 39, 0.98);
     padding: 2.5rem 2rem;
@@ -545,11 +551,12 @@ body {
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     width: 85%;
     max-width: 350px;
-    z-index: 1001;
+    z-index: 9999;
+    margin: 0 !important;
   }
 
   .nav-links.active {
-    transform: translate(-50%, -50%) scale(1);
+    transform: translate(-50%, -50%) scale(1) !important;
   }
 
   .nav-links li {
@@ -627,9 +634,11 @@ body {
   }
 
   .nav-links {
-    width: 90%;
+    width: 88%;
     max-width: 320px;
     padding: 2rem 1.5rem;
+    top: 50vh !important;
+    left: 50vw !important;
   }
 
   .nav-links a {
@@ -699,10 +708,12 @@ body {
   }
 
   .nav-links {
-    width: 92%;
+    width: 90%;
     max-width: 300px;
     padding: 1.8rem 1.2rem;
     gap: 0.8rem;
+    top: 50vh !important;
+    left: 50vw !important;
   }
 
   .nav-links a {
