@@ -164,6 +164,51 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+}
+
+/* Animated Glowing Ring Behind Profile */
+.profile-section::before {
+  content: "";
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, 
+    rgba(59, 130, 246, 0.4) 0%, 
+    rgba(147, 51, 234, 0.4) 25%,
+    rgba(59, 130, 246, 0.4) 50%,
+    rgba(147, 51, 234, 0.4) 75%,
+    rgba(59, 130, 246, 0.4) 100%);
+  background-size: 400% 400%;
+  animation: gradientRotate 8s ease infinite;
+  filter: blur(20px);
+  z-index: 0;
+}
+
+/* Rotating Border Effect */
+.profile-section::after {
+  content: "";
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  border-top-color: rgba(59, 130, 246, 0.8);
+  border-right-color: rgba(147, 51, 234, 0.6);
+  animation: rotateBorder 4s linear infinite;
+  z-index: 0;
+}
+
+@keyframes gradientRotate {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes rotateBorder {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 .profile-section img {
@@ -173,10 +218,14 @@ body {
   object-fit: cover;
   box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
   transition: transform 0.3s;
+  position: relative;
+  z-index: 1;
+  border: 3px solid rgba(59, 130, 246, 0.3);
 }
 
 .profile-section img:hover {
   transform: scale(1.05);
+  box-shadow: 0 0 50px rgba(59, 130, 246, 0.8);
 }
 
 .hero-content {
@@ -263,16 +312,32 @@ body {
   box-shadow: 0 0 15px rgba(217, 48, 37, 0.6);
 }
 
-/* Content Boxes */
+/* Content Boxes with Animated Border Only */
 .content-box {
   background: rgba(10, 14, 39, 0.9);
   border-radius: 20px;
   padding: 3rem;
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(59, 130, 246, 0.2);
+  border: 2px solid rgba(59, 130, 246, 0.3);
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
   max-width: 900px;
   margin: 0 auto;
+  position: relative;
+  animation: borderColorChange 4s ease-in-out infinite;
+}
+
+/* Animated Border Color Shift */
+@keyframes borderColorChange {
+  0%, 100% {
+    border-color: rgba(59, 130, 246, 0.4);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3),
+                0 0 20px rgba(59, 130, 246, 0.2);
+  }
+  50% {
+    border-color: rgba(147, 51, 234, 0.5);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3),
+                0 0 30px rgba(147, 51, 234, 0.3);
+  }
 }
 
 .content-box h2 {
@@ -289,7 +354,7 @@ body {
   margin-bottom: 1rem;
 }
 
-/* Navigation Buttons */
+/* Navigation Buttons with Subtle Glow */
 .nav-buttons {
   display: flex;
   justify-content: space-between;
@@ -307,6 +372,34 @@ body {
   font-size: 1rem;
   cursor: pointer;
   transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle Pulse Animation */
+.back-btn::before,
+.next-btn::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, transparent 70%);
+  transform: translate(-50%, -50%) scale(0);
+  animation: subtlePulse 3s ease-in-out infinite;
+  z-index: -1;
+}
+
+@keyframes subtlePulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0.5;
+  }
 }
 
 .back-btn:hover,
@@ -585,6 +678,16 @@ body {
     gap: 2rem;
   }
 
+  .profile-section::before {
+    width: 240px;
+    height: 240px;
+  }
+
+  .profile-section::after {
+    width: 220px;
+    height: 220px;
+  }
+
   .profile-section img {
     width: 200px;
     height: 200px;
@@ -648,6 +751,16 @@ body {
 
   .home-section {
     padding: 2rem 1rem;
+  }
+
+  .profile-section::before {
+    width: 210px;
+    height: 210px;
+  }
+
+  .profile-section::after {
+    width: 190px;
+    height: 190px;
   }
 
   .profile-section img {
@@ -723,6 +836,16 @@ body {
 
   .home-section {
     padding: 1.5rem 0.8rem;
+  }
+
+  .profile-section::before {
+    width: 190px;
+    height: 190px;
+  }
+
+  .profile-section::after {
+    width: 170px;
+    height: 170px;
   }
 
   .profile-section img {
