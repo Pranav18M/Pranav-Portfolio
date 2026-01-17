@@ -237,6 +237,7 @@ body {
 
 .hero-content h1 {
   font-size: 4rem;
+  margin: 0;
   color: #fff;
   line-height: 1.2;
 }
@@ -667,46 +668,76 @@ body {
   .main-container {
     padding-left: 1rem;
     padding-right: 1rem;
+    padding-top: 70px;
   }
 
-  /* Mobile Home Section - Stack Layout */
+  /* MOBILE HOME - PROFESSIONAL COMPACT LAYOUT */
   .home-section {
     grid-template-columns: 1fr;
-    padding: 2rem 1.5rem;
+    padding: 1.5rem 1rem;
     text-align: center;
-    gap: 2rem;
-  }
-
-  .profile-section::before {
-    width: 240px;
-    height: 240px;
-  }
-
-  .profile-section::after {
-    width: 220px;
-    height: 220px;
-  }
-
-  .profile-section img {
-    width: 200px;
-    height: 200px;
-  }
-
-  .hero-content {
-    padding: 0;
+    gap: 0;
+    min-height: calc(100vh - 90px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
   }
 
+  /* Compact Profile Section */
+  .profile-section {
+    margin-bottom: 1rem;
+  }
+
+  .profile-section::before {
+    width: 230px;
+    height: 230px;
+  }
+
+  .profile-section::after {
+    width: 210px;
+    height: 210px;
+  }
+
+  .profile-section img {
+    width: 190px;
+    height: 190px;
+  }
+
+  /* Hero Content - No Extra Gaps */
+  .hero-content {
+    padding: 0;
+    align-items: center;
+    gap: 0.8rem;
+    width: 100%;
+  }
+
   .hero-content h1 {
-    font-size: 2.3rem;
+    font-size: 2.2rem;
+    margin: 0;
+    line-height: 1.2;
   }
 
   .hero-description {
-    font-size: 1.15rem;
+    font-size: 1.1rem;
+    margin: 0.3rem 0;
+  }
+
+  .cta-button {
+    margin: 0.8rem 0;
+    padding: 0.85rem 2rem;
+    font-size: 1rem;
   }
 
   .social-links {
     justify-content: center;
+    margin-top: 0.5rem;
+    gap: 18px;
+  }
+
+  .social-box {
+    width: 52px;
+    height: 52px;
   }
 
   .content-box {
@@ -728,11 +759,11 @@ body {
 
 @media (max-width: 767px) {
   .navbar {
-    padding: 1rem 1.2rem;
+    padding: 0.9rem 1rem;
   }
 
   .logo {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
   }
 
   .nav-links {
@@ -748,31 +779,57 @@ body {
     padding: 0.8rem 1.2rem;
   }
 
+  .main-container {
+    padding-top: 65px;
+  }
+
+  /* COMPACT MOBILE HOME */
   .home-section {
-    padding: 2rem 1rem;
+    padding: 1.2rem 0.8rem;
+    min-height: calc(100vh - 80px);
+  }
+
+  .profile-section {
+    margin-bottom: 0.8rem;
   }
 
   .profile-section::before {
-    width: 210px;
-    height: 210px;
+    width: 200px;
+    height: 200px;
   }
 
   .profile-section::after {
-    width: 190px;
-    height: 190px;
+    width: 180px;
+    height: 180px;
   }
 
   .profile-section img {
-    width: 170px;
-    height: 170px;
+    width: 165px;
+    height: 165px;
+  }
+
+  .hero-content {
+    gap: 0.6rem;
   }
 
   .hero-content h1 {
-    font-size: 2rem;
+    font-size: 1.9rem;
   }
 
   .hero-description {
-    font-size: 1.05rem;
+    font-size: 1rem;
+    margin: 0.2rem 0;
+  }
+
+  .cta-button {
+    padding: 0.8rem 1.8rem;
+    font-size: 0.95rem;
+    margin: 0.6rem 0;
+  }
+
+  .social-links {
+    margin-top: 0.4rem;
+    gap: 16px;
   }
 
   .social-box {
@@ -816,7 +873,11 @@ body {
 
 @media (max-width: 479px) {
   .logo {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+  }
+
+  .navbar {
+    padding: 0.8rem 0.8rem;
   }
 
   .nav-links {
@@ -833,46 +894,63 @@ body {
     padding: 0.75rem 1rem;
   }
 
+  .main-container {
+    padding-top: 60px;
+  }
+
+  /* EXTRA COMPACT FOR SMALL SCREENS */
   .home-section {
-    padding: 1.5rem 0.8rem;
+    padding: 1rem 0.6rem;
+    min-height: calc(100vh - 70px);
+  }
+
+  .profile-section {
+    margin-bottom: 0.6rem;
   }
 
   .profile-section::before {
-    width: 190px;
-    height: 190px;
+    width: 180px;
+    height: 180px;
   }
 
   .profile-section::after {
-    width: 170px;
-    height: 170px;
+    width: 160px;
+    height: 160px;
   }
 
   .profile-section img {
-    width: 150px;
-    height: 150px;
+    width: 145px;
+    height: 145px;
+  }
+
+  .hero-content {
+    gap: 0.5rem;
   }
 
   .hero-content h1 {
-    font-size: 1.8rem;
-    margin-top:5%:
+    font-size: 1.7rem;
+    line-height: 1.15;
   }
 
   .hero-description {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
+    margin: 0.1rem 0;
   }
 
   .cta-button {
-    padding: 0.8rem 1.8rem;
-    font-size: 0.95rem;
+    padding: 0.75rem 1.6rem;
+    font-size: 0.9rem;
+    margin: 0.5rem 0;
   }
 
   .social-links {
-    gap: 15px;
+    gap: 14px;
+    margin-top: 0.3rem;
   }
 
   .social-box {
-    width: 45px;
-    height: 45px;
+    width: 44px;
+    height: 44px;
   }
 
   .social-box img {
