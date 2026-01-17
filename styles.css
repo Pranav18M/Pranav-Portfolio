@@ -160,6 +160,12 @@ body {
   box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
 }
 
+/* Desktop - Add corner decorations */
+.home-section::before,
+.home-section::after {
+  display: none;
+}
+
 .profile-section {
   display: flex;
   justify-content: center;
@@ -666,22 +672,59 @@ body {
   }
 
   .main-container {
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding-left: 0;
+    padding-right: 0;
     padding-top: 70px;
   }
 
-  /* MOBILE HOME - PROFESSIONAL COMPACT LAYOUT */
+  /* MOBILE HOME - FULL SCREEN EDGE TO EDGE */
   .home-section {
     grid-template-columns: 1fr;
-    padding: 1.5rem 1rem;
+    padding: 2rem 0.8rem;
     text-align: center;
     gap: 0;
-    min-height: calc(100vh - 90px);
+    min-height: calc(100vh - 70px);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    border-radius: 0;
+    margin: 0;
+    width: 100vw;
+    margin-left: calc(-1 * (100vw - 100%) / 2);
+    position: relative;
+  }
+
+  /* Corner decorations - positioned at screen edges */
+  .home-section::before {
+    content: "";
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 70px;
+    height: 70px;
+    border-top: 4px solid rgba(59, 130, 246, 0.5);
+    border-left: 4px solid rgba(59, 130, 246, 0.5);
+    border-radius: 15px 0 0 0;
+    display: block;
+  }
+
+  .home-section::after {
+    content: "";
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 70px;
+    height: 70px;
+    border-bottom: 4px solid rgba(59, 130, 246, 0.5);
+    border-right: 4px solid rgba(59, 130, 246, 0.5);
+    border-radius: 0 0 15px 0;
+    display: block;
+  }
+
+  /* Additional corner decorations */
+  .profile-section {
+    position: relative;
   }
 
   /* Compact Profile Section */
@@ -759,7 +802,7 @@ body {
 
 @media (max-width: 767px) {
   .navbar {
-    padding: 0.9rem 1rem;
+    padding: 0.9rem 0.5rem;
   }
 
   .logo {
@@ -781,12 +824,30 @@ body {
 
   .main-container {
     padding-top: 65px;
+    padding-left: 0;
+    padding-right: 0;
   }
 
-  /* COMPACT MOBILE HOME */
+  /* FULL WIDTH MOBILE HOME */
   .home-section {
-    padding: 1.2rem 0.8rem;
-    min-height: calc(100vh - 80px);
+    padding: 2rem 0.5rem;
+    min-height: calc(100vh - 65px);
+    border-radius: 0;
+    width: 100vw;
+  }
+
+  .home-section::before {
+    top: 8px;
+    left: 8px;
+    width: 60px;
+    height: 60px;
+  }
+
+  .home-section::after {
+    bottom: 8px;
+    right: 8px;
+    width: 60px;
+    height: 60px;
   }
 
   .profile-section {
@@ -877,7 +938,7 @@ body {
   }
 
   .navbar {
-    padding: 0.8rem 0.8rem;
+    padding: 0.8rem 0.5rem;
   }
 
   .nav-links {
@@ -896,12 +957,32 @@ body {
 
   .main-container {
     padding-top: 60px;
+    padding-left: 0;
+    padding-right: 0;
   }
 
-  /* EXTRA COMPACT FOR SMALL SCREENS */
+  /* FULL EDGE-TO-EDGE FOR SMALL SCREENS */
   .home-section {
-    padding: 1rem 0.6rem;
-    min-height: calc(100vh - 70px);
+    padding: 1.5rem 0.5rem;
+    min-height: calc(100vh - 60px);
+    border-radius: 0;
+    width: 100vw;
+  }
+
+  .home-section::before {
+    top: 5px;
+    left: 5px;
+    width: 50px;
+    height: 50px;
+    border-width: 3px;
+  }
+
+  .home-section::after {
+    bottom: 5px;
+    right: 5px;
+    width: 50px;
+    height: 50px;
+    border-width: 3px;
   }
 
   .profile-section {
