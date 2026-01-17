@@ -237,7 +237,6 @@ body {
 
 .hero-content h1 {
   font-size: 4rem;
-  margin: 0;
   color: #fff;
   line-height: 1.2;
 }
@@ -855,6 +854,7 @@ body {
 
   .hero-content h1 {
     font-size: 1.8rem;
+    margin-top:5%:
   }
 
   .hero-description {
