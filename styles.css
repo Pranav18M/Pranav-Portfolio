@@ -938,7 +938,7 @@ body {
   }
 
   .navbar {
-    padding: 0.8rem 0.5rem;
+    padding: 0.8rem 0.8rem;
   }
 
   .nav-links {
@@ -957,32 +957,12 @@ body {
 
   .main-container {
     padding-top: 60px;
-    padding-left: 0;
-    padding-right: 0;
   }
 
-  /* FULL EDGE-TO-EDGE FOR SMALL SCREENS */
+  /* EXTRA COMPACT FOR SMALL SCREENS */
   .home-section {
-    padding: 1.5rem 0.5rem;
-    min-height: calc(100vh - 60px);
-    border-radius: 0;
-    width: 100vw;
-  }
-
-  .home-section::before {
-    top: 5px;
-    left: 5px;
-    width: 50px;
-    height: 50px;
-    border-width: 3px;
-  }
-
-  .home-section::after {
-    bottom: 5px;
-    right: 5px;
-    width: 50px;
-    height: 50px;
-    border-width: 3px;
+    padding: 1rem 0.6rem;
+    min-height: calc(100vh - 70px);
   }
 
   .profile-section {
