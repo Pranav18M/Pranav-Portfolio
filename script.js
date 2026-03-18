@@ -1,10 +1,6 @@
 // ============================================
 // OPTIMIZED JAVASCRIPT - REDUCED LAG
 // ============================================
-
-// -----------------------------
-// Simplified Background (ONLY 4 bubbles!)
-// -----------------------------
 function createBackground() {
   const background = document.querySelector('.background-animation');
   if (!background) return;
@@ -26,6 +22,25 @@ function createBackground() {
   }
 
   // REMOVED all lines - they cause lag on mobile
+}
+
+// -----------------------------
+// Rain Animation for Home Section
+// -----------------------------
+function initRainAnimation() {
+  const rainTargets = document.querySelectorAll('.rain-drop');
+  rainTargets.forEach((el, index) => {
+    // Start from above the viewport (negative translateY), then fall to natural position
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(-120px)';
+    el.style.transition = 'none';
+
+    setTimeout(() => {
+      el.style.transition = `opacity 0.4s ease, transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
+      el.style.opacity = '1';
+      el.style.transform = 'translateY(0)';
+    }, 100 + index * 150);
+  });
 }
 
 // -----------------------------
@@ -61,6 +76,23 @@ function showSection(targetId, pushHistory = true) {
     navLinksContainer.classList.remove('active');
     if (menuBtn) menuBtn.classList.remove('active');
   }
+
+  // Re-trigger rain animation when navigating to any section
+  setTimeout(() => {
+    const sectionRainDrops = targetEl.querySelectorAll('.rain-drop');
+    sectionRainDrops.forEach((el) => {
+      el.style.transition = 'none';
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(-120px)';
+    });
+    sectionRainDrops.forEach((el, index) => {
+      setTimeout(() => {
+        el.style.transition = `opacity 0.4s ease, transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
+        el.style.opacity = '1';
+        el.style.transform = 'translateY(0)';
+      }, 100 + index * 150);
+    });
+  }, 50);
 }
 
 function goBack() {
@@ -264,6 +296,7 @@ document.addEventListener('DOMContentLoaded', function () {
   createBackground();
   typeEffect();
   initLazyLoad();
+  initRainAnimation();
 
   const activeSection = document.querySelector('.content-section.active') || document.getElementById('home');
   historyStack = [activeSection?.id || 'home'];
