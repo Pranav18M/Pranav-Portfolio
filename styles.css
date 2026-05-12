@@ -726,18 +726,18 @@ body {
   }
 
   .profile-section::before {
-    width: 230px;
-    height: 230px;
+    width: 300px;
+    height: 300px;
   }
 
   .profile-section::after {
-    width: 210px;
-    height: 210px;
+    width: 280px;
+    height: 280px;
   }
 
   .profile-section img {
-    width: 190px;
-    height: 190px;
+    width: 250px;
+    height: 250px;
   }
 
   /* Hero Content - No Extra Gaps */
@@ -749,13 +749,13 @@ body {
   }
 
   .hero-content h1 {
-    font-size: 2.2rem;
+    font-size: 2.8rem;
     margin: 0;
     line-height: 1.2;
   }
 
   .hero-description {
-    font-size: 1.1rem;
+    font-size: 1.3rem;
     margin: 0.3rem 0;
   }
 
@@ -847,18 +847,18 @@ body {
   }
 
   .profile-section::before {
-    width: 200px;
-    height: 200px;
+    width: 270px;
+    height: 270px;
   }
 
   .profile-section::after {
-    width: 180px;
-    height: 180px;
+    width: 250px;
+    height: 250px;
   }
 
   .profile-section img {
-    width: 165px;
-    height: 165px;
+    width: 220px;
+    height: 220px;
   }
 
   .hero-content {
@@ -866,11 +866,11 @@ body {
   }
 
   .hero-content h1 {
-    font-size: 1.9rem;
+    font-size: 2.5rem;
   }
 
   .hero-description {
-    font-size: 1rem;
+    font-size: 1.2rem;
     margin: 0.2rem 0;
   }
 
@@ -962,18 +962,18 @@ body {
   }
 
   .profile-section::before {
-    width: 180px;
-    height: 180px;
+    width: 240px;
+    height: 240px;
   }
 
   .profile-section::after {
-    width: 160px;
-    height: 160px;
+    width: 220px;
+    height: 220px;
   }
 
   .profile-section img {
-    width: 145px;
-    height: 145px;
+    width: 195px;
+    height: 195px;
   }
 
   .hero-content {
@@ -981,12 +981,12 @@ body {
   }
 
   .hero-content h1 {
-    font-size: 1.7rem;
+    font-size: 2.2rem;
     line-height: 1.15;
   }
 
   .hero-description {
-    font-size: 0.9rem;
+    font-size: 1.1rem;
     margin: 0.1rem 0;
   }
 
