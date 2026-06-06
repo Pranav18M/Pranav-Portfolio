@@ -5,9 +5,175 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pranav's Portfolio</title>
   <link rel="stylesheet" href="styles.css">
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- LANDING ANIMATION STYLES                        -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&display=swap');
+
+    /* ── Overlay — single full-screen panel ─────── */
+    #landing-overlay {
+      position: fixed;
+      inset: 0;
+      background: #0A1931;
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      clip-path: inset(0 0% 0 0);
+      will-change: clip-path;
+    }
+
+    /* Subtle centre glow */
+    #landing-overlay::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 50% 50%,
+        rgba(59,130,246,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* ── Text wrapper ────────────────────────────── */
+    #welcome-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Sub-label */
+    #welcome-sub {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: clamp(0.7rem, 2vw, 1rem);
+      letter-spacing: 0.55em;
+      color: #3b82f6;
+      text-transform: uppercase;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    #welcome-sub.visible { opacity: 1; transform: translateY(0); }
+
+    /* Main WELCOME letters */
+    #welcome-text {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: clamp(3.5rem, 11vw, 8rem);
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.2em;
+      white-space: nowrap;
+      display: flex;
+      gap: 0.02em;
+      position: relative;
+    }
+
+    /* Each letter span — paused until JS fires it */
+    .wl {
+      display: inline-block;
+      opacity: 0;
+      animation: letterDrop 0.5s cubic-bezier(0.22,1,0.36,1) forwards paused;
+      text-shadow: 0 0 30px rgba(59,130,246,0.8), 0 0 60px rgba(59,130,246,0.4);
+    }
+
+    @keyframes letterDrop {
+      0%   { opacity:0; transform: translateY(-60px) rotateX(90deg) scale(1.3); }
+      60%  { opacity:1; transform: translateY(6px)   rotateX(-8deg)  scale(1);   }
+      80%  {            transform: translateY(-3px)  rotateX( 4deg);             }
+      100% { opacity:1; transform: translateY(0)     rotateX(0deg)   scale(1);   }
+    }
+
+    /* Shimmer wave after all letters land */
+    .wl.shimmer {
+      animation: shimmerPass 1.2s ease forwards;
+    }
+    @keyframes shimmerPass {
+      0%   { text-shadow: 0 0 30px rgba(59,130,246,0.8), 0 0 60px rgba(59,130,246,0.4); color:#fff;    }
+      40%  { text-shadow: 0 0 40px rgba(147,197,253,1),  0 0 80px rgba(59,130,246,0.8); color:#e0f2fe; }
+      100% { text-shadow: 0 0 20px rgba(59,130,246,0.5), 0 0 40px rgba(59,130,246,0.2); color:#fff;    }
+    }
+
+    /* Accent bar */
+    #welcome-bar {
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #3b82f6, #93c5fd, #3b82f6, transparent);
+      border-radius: 2px;
+      box-shadow: 0 0 12px rgba(59,130,246,0.8);
+      transition: width 1s ease 0.2s;
+    }
+    #welcome-bar.open { width: min(500px, 80vw); }
+
+    /* Tagline */
+    #welcome-tag {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: clamp(0.7rem, 1.8vw, 0.95rem);
+      letter-spacing: 0.4em;
+      color: rgba(148,163,184,0.8);
+      text-transform: uppercase;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.7s ease 0.3s, transform 0.7s ease 0.3s;
+    }
+    #welcome-tag.visible { opacity:1; transform:translateY(0); }
+
+    /* Glitch flash */
+    .glitch-flash {
+      animation: glitchFlash 0.4s steps(1) forwards !important;
+    }
+    @keyframes glitchFlash {
+      0%       { text-shadow: -3px 0 #f00,  3px 0 #0ff; transform: skewX(-3deg); }
+      20%      { text-shadow:  3px 0 #f00, -3px 0 #0ff; transform: skewX( 3deg); }
+      40%      { text-shadow: -2px 0 #f00,  2px 0 #0ff; transform: skewX(-1deg); }
+      60%      { text-shadow:  2px 0 #f00, -2px 0 #0ff; transform: skewX( 1deg); }
+      80%,100% { text-shadow: 0 0 20px rgba(59,130,246,0.5), 0 0 40px rgba(59,130,246,0.2); transform:skewX(0); color:#fff; }
+    }
+
+    /* ── Slide-away exit (left → right reveal) ───── */
+    @keyframes doorSlide {
+      0%   { clip-path: inset(0 0%   0 0); }
+      100% { clip-path: inset(0 100% 0 0); }
+    }
+    #landing-overlay.slide-away {
+      animation: doorSlide 2.8s cubic-bezier(0.76,0,0.24,1) forwards;
+    }
+
+    /* Text clips in sync with the sliding edge */
+    @keyframes textDisappear {
+      0%   { clip-path: inset(0 0%   0 0); }
+      100% { clip-path: inset(0 100% 0 0); }
+    }
+    #welcome-wrap.slide-away {
+      animation: textDisappear 2.8s cubic-bezier(0.76,0,0.24,1) forwards;
+    }
+
+    #landing-overlay.done {
+      pointer-events: none;
+      display: none;
+    }
+  </style>
 </head>
 <body>
-  
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- LANDING OVERLAY                                 -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div id="landing-overlay" aria-hidden="true">
+    <div id="welcome-wrap">
+      <div id="welcome-sub">Portfolio</div>
+      <div id="welcome-text"><!-- letters injected by JS --></div>
+      <div id="welcome-bar"></div>
+      <div id="welcome-tag">Mohana Pranav &nbsp;·&nbsp; Full Stack Developer</div>
+    </div>
+  </div>
+
+  <!-- ─────────────────────────────────────────────── -->
+  <!-- ALL EXISTING PORTFOLIO MARKUP (UNCHANGED)       -->
+  <!-- ─────────────────────────────────────────────── -->
+
   <!-- Animated Background -->
   <div class="background-animation"></div>
 
@@ -72,7 +238,6 @@
         <p class="rain-drop">  I'm Mohana Pranav — A Web Developer who has built and shipped 4 live full-stack applications.</p>
         <p class="rain-drop">I work with React.js, Node.js, NestJS, TypeScript, MongoDB and MySQL — and I'm an AWS Certified Cloud Practitioner with real deployment experience on Vercel and Render and Railway.</p>
         <p class="rain-drop">Currently in my 3rd year of B.E. ECE at Excel Engineering College, I'm actively looking for Web Developer roles where I can build real products and grow fast.</p>
-        
       </div> 
     </div>
 
@@ -135,8 +300,7 @@
         <div class="projects-grid">
           <a href="https://mock-intervue-ai.vercel.app/" target="_blank" class="project-card rain-drop">
             <h3>InterviewAI</h3>
-            <p>
-AI-powered mock interview platform with voice interviews, real-time scoring, ATS resume analyzer, and resume generator--built with React, Node.js+NestJS, MongoDB, and Google Gemini AI.</p>
+            <p>AI-powered mock interview platform with voice interviews, real-time scoring, ATS resume analyzer, and resume generator--built with React, Node.js+NestJS, MongoDB, and Google Gemini AI.</p>
           </a>
           <a href="https://shop-ix.vercel.app/" target="_blank" class="project-card rain-drop">
             <h3>Shop-ix</h3>
@@ -251,5 +415,9 @@ AI-powered mock interview platform with voice interviews, real-time scoring, ATS
   </div>
 
   <script src="script.js"></script>
+
+  <!-- Landing animation — separate file -->
+  <script src="landing.js"></script>
+
 </body>
 </html>
