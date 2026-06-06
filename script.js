@@ -301,3 +301,85 @@ document.addEventListener('DOMContentLoaded', function () {
   const activeSection = document.querySelector('.content-section.active') || document.getElementById('home');
   historyStack = [activeSection?.id || 'home'];
 });
+/* ==========================================================
+   landing.js  —  Welcome Animation
+   Timeline:
+     0.0s  Navy overlay visible
+     0.3s  "Portfolio" sub-label fades up
+     0.6s  Letters W-E-L-C-O-M-E drop in one by one
+     2.2s  Accent bar expands + tagline fades in
+     2.5s  Shimmer wave across letters
+     2.9s  Brief glitch flash
+     3.4s  Overlay slides away left→right (clip-path)
+     6.2s  Overlay removed from DOM
+   ========================================================== */
+
+(function () {
+  'use strict';
+
+  const overlay  = document.getElementById('landing-overlay');
+  const textEl   = document.getElementById('welcome-text');
+  const subEl    = document.getElementById('welcome-sub');
+  const barEl    = document.getElementById('welcome-bar');
+  const tagEl    = document.getElementById('welcome-tag');
+  const wrapEl   = document.getElementById('welcome-wrap');
+
+  if (!overlay || !textEl) return;
+
+  /* ── Config ─────────────────────────────────────── */
+  const WORD         = 'WELCOME';
+  const FIRST_LETTER = 600;   // ms before first letter drops
+  const LETTER_GAP   = 220;   // ms between each letter
+
+  /* ── 1. Sub-label fades up ───────────────────────── */
+  setTimeout(() => {
+    if (subEl) subEl.classList.add('visible');
+  }, 450);
+
+  /* ── 2. Build letter spans, drop one by one ─────── */
+  const letterSpans = WORD.split('').map(char => {
+    const span = document.createElement('span');
+    span.className   = 'wl';
+    span.textContent = char;
+    textEl.appendChild(span);
+    return span;
+  });
+
+  letterSpans.forEach((span, i) => {
+    setTimeout(() => {
+      span.style.animationPlayState = 'running';
+    }, FIRST_LETTER + i * LETTER_GAP);
+  });
+
+  /* ── 3. After all letters land ───────────────────── */
+  const ALL_LANDED = FIRST_LETTER + WORD.length * LETTER_GAP + 200;
+
+  setTimeout(() => {
+    // Accent bar expands
+    if (barEl) barEl.classList.add('open');
+    // Tagline fades up
+    if (tagEl) tagEl.classList.add('visible');
+    // Shimmer wave — staggered across letters
+    letterSpans.forEach((span, i) => {
+      setTimeout(() => span.classList.add('shimmer'), i * 60);
+    });
+  }, ALL_LANDED);
+
+  /* ── 4. Glitch burst ─────────────────────────────── */
+  setTimeout(() => {
+    textEl.classList.add('glitch-flash');
+    setTimeout(() => textEl.classList.remove('glitch-flash'), 450);
+  }, ALL_LANDED + WORD.length * 60 + 200);
+
+  /* ── 5. Slide overlay away left → right ─────────── */
+  const SLIDE_START = ALL_LANDED + WORD.length * 60 + 700;
+
+  setTimeout(() => {
+    overlay.classList.add('slide-away');
+    if (wrapEl) wrapEl.classList.add('slide-away');
+
+    // Kill overlay after animation (2.8s slide)
+    setTimeout(() => overlay.classList.add('done'), 2850);
+  }, SLIDE_START);
+
+})();
