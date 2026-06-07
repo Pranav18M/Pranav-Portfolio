@@ -81,19 +81,9 @@
 
     @keyframes letterDrop {
       0%   { opacity:0; transform: translateY(-60px) rotateX(90deg) scale(1.3); }
-      60%  { opacity:1; transform: translateY(6px)   rotateX(-8deg)  scale(1);   }
-      80%  {            transform: translateY(-3px)  rotateX( 4deg);             }
-      100% { opacity:1; transform: translateY(0)     rotateX(0deg)   scale(1);   }
-    }
-
-    /* Shimmer wave after all letters land */
-    .wl.shimmer {
-      animation: shimmerPass 1.2s ease forwards;
-    }
-    @keyframes shimmerPass {
-      0%   { text-shadow: 0 0 30px rgba(59,130,246,0.8), 0 0 60px rgba(59,130,246,0.4); color:#fff;    }
-      40%  { text-shadow: 0 0 40px rgba(147,197,253,1),  0 0 80px rgba(59,130,246,0.8); color:#e0f2fe; }
-      100% { text-shadow: 0 0 20px rgba(59,130,246,0.5), 0 0 40px rgba(59,130,246,0.2); color:#fff;    }
+      60%  { opacity:1; transform: translateY(6px)   rotateX(-8deg) scale(1);   }
+      80%  { opacity:1; transform: translateY(-3px)  rotateX(4deg);             }
+      100% { opacity:1; transform: translateY(0)     rotateX(0deg)  scale(1);   }
     }
 
     /* Accent bar */
@@ -120,31 +110,20 @@
     }
     #welcome-tag.visible { opacity:1; transform:translateY(0); }
 
-    /* Glitch flash */
-    .glitch-flash {
-      animation: glitchFlash 0.4s steps(1) forwards !important;
-    }
-    @keyframes glitchFlash {
-      0%       { text-shadow: -3px 0 #f00,  3px 0 #0ff; transform: skewX(-3deg); }
-      20%      { text-shadow:  3px 0 #f00, -3px 0 #0ff; transform: skewX( 3deg); }
-      40%      { text-shadow: -2px 0 #f00,  2px 0 #0ff; transform: skewX(-1deg); }
-      60%      { text-shadow:  2px 0 #f00, -2px 0 #0ff; transform: skewX( 1deg); }
-      80%,100% { text-shadow: 0 0 20px rgba(59,130,246,0.5), 0 0 40px rgba(59,130,246,0.2); transform:skewX(0); color:#fff; }
-    }
 
-    /* ── Slide-away exit (left → right reveal) ───── */
+    /* ── Slide-away exit (bottom → top shutter) ───── */
     @keyframes doorSlide {
-      0%   { clip-path: inset(0 0%   0 0); }
-      100% { clip-path: inset(0 100% 0 0); }
+      0%   { clip-path: inset(0 0 0%   0); }
+      100% { clip-path: inset(0 0 100% 0); }
     }
     #landing-overlay.slide-away {
       animation: doorSlide 2.8s cubic-bezier(0.76,0,0.24,1) forwards;
     }
 
-    /* Text clips in sync with the sliding edge */
+    /* Text clips in sync with the shutter edge */
     @keyframes textDisappear {
-      0%   { clip-path: inset(0 0%   0 0); }
-      100% { clip-path: inset(0 100% 0 0); }
+      0%   { clip-path: inset(0 0 0%   0); }
+      100% { clip-path: inset(0 0 100% 0); }
     }
     #welcome-wrap.slide-away {
       animation: textDisappear 2.8s cubic-bezier(0.76,0,0.24,1) forwards;
@@ -204,10 +183,8 @@
     <div class="content-section active" id="home">
       <div class="home-section">
         <div class="profile-section rain-drop">
-      <div class="profile-inner">
-        <img src="my image.png" alt="Pranav">
-      </div>
-    </div>
+          <img src="my image.png" alt="Pranav">
+        </div>
         
         <div class="hero-content">
           <h1 class="rain-drop">Hello, I'm <span class="highlight">Pranav</span></h1>
@@ -237,7 +214,8 @@
           <button class="next-btn" onclick="goNext('skills')">Next</button>
         </div>
         <h2 class="rain-drop">About Me</h2>
-        <p class="rain-drop"> I'm Mohana Pranav — a Results-driven MERN Stack Developer with hands-on experience building and deploying 4 production-grade full-stack web applications.I'm Mohana Pranav — a Results-driven MERN Stack Developer with hands-on experience building and deploying 4 production-grade full-stack web applications , I work with React.js, Node.js, TypeScript and MongoDB — and I'm an AWS Certified Cloud Practitioner proficient in RESTful API development, JWT Authentication, and cloud deployment on Vercel and Render.</p>
+        <p class="rain-drop">I'm Mohana Pranav — a Passionate MERN Stack Developer with hands-on experience building and deploying 4 production-grade full-stack web applications.</p>
+        <p class="rain-drop">I work with React.js, Node.js, TypeScript and MongoDB — and I'm an AWS Certified Cloud Practitioner proficient in RESTful API development, JWT Authentication, and cloud deployment on Vercel and Render.</p>
         <p class="rain-drop">Currently in my 4th year of B.E. ECE at Excel Engineering College, I deliver scalable solutions independently and in team environments — focused on solving real-world problems through efficient and user-friendly solutions.</p>
       </div> 
     </div>
@@ -422,8 +400,3 @@
 
 </body>
 </html>
-
-
-
-
-
