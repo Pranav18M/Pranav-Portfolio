@@ -296,7 +296,7 @@ document.addEventListener('DOMContentLoaded', function () {
   createBackground();
   typeEffect();
   initLazyLoad();
-  initRainAnimation();
+ setTimeout(initRainAnimation, 4500);
 
   const activeSection = document.querySelector('.content-section.active') || document.getElementById('home');
   historyStack = [activeSection?.id || 'home'];
@@ -349,7 +349,15 @@ document.addEventListener('DOMContentLoaded', function () {
   setTimeout(() => {
     overlay.classList.add('slide-away');
     if (wrapEl) wrapEl.classList.add('slide-away');
-    setTimeout(() => overlay.classList.add('done'), 2850);
+    setTimeout(() => {
+  overlay.classList.add('done');
+}, 2850);
+
+setTimeout(() => {
+  const homeSection = document.querySelector('.home-section');
+  if (homeSection) homeSection.classList.add('zoom-reveal');
+}, 1400);
   }, SLIDE_START);
 
 })();
+
