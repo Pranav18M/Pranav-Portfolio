@@ -1031,3 +1031,23 @@ body {
     height: 35px;
   }
 }
+/* Hide home content during landing */
+.home-section .profile-section,
+.home-section .hero-content {
+  opacity: 0;
+}
+
+.home-section.zoom-reveal .profile-section {
+  opacity: 1;
+  transition: opacity 0.8s ease;
+}
+
+.home-section.zoom-reveal .hero-content {
+  animation: homeZoomIn 3.2s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
+}
+
+@keyframes homeZoomIn {
+  0%   { transform: scale(0.01); opacity: 0; }
+  60%  { transform: scale(1.05); opacity: 1; }
+  100% { transform: scale(1);    opacity: 1; }
+}
