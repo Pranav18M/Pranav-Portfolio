@@ -10,34 +10,34 @@
   <!-- LANDING ANIMATION STYLES                        -->
   <!-- ═══════════════════════════════════════════════ -->
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&family=Poppins:wght@300;400;500;600;700&display=swap');
 
     /* ── Overlay — single full-screen panel ─────── */
     #landing-overlay {
-      position: fixed;
-      inset: 0;
-      background: #0A1931;
-      z-index: 99999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      clip-path: inset(0 0% 0 0);
-      will-change: clip-path;
-    }
+    position: fixed;
+    inset: 0;
+    background: #032355;  /* back to dark navy */
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    clip-path: inset(0 0% 0 0);
+    will-change: clip-path;
+  }
 
-    /* Subtle centre glow */
     #landing-overlay::before {
       content: "";
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse 60% 50% at 50% 50%,
-        rgba(59,130,246,0.12) 0%, transparent 70%);
+      background: radial-gradient(ellipse 70% 60% at 50% 50%,
+        rgba(8, 44, 90, 0.7) 0%, transparent 70%);
       pointer-events: none;
     }
 
     /* ── Text wrapper ────────────────────────────── */
     #welcome-wrap {
       display: flex;
+      font-size:10px;
       flex-direction: column;
       align-items: center;
       gap: 1rem;
@@ -48,36 +48,36 @@
     /* Sub-label */
     #welcome-sub {
       font-family: 'Rajdhani', sans-serif;
-      font-size: clamp(0.7rem, 2vw, 1rem);
-      letter-spacing: 0.55em;
-      color: #3b82f6;
+      font-size: clamp(0.65rem, 1.8vw, 0.85rem);
+      letter-spacing: 0.5em;
+      color: #93c5fd;
       text-transform: uppercase;
       opacity: 0;
       transform: translateY(10px);
       transition: opacity 0.6s ease, transform 0.6s ease;
     }
-    #welcome-sub.visible { opacity: 1; transform: translateY(0); }
+        #welcome-sub.visible { opacity: 1; transform: translateY(0); }
 
-    /* Main WELCOME letters */
-    #welcome-text {
-      font-family: 'Rajdhani', sans-serif;
-      font-size: clamp(3.5rem, 11vw, 8rem);
-      font-weight: 700;
-      color: #fff;
-      letter-spacing: 0.2em;
-      white-space: nowrap;
-      display: flex;
-      gap: 0.02em;
-      position: relative;
+        /* Main WELCOME letters */
+        #welcome-text {
+        font-family: 'Rajdhani', sans-serif;
+        font-size: clamp(4rem, 13vw, 9.5rem);
+        font-weight: 700;
+        color: #ffffff;
+        letter-spacing: 0.15em;
+        white-space: nowrap;
+        display: flex;
+        gap: 0.02em;
     }
+
 
     /* Each letter span — paused until JS fires it */
     .wl {
       display: inline-block;
       opacity: 0;
       animation: letterDrop 0.5s cubic-bezier(0.22,1,0.36,1) forwards paused;
-      text-shadow: 0 0 30px rgba(59,130,246,0.8), 0 0 60px rgba(59,130,246,0.4);
-    }
+      text-shadow: 0 0 30px rgba(96,165,250,0.8), 0 0 60px rgba(59,130,246,0.4);
+}
 
     @keyframes letterDrop {
       0%   { opacity:0; transform: translateY(-60px) rotateX(90deg) scale(1.3); }
@@ -87,27 +87,27 @@
     }
 
     /* Accent bar */
-    #welcome-bar {
-      width: 0;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, #3b82f6, #93c5fd, #3b82f6, transparent);
-      border-radius: 2px;
-      box-shadow: 0 0 12px rgba(59,130,246,0.8);
-      transition: width 1s ease 0.2s;
-    }
+   #welcome-bar {
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #1e40af, #3b82f6, #1e40af, transparent);
+    border-radius: 2px;
+    box-shadow: none;
+    transition: width 1s ease 0.2s;
+  }
     #welcome-bar.open { width: min(500px, 80vw); }
 
     /* Tagline */
     #welcome-tag {
-      font-family: 'Rajdhani', sans-serif;
-      font-size: clamp(0.7rem, 1.8vw, 0.95rem);
-      letter-spacing: 0.4em;
-      color: rgba(148,163,184,0.8);
-      text-transform: uppercase;
-      opacity: 0;
-      transform: translateY(8px);
-      transition: opacity 0.7s ease 0.3s, transform 0.7s ease 0.3s;
-    }
+    font-family: 'Rajdhani', sans-serif;
+    font-size: clamp(0.65rem, 1.6vw, 0.9rem);
+    letter-spacing: 0.35em;
+    color: rgba(148,163,184,0.8);
+    text-transform: uppercase;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.7s ease 0.3s, transform 0.7s ease 0.3s;
+  }
     #welcome-tag.visible { opacity:1; transform:translateY(0); }
 
 
@@ -141,13 +141,13 @@
   <!-- LANDING OVERLAY                                 -->
   <!-- ═══════════════════════════════════════════════ -->
   <div id="landing-overlay" aria-hidden="true">
-    <div id="welcome-wrap">
-      <div id="welcome-sub">Portfolio</div>
-      <div id="welcome-text"><!-- letters injected by JS --></div>
-      <div id="welcome-bar"></div>
-      <div id="welcome-tag">Mohana Pranav &nbsp;·&nbsp; Full Stack Developer</div>
-    </div>
+  <div id="welcome-wrap">
+    <div id="welcome-sub"> HEY😀, I'M MOHANAPRANAV </div>
+    <div id="welcome-text"><!-- letters injected by JS --></div>
+    <div id="welcome-bar"></div>
+    <div id="welcome-tag">TO MY PORTFOLIO🌐 &nbsp;·&nbsp;</div>
   </div>
+</div>
 
   <!-- ─────────────────────────────────────────────── -->
   <!-- ALL EXISTING PORTFOLIO MARKUP (UNCHANGED)       -->
@@ -188,7 +188,7 @@
         
         <div class="hero-content">
           <h1 class="rain-drop">Hello, I'm <span class="highlight">Pranav</span></h1>
-          <h3 class="hero-description rain-drop">Aspiring <span id="typing-text">Web developer</span></h3>
+          <h3 class="hero-description rain-drop"><span id="typing-text">MERN Stack Developer</span></h3>
           <a href="#about" class="cta-button nav-link rain-drop">Discover More</a>
           
           <div class="social-links rain-drop">
@@ -237,6 +237,7 @@
               <img src="https://cdn-icons-png.flaticon.com/512/5968/5968292.png" alt="JavaScript" title="JavaScript">
               <img src="https://cdn-icons-png.flaticon.com/512/1126/1126012.png" alt="React" title="React">
               <img src="https://cdn-icons-png.flaticon.com/512/919/919832.png" alt="TypeScript" title="TypeScript">
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" alt="Next.js" title="Next.js">
             </div>
           </div>
           <div class="skill-box rain-drop">
@@ -254,6 +255,7 @@
             <div class="skill-icons">
               <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" alt="MongoDB" title="MongoDB">
               <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL" title="MySQL">
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/supabase/supabase-original.svg" alt="Supabase" title="Supabase">
             </div>
           </div>
           <div class="skill-box rain-drop">
@@ -261,7 +263,20 @@
             <div class="skill-icons">
               <img src="https://cdn-icons-png.flaticon.com/512/2111/2111288.png" alt="Git" title="Git">
               <img src="https://cdn-icons-png.flaticon.com/512/733/733609.png" alt="GitHub" title="GitHub">
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postman/postman-original.svg" alt="Postman" title="Postman">
               <img src="https://cdn-icons-png.flaticon.com/512/906/906324.png" alt="VS Code" title="VS Code">
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/npm/npm-original-wordmark.svg" alt="npm" title="npm">
+            </div>
+          </div>
+          <div class="skill-box rain-drop">
+            <h3>Platforms</h3>
+            <div class="skill-icons">
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vercel/vercel-original.svg"
+                  alt="Vercel" title="Vercel">
+              <img src="https://cdn.simpleicons.org/render/46E3B7"
+                  alt="Render" title="Render">
+              <img src="https://cdn.simpleicons.org/railway/FFFFFF"
+                  alt="Railway" title="Railway">
             </div>
           </div>
         </div>
