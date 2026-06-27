@@ -93,11 +93,11 @@
 
     /* Orange accent letters: W (0), O (4), E (6) */
     .wl.orange {
-      color: #FF8C42;
+      color: #4F9FFF;
       text-shadow:
-        0 0 15px rgba(255,140,66,0.9),
-        0 0 35px rgba(255,140,66,0.6),
-        0 0 70px rgba(255,100,20,0.4);
+        0 0 15px rgba(79,159,255,0.9),
+        0 0 35px rgba(79,159,255,0.6),
+        0 0 70px rgba(30,100,255,0.4);
     }
     /* White majority letters */
     .wl.white {
@@ -147,8 +147,8 @@
       width: 5px;
       height: 5px;
       border-radius: 50%;
-      background: #FF8C42;
-      box-shadow: 0 0 8px rgba(255,140,66,0.9);
+      background: #4F9FFF;
+      box-shadow: 0 0 8px rgba(79,159,255,0.9);
     }
 
     /* Tagline */
@@ -171,9 +171,9 @@
       100% { filter: brightness(1)   drop-shadow(0 0 8px rgba(120,180,255,0.5)); }
     }
     @keyframes wl-pulse-orange {
-      0%   { filter: brightness(1)   drop-shadow(0 0 8px rgba(255,140,66,0.6)); }
-      50%  { filter: brightness(1.5) drop-shadow(0 0 25px rgba(255,140,66,1.0)); }
-      100% { filter: brightness(1)   drop-shadow(0 0 8px rgba(255,140,66,0.6)); }
+      0%   { filter: brightness(1)   drop-shadow(0 0 8px rgba(79,159,255,0.9)); }
+      50%  { filter: brightness(1.5) drop-shadow(0 0 25px rgba(79,159,255,0.6)); }
+      100% { filter: brightness(1)   drop-shadow(0 0 8px rgba(30,100,255,0.4)); }
     }
     .wl.pulse.white  { animation: wl-pulse-white  0.9s ease forwards; }
     .wl.pulse.orange { animation: wl-pulse-orange 0.9s ease forwards; }
@@ -212,7 +212,7 @@
         <div class="bar-dot"></div>
         <div class="bar-line"></div>
       </div>
-      <div id="welcome-tag">  &nbsp;&nbsp; MERN Stack Developer &nbsp;&nbsp; &nbsp;&nbsp;</div>
+      <div id="welcome-tag"> &nbsp;&nbsp; MERN Stack Developer &nbsp;&nbsp; &nbsp;&nbsp;</div>
     </div>
 
     <!-- Flying letters injected here by JS (position:fixed, outside wrap) -->
