@@ -6,112 +6,179 @@
   <title>Pranav's Portfolio</title>
   <link rel="stylesheet" href="styles.css">
 
-  <!-- ═══════════════════════════════════════════════ -->
-  <!-- LANDING ANIMATION STYLES                        -->
-  <!-- ═══════════════════════════════════════════════ -->
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&family=Poppins:wght@300;400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&display=swap');
 
-    /* ── Overlay — single full-screen panel ─────── */
+    /* ══════════════════════════════════════════════
+       LANDING OVERLAY
+    ══════════════════════════════════════════════ */
     #landing-overlay {
-    position: fixed;
-    inset: 0;
-    background: #032355;  /* back to dark navy */
-    z-index: 99999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    clip-path: inset(0 0% 0 0);
-    will-change: clip-path;
-  }
-
-    #landing-overlay::before {
-      content: "";
-      position: absolute;
+      position: fixed;
       inset: 0;
-      background: radial-gradient(ellipse 70% 60% at 50% 50%,
-        rgba(8, 44, 90, 0.7) 0%, transparent 70%);
-      pointer-events: none;
+      background: #050505;
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
     }
 
-    /* ── Text wrapper ────────────────────────────── */
+    /* ── Content wrapper ── */
     #welcome-wrap {
       display: flex;
-      font-size:10px;
       flex-direction: column;
       align-items: center;
-      gap: 1rem;
+      gap: 14px;
       position: relative;
       z-index: 2;
+      text-align: center;
     }
 
-    /* Sub-label */
+    /* "Hi there, I'm" */
     #welcome-sub {
       font-family: 'Rajdhani', sans-serif;
-      font-size: clamp(0.65rem, 1.8vw, 0.85rem);
-      letter-spacing: 0.5em;
-      color: #93c5fd;
+      font-size: clamp(0.75rem, 2vw, 1rem);
+      letter-spacing: 0.55em;
+      color: #C9D8FF;
       text-transform: uppercase;
       opacity: 0;
       transform: translateY(10px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
+      transition: opacity 0.7s ease, transform 0.7s ease;
     }
-        #welcome-sub.visible { opacity: 1; transform: translateY(0); }
+    #welcome-sub.visible { opacity: 1; transform: translateY(0); }
 
-        /* Main WELCOME letters */
-        #welcome-text {
-        font-family: 'Rajdhani', sans-serif;
-        font-size: clamp(4rem, 13vw, 9.5rem);
-        font-weight: 700;
-        color: #ffffff;
-        letter-spacing: 0.15em;
-        white-space: nowrap;
-        display: flex;
-        gap: 0.02em;
-    }
-
-
-    /* Each letter span — paused until JS fires it */
-    .wl {
-      display: inline-block;
+    /* "Mohana Pranav" name */
+    #welcome-name {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: clamp(1.1rem, 3vw, 1.8rem);
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      color: #ffffff;
       opacity: 0;
-      animation: letterDrop 0.5s cubic-bezier(0.22,1,0.36,1) forwards paused;
-      text-shadow: 0 0 30px rgba(96,165,250,0.8), 0 0 60px rgba(59,130,246,0.4);
-}
+      transform: translateY(10px);
+      transition: opacity 0.8s ease 0.1s, transform 0.8s ease 0.1s;
+    }
+    #welcome-name.visible { opacity: 1; transform: translateY(0); }
 
-    @keyframes letterDrop {
-      0%   { opacity:0; transform: translateY(-60px) rotateX(90deg) scale(1.3); }
-      60%  { opacity:1; transform: translateY(6px)   rotateX(-8deg) scale(1);   }
-      80%  { opacity:1; transform: translateY(-3px)  rotateX(4deg);             }
-      100% { opacity:1; transform: translateY(0)     rotateX(0deg)  scale(1);   }
+    /* Ghost row — reserves exact WELCOME height/width, invisible */
+    #welcome-ghost {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: clamp(3.5rem, 11vw, 7.5rem);
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      white-space: nowrap;
+      visibility: hidden;   /* takes up space but invisible */
+      user-select: none;
+      pointer-events: none;
+      line-height: 1;
     }
 
-    /* Accent bar */
-   #welcome-bar {
-    width: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, #1e40af, #3b82f6, #1e40af, transparent);
-    border-radius: 2px;
-    box-shadow: none;
-    transition: width 1s ease 0.2s;
-  }
-    #welcome-bar.open { width: min(500px, 80vw); }
+    /* Flying letters — positioned absolutely within overlay */
+    .wl {
+      position: fixed;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: clamp(3.5rem, 11vw, 7.5rem);
+      font-weight: 700;
+      line-height: 1;
+      white-space: nowrap;
+      will-change: transform, opacity, filter;
+      opacity: 0;
+      z-index: 10;
+      /* base glow — white majority */
+      text-shadow:
+        0 0 15px rgba(255,255,255,0.8),
+        0 0 35px rgba(120,180,255,0.5),
+        0 0 70px rgba(120,180,255,0.3);
+    }
+
+    /* Orange accent letters: W (0), O (4), E (6) */
+    .wl.orange {
+      color: #FF8C42;
+      text-shadow:
+        0 0 15px rgba(255,140,66,0.9),
+        0 0 35px rgba(255,140,66,0.6),
+        0 0 70px rgba(255,100,20,0.4);
+    }
+    /* White majority letters */
+    .wl.white {
+      color: #FFFFFF;
+      text-shadow:
+        0 0 15px rgba(255,255,255,0.8),
+        0 0 35px rgba(120,180,255,0.5),
+        0 0 70px rgba(120,180,255,0.3);
+    }
+
+    /* Radial glow behind assembled WELCOME */
+    #welcome-glow {
+      position: fixed;
+      width: min(800px, 90vw);
+      height: 300px;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(
+        ellipse,
+        rgba(120,180,255,0.12) 0%,
+        rgba(255,120,40,0.06) 40%,
+        transparent 70%
+      );
+      opacity: 0;
+      transition: opacity 0.8s ease;
+      pointer-events: none;
+      z-index: 1;
+    }
+    #welcome-glow.show { opacity: 1; }
+
+    /* Divider */
+    #welcome-bar {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+    #welcome-bar.open { opacity: 1; }
+    .bar-line {
+      height: 1px;
+      width: 80px;
+      background: linear-gradient(90deg, transparent, #356FD6, transparent);
+    }
+    .bar-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #FF8C42;
+      box-shadow: 0 0 8px rgba(255,140,66,0.9);
+    }
 
     /* Tagline */
     #welcome-tag {
-    font-family: 'Rajdhani', sans-serif;
-    font-size: clamp(0.65rem, 1.6vw, 0.9rem);
-    letter-spacing: 0.35em;
-    color: rgba(148,163,184,0.8);
-    text-transform: uppercase;
-    opacity: 0;
-    transform: translateY(8px);
-    transition: opacity 0.7s ease 0.3s, transform 0.7s ease 0.3s;
-  }
-    #welcome-tag.visible { opacity:1; transform:translateY(0); }
+      font-family: 'Rajdhani', sans-serif;
+      font-size: clamp(0.65rem, 1.8vw, 0.88rem);
+      letter-spacing: 0.42em;
+      color: #8EA6D8;
+      text-transform: uppercase;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.7s ease 0.15s, transform 0.7s ease 0.15s;
+    }
+    #welcome-tag.visible { opacity: 1; transform: translateY(0); }
 
+    /* ── Glow pulse — uses filter not transform to avoid position reset ── */
+    @keyframes wl-pulse-white {
+      0%   { filter: brightness(1)   drop-shadow(0 0 8px rgba(120,180,255,0.5)); }
+      50%  { filter: brightness(1.4) drop-shadow(0 0 25px rgba(120,180,255,0.9)); }
+      100% { filter: brightness(1)   drop-shadow(0 0 8px rgba(120,180,255,0.5)); }
+    }
+    @keyframes wl-pulse-orange {
+      0%   { filter: brightness(1)   drop-shadow(0 0 8px rgba(255,140,66,0.6)); }
+      50%  { filter: brightness(1.5) drop-shadow(0 0 25px rgba(255,140,66,1.0)); }
+      100% { filter: brightness(1)   drop-shadow(0 0 8px rgba(255,140,66,0.6)); }
+    }
+    .wl.pulse.white  { animation: wl-pulse-white  0.9s ease forwards; }
+    .wl.pulse.orange { animation: wl-pulse-orange 0.9s ease forwards; }
 
-    /* ── Slide-away exit (bottom → top shutter) ───── */
+    /* ── Exit slide ── */
     @keyframes doorSlide {
       0%   { clip-path: inset(0 0 0%   0); }
       100% { clip-path: inset(0 0 100% 0); }
@@ -119,16 +186,6 @@
     #landing-overlay.slide-away {
       animation: doorSlide 2.8s cubic-bezier(0.76,0,0.24,1) forwards;
     }
-
-    /* Text clips in sync with the shutter edge */
-    @keyframes textDisappear {
-      0%   { clip-path: inset(0 0 0%   0); }
-      100% { clip-path: inset(0 0 100% 0); }
-    }
-    #welcome-wrap.slide-away {
-      animation: textDisappear 2.8s cubic-bezier(0.76,0,0.24,1) forwards;
-    }
-
     #landing-overlay.done {
       pointer-events: none;
       display: none;
@@ -141,16 +198,29 @@
   <!-- LANDING OVERLAY                                 -->
   <!-- ═══════════════════════════════════════════════ -->
   <div id="landing-overlay" aria-hidden="true">
-  <div id="welcome-wrap">
-    <div id="welcome-sub"> HEY😀, I'M MOHANAPRANAV </div>
-    <div id="welcome-text"><!-- letters injected by JS --></div>
-    <div id="welcome-bar"></div>
-    <div id="welcome-tag">TO MY PORTFOLIO🌐 &nbsp;·&nbsp;</div>
+
+    <!-- Soft radial glow behind WELCOME word -->
+    <div id="welcome-glow"></div>
+
+    <div id="welcome-wrap">
+      <div id="welcome-sub">Hi there, I'm</div>
+      <div id="welcome-name">Mohana Pranav</div>
+      <!-- Ghost row reserves exact height so wrap never shifts during flight -->
+      <div id="welcome-ghost">WELCOME</div>
+      <div id="welcome-bar">
+        <div class="bar-line"></div>
+        <div class="bar-dot"></div>
+        <div class="bar-line"></div>
+      </div>
+      <div id="welcome-tag">  &nbsp;&nbsp; MERN Stack Developer &nbsp;&nbsp; &nbsp;&nbsp;</div>
+    </div>
+
+    <!-- Flying letters injected here by JS (position:fixed, outside wrap) -->
+
   </div>
-</div>
 
   <!-- ─────────────────────────────────────────────── -->
-  <!-- ALL EXISTING PORTFOLIO MARKUP (UNCHANGED)       -->
+  <!-- PORTFOLIO MARKUP (UNCHANGED)                    -->
   <!-- ─────────────────────────────────────────────── -->
 
   <!-- Animated Background -->
@@ -171,7 +241,7 @@
         <li><a href="#skills" class="nav-link">Skills</a></li>
         <li><a href="#projects" class="nav-link">Projects</a></li>
         <li><a href="#certifications" class="nav-link">Certifications</a></li>
-        <li><a href="#contact" class="nav-link">Contact</a></li> 
+        <li><a href="#contact" class="nav-link">Contact</a></li>
       </ul>
     </div>
   </nav>
@@ -185,12 +255,10 @@
         <div class="profile-section rain-drop">
           <img src="my image.png" alt="Pranav">
         </div>
-        
         <div class="hero-content">
           <h1 class="rain-drop">Hello, I'm <span class="highlight">Pranav</span></h1>
-          <h3 class="hero-description rain-drop"><span id="typing-text">MERN Stack Developer</span></h3>
+          <h3 class="hero-description rain-drop">Aspiring <span id="typing-text">Web developer</span></h3>
           <a href="#about" class="cta-button nav-link rain-drop">Discover More</a>
-          
           <div class="social-links rain-drop">
             <a href="https://www.linkedin.com/in/mohana-pranav-1b087b2bb?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="social-box linkedin">
               <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn">
@@ -207,8 +275,8 @@
     </div>
 
     <!-- About Section -->
-    <div class="content-section" id="about"> 
-      <div class="content-box"> 
+    <div class="content-section" id="about">
+      <div class="content-box">
         <div class="nav-buttons">
           <button class="back-btn" onclick="goBack()">Back</button>
           <button class="next-btn" onclick="goNext('skills')">Next</button>
@@ -217,7 +285,7 @@
         <p class="rain-drop">I'm Mohana Pranav — a Passionate MERN Stack Developer with hands-on experience building and deploying 4 production-grade full-stack web applications.</p>
         <p class="rain-drop">I work with React.js, Node.js, TypeScript and MongoDB — and I'm an AWS Certified Cloud Practitioner proficient in RESTful API development, JWT Authentication, and cloud deployment on Vercel and Render.</p>
         <p class="rain-drop">Currently in my 4th year of B.E. ECE at Excel Engineering College, I deliver scalable solutions independently and in team environments — focused on solving real-world problems through efficient and user-friendly solutions.</p>
-      </div> 
+      </div>
     </div>
 
     <!-- Skills Section -->
@@ -237,7 +305,6 @@
               <img src="https://cdn-icons-png.flaticon.com/512/5968/5968292.png" alt="JavaScript" title="JavaScript">
               <img src="https://cdn-icons-png.flaticon.com/512/1126/1126012.png" alt="React" title="React">
               <img src="https://cdn-icons-png.flaticon.com/512/919/919832.png" alt="TypeScript" title="TypeScript">
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" alt="Next.js" title="Next.js">
             </div>
           </div>
           <div class="skill-box rain-drop">
@@ -255,7 +322,6 @@
             <div class="skill-icons">
               <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" alt="MongoDB" title="MongoDB">
               <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL" title="MySQL">
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/supabase/supabase-original.svg" alt="Supabase" title="Supabase">
             </div>
           </div>
           <div class="skill-box rain-drop">
@@ -263,20 +329,7 @@
             <div class="skill-icons">
               <img src="https://cdn-icons-png.flaticon.com/512/2111/2111288.png" alt="Git" title="Git">
               <img src="https://cdn-icons-png.flaticon.com/512/733/733609.png" alt="GitHub" title="GitHub">
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postman/postman-original.svg" alt="Postman" title="Postman">
               <img src="https://cdn-icons-png.flaticon.com/512/906/906324.png" alt="VS Code" title="VS Code">
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/npm/npm-original-wordmark.svg" alt="npm" title="npm">
-            </div>
-          </div>
-          <div class="skill-box rain-drop">
-            <h3>Platforms</h3>
-            <div class="skill-icons">
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vercel/vercel-original.svg"
-                  alt="Vercel" title="Vercel">
-              <img src="https://cdn.simpleicons.org/render/46E3B7"
-                  alt="Render" title="Render">
-              <img src="https://cdn.simpleicons.org/railway/FFFFFF"
-                  alt="Railway" title="Railway">
             </div>
           </div>
         </div>
@@ -406,12 +459,182 @@
       </div>
     </div>
 
-  </div>
+  </div><!-- /.main-container -->
 
   <script src="script.js"></script>
 
-  <!-- Landing animation — separate file -->
-  <script src="landing.js"></script>
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- LANDING ANIMATION SCRIPT                        -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <script>
+  (function () {
+    'use strict';
+
+    const overlay = document.getElementById('landing-overlay');
+    const subEl   = document.getElementById('welcome-sub');
+    const nameEl  = document.getElementById('welcome-name');
+    const ghostEl = document.getElementById('welcome-ghost');
+    const barEl   = document.getElementById('welcome-bar');
+    const tagEl   = document.getElementById('welcome-tag');
+    const wrapEl  = document.getElementById('welcome-wrap');
+    const glowEl  = document.getElementById('welcome-glow');
+
+    if (!overlay || !ghostEl) return;
+
+    /*
+      STRATEGY (bug-free):
+      ─────────────────────────────────────────────────
+      Each .wl span uses position:fixed.
+      • left / top  → set to the FINAL pixel position (measured from ghost)
+      • transform   → used ONLY for the flight offset (starts far off-screen,
+                       transitions to translate(0,0) to land perfectly)
+      This way the pulse animation (filter only) never touches transform,
+      so letters never jump to 0,0.
+    ─────────────────────────────────────────────────
+    */
+
+    // W  E  L  C  O  M  E  — off-screen launch offsets in px
+    // We overshoot well past viewport so letters truly come from edges
+    const getOriginOffset = (i, vw, vh) => {
+      const dirs = [
+        { dx: -vw * 1.3,  dy: 0         },  // W  — far left
+        { dx: -vw * 0.8,  dy: -vh * 1.2 },  // E  — top-left
+        { dx: -vw * 0.8,  dy:  vh * 1.2 },  // L  — bottom-left
+        { dx: 0,           dy: -vh * 1.2 },  // C  — top-center
+        { dx: 0,           dy:  vh * 1.2 },  // O  — bottom-center
+        { dx:  vw * 0.8,  dy: -vh * 1.2 },  // M  — top-right
+        { dx:  vw * 1.3,  dy: 0         },  // E  — far right
+      ];
+      return dirs[i];
+    };
+
+    // Orange accent indices: W(0), O(4), last E(6)
+    const ORANGE_IDX = new Set([0, 4, 6]);
+
+    const WORD        = 'WELCOME';
+    const STAGGER     = 90;    // ms between letters
+    const TRAVEL      = 850;   // ms flight duration
+    const PHASE2_START = 500;
+    const ALL_LANDED  = PHASE2_START + (WORD.length - 1) * STAGGER + TRAVEL + 150;
+
+    /* ── Phase 1 — labels fade in ── */
+    setTimeout(() => { if (subEl)  subEl.classList.add('visible'); }, 200);
+    setTimeout(() => { if (nameEl) nameEl.classList.add('visible'); }, 500);
+
+    /* ── Phase 2 — launch letters ── */
+    setTimeout(() => {
+      // Measure each character's bounding rect from the ghost
+      // Ghost uses visibility:hidden so it's in layout but invisible
+      const ghostRect = ghostEl.getBoundingClientRect();
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+
+      // Build individual char spans by measuring ghost's character widths
+      // We do this by temporarily rendering each char in a hidden span
+      const charWidths = [];
+      const measurer = document.createElement('span');
+      measurer.style.cssText = [
+        'position:fixed', 'visibility:hidden', 'pointer-events:none',
+        `font-family:'Rajdhani',sans-serif`,
+        `font-size:${getComputedStyle(ghostEl).fontSize}`,
+        'font-weight:700', 'letter-spacing:0.18em', 'white-space:nowrap',
+        'top:-9999px', 'left:-9999px'
+      ].join(';');
+
+      let runningX = ghostRect.left;
+
+      // Simpler approach: divide ghost width evenly (Rajdhani is monospaced-ish)
+      // but account for letter-spacing by measuring the ghost directly
+      const totalW   = ghostRect.width;
+      const charSlot = totalW / WORD.length;
+      const charH    = ghostRect.height;
+      const charTopY = ghostRect.top;
+
+      const allSpans = [];
+
+      WORD.split('').forEach((char, i) => {
+        const isOrange = ORANGE_IDX.has(i);
+        const span = document.createElement('span');
+        span.className   = 'wl ' + (isOrange ? 'orange' : 'white');
+        span.textContent = char;
+
+        // Final resting position
+        const finalLeft = ghostRect.left + i * charSlot;
+        const finalTop  = charTopY;
+
+        // Flight start offset (relative to final position)
+        const { dx, dy } = getOriginOffset(i, vw, vh);
+
+        // Set final position as left/top; flight offset via transform
+        span.style.left      = finalLeft + 'px';
+        span.style.top       = finalTop  + 'px';
+        span.style.width     = charSlot  + 'px';
+        span.style.height    = charH     + 'px';
+        span.style.display   = 'flex';
+        span.style.alignItems    = 'center';
+        span.style.justifyContent = 'center';
+        span.style.opacity   = '0';
+        span.style.filter    = 'blur(14px)';
+        span.style.transform = `translate(${dx}px, ${dy}px) scale(1.3)`;
+        span.style.transition = 'none';
+
+        overlay.appendChild(span);
+        allSpans.push(span);
+      });
+
+      /* Stagger-launch each letter toward translate(0,0) = its final position */
+      allSpans.forEach((span, i) => {
+        setTimeout(() => {
+          // Force layout so transition fires
+          span.getBoundingClientRect();
+
+          span.style.transition = [
+            `transform ${TRAVEL}ms cubic-bezier(0.16,1,0.3,1)`,
+            `filter    ${TRAVEL}ms ease-out`,
+            `opacity   100ms ease-out`,
+          ].join(', ');
+
+          span.style.opacity   = '1';
+          span.style.transform = 'translate(0,0) scale(1)';
+          span.style.filter    = 'blur(0px)';
+
+        }, i * STAGGER);
+      });
+
+      /* ── Phase 3/4 — after all land: glow + bar + tagline + pulse ── */
+      const SETTLE = ALL_LANDED - PHASE2_START;
+      setTimeout(() => {
+        if (glowEl) glowEl.classList.add('show');
+        if (barEl)  barEl.classList.add('open');
+        if (tagEl)  tagEl.classList.add('visible');
+
+        // Phase 4: premium glow pulse — filter only, no transform
+        setTimeout(() => {
+          allSpans.forEach(span => span.classList.add('pulse'));
+        }, 250);
+
+      }, SETTLE);
+
+    }, PHASE2_START);
+
+    /* ── Exit — slide overlay up ── */
+    const SLIDE_START = ALL_LANDED + 2400;
+
+    setTimeout(() => {
+      // The overlay clip-path slides up, taking everything inside with it
+      overlay.classList.add('slide-away');
+
+      setTimeout(() => { overlay.classList.add('done'); }, 2900);
+
+      setTimeout(() => {
+        const homeSection = document.querySelector('.home-section');
+        if (homeSection) homeSection.classList.add('zoom-reveal');
+      }, 1400);
+
+    }, SLIDE_START);
+
+  })();
+  </script>
 
 </body>
 </html>
