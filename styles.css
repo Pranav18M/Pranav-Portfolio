@@ -7,7 +7,7 @@
 body {
   font-family: 'Arial', sans-serif;
   line-height: 1.6;
-  background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0a0e27 100%);
+  background: linear-gradient(135deg, #0a0e27 0%, #000000 50%, #030b3a 100%);
   min-height: 100vh;
   color: #fff;
   overflow-x: hidden;
