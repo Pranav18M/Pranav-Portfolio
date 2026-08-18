@@ -202,7 +202,13 @@ function initLazyLoad() {
 // -----------------------------
 // OPTIMIZED Typing effect
 // -----------------------------
-const textArray = ["Full Stack Developer (MERN)", "Problem Solver", "Web Developer", "AI-assisted coding"];
+const textArray = [
+  "Full-Stack Developer",
+  "MERN Stack Developer",
+  "React & Next.js Developer",
+  "Backend Developer",
+  "AI-Powered Application Developer"
+];
 let i = 0, j = 0, currentText = "", isDeleting = false;
 
 function typeEffect() {
@@ -360,4 +366,3 @@ setTimeout(() => {
   }, SLIDE_START);
 
 })();
-
