@@ -192,46 +192,207 @@ body {
   z-index: 0;
 }
 
-/* Rotating Border Effect */
-.profile-section::after {
+/* ===== Image 2 style: gradient ring + orbit dots + info badges ===== */
+
+.profile-section {
+  position: relative;
+  width: clamp(220px, 40vw, 320px);
+  height: clamp(220px, 40vw, 320px);
+  margin: 60px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Soft glow behind everything */
+.profile-section::before {
   content: "";
   position: absolute;
-  width: 300px;
-  height: 300px;
+  width: 78%;
+  height: 78%;
   border-radius: 50%;
-  border: 3px solid transparent;
-  border-top-color: rgba(59, 130, 246, 0.8);
-  border-right-color: rgba(147, 51, 234, 0.6);
-  animation: rotateBorder 4s linear infinite;
+  background: radial-gradient(circle, rgba(59,130,246,0.35), transparent 70%);
+  filter: blur(10px);
   z-index: 0;
 }
 
-@keyframes gradientRotate {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+/* Simpler fallback: plain animated border ring, no background dependency */
+.orbit-ring {
+  position: absolute;
+  width: 96%;
+  height: 96%;
+  border-radius: 50%;
+  border: 3px solid rgba(59, 130, 246, 0.3);
+  border-top-color: rgba(59, 130, 246, 0.95);
+  border-right-color: rgba(168, 85, 247, 0.85);
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+  animation: ringSpin 6s linear infinite;
+  z-index: 1;
 }
 
-@keyframes rotateBorder {
-  0% { transform: rotate(0deg); }
+@keyframes ringSpin {
+  0%   { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
 
+/* Small static glowing dots on the ring */
+.orbit-dot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #60a5fa, #a855f7);
+  box-shadow: 0 0 10px 3px rgba(96,165,250,0.8);
+  z-index: 2;
+}
+
+.dot1 { top: 6%;  right: 10%; }
+.dot2 { top: 45%; right: -3%; }
+.dot3 { bottom: 8%; left: 8%; opacity: 0.7; }
+
+/* The photo — same size/position as before */
 .profile-section img {
-  width: 280px;
-  height: 280px;
+  width: 78%;
+  height: 78%;
   border-radius: 50%;
   object-fit: cover;
-  box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
+  box-shadow: 0 0 25px rgba(59, 130, 246, 0.5);
   transition: transform 0.3s;
   position: relative;
-  z-index: 1;
+  z-index: 3;
   border: 3px solid rgba(59, 130, 246, 0.3);
 }
 
 .profile-section img:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 50px rgba(59, 130, 246, 0.8);
+  box-shadow: 0 0 45px rgba(59, 130, 246, 0.8);
+}
+
+/* Floating info badges */
+.badge {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(59, 130, 246, 0.4);
+  border-radius: 10px;
+  padding: 8px 12px;
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.25);
+  backdrop-filter: blur(6px);
+  z-index: 4;
+  white-space: nowrap;
+  animation: floatBadge 3s ease-in-out infinite;
+}
+
+.badge-icon {
+  font-size: clamp(14px, 3vw, 18px);
+}
+
+.badge strong {
+  display: block;
+  font-size: clamp(11px, 2.2vw, 13px);
+  color: #fff;
+}
+
+.badge p {
+  margin: 0;
+  font-size: clamp(9px, 1.8vw, 11px);
+  color: #93c5fd;
+}
+
+.badge-top {
+  top: -18%;
+  right: -15%;
+  animation-delay: 0s;
+}
+
+/* Fast Learner - fully outside the circle, not overlapping the image */
+.badge-left {
+  left: -38%;
+  top: 45%;
+}
+
+.badge-bottom {
+  bottom: -15%;
+  right: -10%;
+  animation-delay: 2s;
+}
+
+@keyframes floatBadge {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
+}
+
+@media (max-width: 600px) {
+  .home-section {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    overflow: visible;
+  }
+
+  .profile-section {
+    width: clamp(200px, 60vw, 240px);
+    height: clamp(200px, 60vw, 240px);
+    margin: 90px auto 70px;
+  }
+
+  .badge {
+    padding: 6px 9px;
+    gap: 6px;
+    border-radius: 8px;
+  }
+
+  .badge-icon {
+    font-size: 13px;
+  }
+
+  .badge strong {
+    font-size: 10px;
+  }
+
+  .badge p {
+    font-size: 8px;
+  }
+
+  /* Web Developer - top, slightly right, above the circle */
+  .badge-top {
+    top: -22%;
+    right: -5%;
+  }
+
+  /* Fast Learner - overlapping left-middle edge of circle */
+   .badge-left {
+    left: -28%;
+    top: 42%;
+  }
+
+  /* Problem Solver - overlapping bottom-right edge of circle */
+  .badge-bottom {
+    bottom: -10%;
+    right: -8%;
+  }
+}
+
+@media (max-width: 400px) {
+  .profile-section {
+    width: clamp(175px, 62vw, 210px);
+    margin: 85px auto 65px;
+  }
+
+  .badge-top    { top: -20%; right: -8%; }
+  .badge-left   { left: -6%; top: 36%; }
+  .badge-bottom { bottom: -8%; right: -10%; }
+
+  .badge p {
+    display: none;
+  }
+  
+  .badge-left {
+    left: -22%;
+    top: 40%;
+  }
+
 }
 
 .hero-content {
