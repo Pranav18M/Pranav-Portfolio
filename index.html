@@ -10,12 +10,15 @@
     @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&display=swap');
 
     /* ══════════════════════════════════════════════
-       LANDING OVERLAY
+       LANDING OVERLAY (lightweight, lag-free version)
+       Only transform + opacity are animated below.
+       No filter/blur/drop-shadow animation, no JS
+       layout measuring, no huge off-screen translates.
     ══════════════════════════════════════════════ */
     #landing-overlay {
       position: fixed;
       inset: 0;
-      background: #050505;
+      background: linear-gradient(135deg, #0a0e27 0%, #000000 50%, #030b3a 100%);
       z-index: 99999;
       display: flex;
       align-items: center;
@@ -43,9 +46,9 @@
       text-transform: uppercase;
       opacity: 0;
       transform: translateY(10px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
+      animation: fadeUp 0.6s ease forwards;
+      animation-delay: 0.15s;
     }
-    #welcome-sub.visible { opacity: 1; transform: translateY(0); }
 
     /* "Mohana Pranav" name */
     #welcome-name {
@@ -56,61 +59,45 @@
       color: #ffffff;
       opacity: 0;
       transform: translateY(10px);
-      transition: opacity 0.8s ease 0.1s, transform 0.8s ease 0.1s;
+      animation: fadeUp 0.6s ease forwards;
+      animation-delay: 0.35s;
     }
-    #welcome-name.visible { opacity: 1; transform: translateY(0); }
 
-    /* Ghost row — reserves exact WELCOME height/width, invisible */
-    #welcome-ghost {
+    /* WELCOME word — static markup, CSS-only stagger animation */
+    #welcome-word {
       font-family: 'Rajdhani', sans-serif;
       font-size: clamp(3.5rem, 11vw, 7.5rem);
       font-weight: 700;
       letter-spacing: 0.18em;
       white-space: nowrap;
-      visibility: hidden;   /* takes up space but invisible */
-      user-select: none;
-      pointer-events: none;
       line-height: 1;
+      position: relative;
     }
 
-    /* Flying letters — positioned absolutely within overlay */
     .wl {
-      position: fixed;
-      font-family: 'Rajdhani', sans-serif;
-      font-size: clamp(3.5rem, 11vw, 7.5rem);
-      font-weight: 700;
-      line-height: 1;
-      white-space: nowrap;
-      will-change: transform, opacity, filter;
+      display: inline-block;
       opacity: 0;
-      z-index: 10;
-      /* base glow — white majority */
+      transform: translateY(16px);
+      animation: letterIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      /* single static glow, never animated */
       text-shadow:
         0 0 15px rgba(255,255,255,0.8),
-        0 0 35px rgba(120,180,255,0.5),
-        0 0 70px rgba(120,180,255,0.3);
+        0 0 35px rgba(120,180,255,0.5);
     }
 
-    /* Orange accent letters: W (0), O (4), E (6) */
     .wl.orange {
       color: #4F9FFF;
       text-shadow:
         0 0 15px rgba(79,159,255,0.9),
-        0 0 35px rgba(79,159,255,0.6),
-        0 0 70px rgba(30,100,255,0.4);
+        0 0 35px rgba(79,159,255,0.6);
     }
-    /* White majority letters */
     .wl.white {
       color: #FFFFFF;
-      text-shadow:
-        0 0 15px rgba(255,255,255,0.8),
-        0 0 35px rgba(120,180,255,0.5),
-        0 0 70px rgba(120,180,255,0.3);
     }
 
     /* Radial glow behind assembled WELCOME */
     #welcome-glow {
-      position: fixed;
+      position: absolute;
       width: min(800px, 90vw);
       height: 300px;
       left: 50%;
@@ -118,12 +105,12 @@
       transform: translate(-50%, -50%);
       background: radial-gradient(
         ellipse,
-        rgba(120,180,255,0.12) 0%,
-        rgba(255,120,40,0.06) 40%,
+        rgba(121, 178, 248, 0.12) 0%,
+        rgba(10, 16, 102, 0.103) 40%,
         transparent 70%
       );
       opacity: 0;
-      transition: opacity 0.8s ease;
+      transition: opacity 0.6s ease;
       pointer-events: none;
       z-index: 1;
     }
@@ -135,7 +122,7 @@
       align-items: center;
       gap: 14px;
       opacity: 0;
-      transition: opacity 0.6s ease;
+      transition: opacity 0.5s ease;
     }
     #welcome-bar.open { opacity: 1; }
     .bar-line {
@@ -160,34 +147,33 @@
       text-transform: uppercase;
       opacity: 0;
       transform: translateY(8px);
-      transition: opacity 0.7s ease 0.15s, transform 0.7s ease 0.15s;
+      transition: opacity 0.5s ease, transform 0.5s ease;
     }
     #welcome-tag.visible { opacity: 1; transform: translateY(0); }
 
-    /* ── Glow pulse — uses filter not transform to avoid position reset ── */
-    @keyframes wl-pulse-white {
-      0%   { filter: brightness(1)   drop-shadow(0 0 8px rgba(120,180,255,0.5)); }
-      50%  { filter: brightness(1.4) drop-shadow(0 0 25px rgba(120,180,255,0.9)); }
-      100% { filter: brightness(1)   drop-shadow(0 0 8px rgba(120,180,255,0.5)); }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
-    @keyframes wl-pulse-orange {
-      0%   { filter: brightness(1)   drop-shadow(0 0 8px rgba(79,159,255,0.9)); }
-      50%  { filter: brightness(1.5) drop-shadow(0 0 25px rgba(79,159,255,0.6)); }
-      100% { filter: brightness(1)   drop-shadow(0 0 8px rgba(30,100,255,0.4)); }
-    }
-    .wl.pulse.white  { animation: wl-pulse-white  0.9s ease forwards; }
-    .wl.pulse.orange { animation: wl-pulse-orange 0.9s ease forwards; }
 
-    /* ── Exit slide ── */
+    @keyframes letterIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Exit — the "door" wipe. clip-path is the ONLY thing
+       animating here (no blur/shadow/JS alongside it). Duration
+       is 2s — enough to read clearly as a wipe without dragging
+       on like the original 2.8s. ── */
     @keyframes doorSlide {
       0%   { clip-path: inset(0 0 0%   0); }
       100% { clip-path: inset(0 0 100% 0); }
     }
     #landing-overlay.slide-away {
-      animation: doorSlide 2.8s cubic-bezier(0.76,0,0.24,1) forwards;
+      animation: doorSlide 2s cubic-bezier(0.76,0,0.24,1) forwards;
+      pointer-events: none;
     }
     #landing-overlay.done {
-      pointer-events: none;
       display: none;
     }
   </style>
@@ -205,8 +191,18 @@
     <div id="welcome-wrap">
       <div id="welcome-sub">Hi there, I'm</div>
       <div id="welcome-name">Mohana Pranav</div>
-      <!-- Ghost row reserves exact height so wrap never shifts during flight -->
-      <div id="welcome-ghost">WELCOME</div>
+
+      <!-- Static letters, staggered purely via CSS animation-delay -->
+      <div id="welcome-word">
+        <span class="wl orange" style="animation-delay:0.90s">W</span>
+        <span class="wl white"  style="animation-delay:0.98s">E</span>
+        <span class="wl white"  style="animation-delay:1.06s">L</span>
+        <span class="wl white"  style="animation-delay:1.14s">C</span>
+        <span class="wl orange" style="animation-delay:1.22s">O</span>
+        <span class="wl white"  style="animation-delay:1.30s">M</span>
+        <span class="wl orange" style="animation-delay:1.38s">E</span>
+      </div>
+
       <div id="welcome-bar">
         <div class="bar-line"></div>
         <div class="bar-dot"></div>
@@ -214,8 +210,6 @@
       </div>
       <div id="welcome-tag"> &nbsp;&nbsp; to My Portfolio &nbsp;&nbsp; &nbsp;&nbsp;</div>
     </div>
-
-    <!-- Flying letters injected here by JS (position:fixed, outside wrap) -->
 
   </div>
 
@@ -252,12 +246,47 @@
     <!-- Home Section -->
     <div class="content-section active" id="home">
       <div class="home-section">
-        <div class="profile-section rain-drop">
+        <!-- <div class="profile-section rain-drop">
           <img src="my image.png" alt="Pranav">
-        </div>
+          
+        </div> -->
+        <div class="profile-section rain-drop">
+      <div class="orbit-ring"></div>
+      <span class="orbit-dot dot1"></span>
+      <span class="orbit-dot dot2"></span>
+      <span class="orbit-dot dot3"></span>
+
+      <img src="my image.png" alt="Pranav">
+
+      <div class="badge badge-top">
+  <span class="badge-icon">🔎</span>
+  <div>
+    <strong>Cross-Domain Explorer</strong>
+    <p>Explore. Learn. Build. Repeat</p>
+  </div>
+</div>
+
+<div class="badge badge-left">
+  <span class="badge-icon">🧩</span>
+  <div>
+    <strong>Curious Builder</strong>
+    <p>Curiosity → Creation</p>
+  </div>
+</div>
+
+<div class="badge badge-bottom">
+  <span class="badge-icon">🔄</span>
+  <div>
+    <strong>Always Evolving</strong>
+    <p>Think. Code. Evolve.</p>
+  </div>
+</div>
+    </div>
         <div class="hero-content">
           <h1 class="rain-drop">Hello, I'm <span class="highlight">Pranav</span></h1>
-          <h3 class="hero-description rain-drop">Aspiring <span id="typing-text">Web developer</span></h3>
+          <h3 class="hero-description rain-drop">
+          <span id="typing-text">Web Developer</span>
+        </h3>
           <a href="#about" class="cta-button nav-link rain-drop">Discover More</a>
           <div class="social-links rain-drop">
             <a href="https://www.linkedin.com/in/mohana-pranav-1b087b2bb?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="social-box linkedin">
@@ -489,174 +518,49 @@ Android/iOS device from the browser.</p>
   <script src="script.js"></script>
 
   <!-- ═══════════════════════════════════════════════ -->
-  <!-- LANDING ANIMATION SCRIPT                        -->
+  <!-- LANDING ANIMATION SCRIPT (lightweight)          -->
+  <!-- All timing/motion is handled by CSS above.      -->
+  <!-- This script only triggers the exit — a single   -->
+  <!-- timer, no DOM creation, no layout measuring.    -->
   <!-- ═══════════════════════════════════════════════ -->
   <script>
   (function () {
     'use strict';
 
     const overlay = document.getElementById('landing-overlay');
-    const subEl   = document.getElementById('welcome-sub');
-    const nameEl  = document.getElementById('welcome-name');
-    const ghostEl = document.getElementById('welcome-ghost');
     const barEl   = document.getElementById('welcome-bar');
     const tagEl   = document.getElementById('welcome-tag');
-    const wrapEl  = document.getElementById('welcome-wrap');
     const glowEl  = document.getElementById('welcome-glow');
 
-    if (!overlay || !ghostEl) return;
+    if (!overlay) return;
 
-    /*
-      STRATEGY (bug-free):
-      ─────────────────────────────────────────────────
-      Each .wl span uses position:fixed.
-      • left / top  → set to the FINAL pixel position (measured from ghost)
-      • transform   → used ONLY for the flight offset (starts far off-screen,
-                       transitions to translate(0,0) to land perfectly)
-      This way the pulse animation (filter only) never touches transform,
-      so letters never jump to 0,0.
-    ─────────────────────────────────────────────────
-    */
+    // Letters finish landing around 1.38s + 0.45s ≈ 1.85s
+    const LETTERS_DONE  = 1900;
+    const HOLD          = 1600;  // how long WELCOME stays fully visible
+    const EXIT_DURATION = 1400;  // must match doorSlide animation duration in CSS
 
-    // W  E  L  C  O  M  E  — off-screen launch offsets in px
-    // We overshoot well past viewport so letters truly come from edges
-    const getOriginOffset = (i, vw, vh) => {
-      const dirs = [
-        { dx: -vw * 1.3,  dy: 0         },  // W  — far left
-        { dx: -vw * 0.8,  dy: -vh * 1.2 },  // E  — top-left
-        { dx: -vw * 0.8,  dy:  vh * 1.2 },  // L  — bottom-left
-        { dx: 0,           dy: -vh * 1.2 },  // C  — top-center
-        { dx: 0,           dy:  vh * 1.2 },  // O  — bottom-center
-        { dx:  vw * 0.8,  dy: -vh * 1.2 },  // M  — top-right
-        { dx:  vw * 1.3,  dy: 0         },  // E  — far right
-      ];
-      return dirs[i];
-    };
+    // Reveal glow / bar / tagline right after letters land
+    setTimeout(function () {
+      if (glowEl) glowEl.classList.add('show');
+      if (barEl)  barEl.classList.add('open');
+      if (tagEl)  tagEl.classList.add('visible');
+    }, LETTERS_DONE);
 
-    // Orange accent indices: W(0), O(4), last E(6)
-    const ORANGE_IDX = new Set([0, 4, 6]);
-
-    const WORD        = 'WELCOME';
-    const STAGGER     = 90;    // ms between letters
-    const TRAVEL      = 850;   // ms flight duration
-    const PHASE2_START = 500;
-    const ALL_LANDED  = PHASE2_START + (WORD.length - 1) * STAGGER + TRAVEL + 150;
-
-    /* ── Phase 1 — labels fade in ── */
-    setTimeout(() => { if (subEl)  subEl.classList.add('visible'); }, 200);
-    setTimeout(() => { if (nameEl) nameEl.classList.add('visible'); }, 500);
-
-    /* ── Phase 2 — launch letters ── */
-    setTimeout(() => {
-      // Measure each character's bounding rect from the ghost
-      // Ghost uses visibility:hidden so it's in layout but invisible
-      const ghostRect = ghostEl.getBoundingClientRect();
-      const vw = window.innerWidth;
-      const vh = window.innerHeight;
-
-      // Build individual char spans by measuring ghost's character widths
-      // We do this by temporarily rendering each char in a hidden span
-      const charWidths = [];
-      const measurer = document.createElement('span');
-      measurer.style.cssText = [
-        'position:fixed', 'visibility:hidden', 'pointer-events:none',
-        `font-family:'Rajdhani',sans-serif`,
-        `font-size:${getComputedStyle(ghostEl).fontSize}`,
-        'font-weight:700', 'letter-spacing:0.18em', 'white-space:nowrap',
-        'top:-9999px', 'left:-9999px'
-      ].join(';');
-
-      let runningX = ghostRect.left;
-
-      // Simpler approach: divide ghost width evenly (Rajdhani is monospaced-ish)
-      // but account for letter-spacing by measuring the ghost directly
-      const totalW   = ghostRect.width;
-      const charSlot = totalW / WORD.length;
-      const charH    = ghostRect.height;
-      const charTopY = ghostRect.top;
-
-      const allSpans = [];
-
-      WORD.split('').forEach((char, i) => {
-        const isOrange = ORANGE_IDX.has(i);
-        const span = document.createElement('span');
-        span.className   = 'wl ' + (isOrange ? 'orange' : 'white');
-        span.textContent = char;
-
-        // Final resting position
-        const finalLeft = ghostRect.left + i * charSlot;
-        const finalTop  = charTopY;
-
-        // Flight start offset (relative to final position)
-        const { dx, dy } = getOriginOffset(i, vw, vh);
-
-        // Set final position as left/top; flight offset via transform
-        span.style.left      = finalLeft + 'px';
-        span.style.top       = finalTop  + 'px';
-        span.style.width     = charSlot  + 'px';
-        span.style.height    = charH     + 'px';
-        span.style.display   = 'flex';
-        span.style.alignItems    = 'center';
-        span.style.justifyContent = 'center';
-        span.style.opacity   = '0';
-        span.style.filter    = 'blur(14px)';
-        span.style.transform = `translate(${dx}px, ${dy}px) scale(1.3)`;
-        span.style.transition = 'none';
-
-        overlay.appendChild(span);
-        allSpans.push(span);
-      });
-
-      /* Stagger-launch each letter toward translate(0,0) = its final position */
-      allSpans.forEach((span, i) => {
-        setTimeout(() => {
-          // Force layout so transition fires
-          span.getBoundingClientRect();
-
-          span.style.transition = [
-            `transform ${TRAVEL}ms cubic-bezier(0.16,1,0.3,1)`,
-            `filter    ${TRAVEL}ms ease-out`,
-            `opacity   100ms ease-out`,
-          ].join(', ');
-
-          span.style.opacity   = '1';
-          span.style.transform = 'translate(0,0) scale(1)';
-          span.style.filter    = 'blur(0px)';
-
-        }, i * STAGGER);
-      });
-
-      /* ── Phase 3/4 — after all land: glow + bar + tagline + pulse ── */
-      const SETTLE = ALL_LANDED - PHASE2_START;
-      setTimeout(() => {
-        if (glowEl) glowEl.classList.add('show');
-        if (barEl)  barEl.classList.add('open');
-        if (tagEl)  tagEl.classList.add('visible');
-
-        // Phase 4: premium glow pulse — filter only, no transform
-        setTimeout(() => {
-          allSpans.forEach(span => span.classList.add('pulse'));
-        }, 250);
-
-      }, SETTLE);
-
-    }, PHASE2_START);
-
-    /* ── Exit — slide overlay up ── */
-    const SLIDE_START = ALL_LANDED + 2400;
-
-    setTimeout(() => {
-      // The overlay clip-path slides up, taking everything inside with it
+    // Exit — trigger the door wipe, then hide once it finishes
+    setTimeout(function () {
       overlay.classList.add('slide-away');
 
-      setTimeout(() => { overlay.classList.add('done'); }, 2900);
+      setTimeout(function () {
+        overlay.classList.add('done');
+      }, EXIT_DURATION);
 
-      setTimeout(() => {
+      // Reveal the home section partway through the wipe, same as before
+      setTimeout(function () {
         const homeSection = document.querySelector('.home-section');
         if (homeSection) homeSection.classList.add('zoom-reveal');
-      }, 1400);
+      }, EXIT_DURATION * 0.9);
 
-    }, SLIDE_START);
+    }, LETTERS_DONE + HOLD);
 
   })();
   </script>
